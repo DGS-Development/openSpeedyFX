@@ -1,0 +1,5 @@
+.floorTexture {
+	-fx-background-image: url("floorTexture.png");
+	-fx-background-repeat: repeat;
+	-fx-background-position: center center;
+}

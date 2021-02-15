@@ -1,0 +1,347 @@
+Credits:
+
+Burak Güccük (asset design, ui testing)
+Roman Treyger (ui testing, architecture assistance)
+Patrick Hofmann (programming, architecture, asset design)
+Leander Steiner (additional programming, game logic architecture)
+Michael Jungkind (additional programming, ui design, asset design)
+Lukas Thurner (additional programming, main menu ui design)
+
+======================================================================================================
+
+Assets:
+
+https://www.youtube.com/watch?v=eLAv7scWR_Q
+https://creativecommons.org/licenses/by-nc-nd/4.0/
+Author: QamiKazu (https://www.youtube.com/channel/UCOaptYjiswhPMVTCtQQuh2A)
+Was modified: Yes
+
+https://www.youtube.com/watch?v=_BTje8L7bso
+https://creativecommons.org/licenses/by-nc-nd/4.0/
+Author: QamiKazu (https://www.youtube.com/channel/UCOaptYjiswhPMVTCtQQuh2A)
+Was modified: Yes
+
+https://www.youtube.com/watch?v=JQj1CFtyfWY&feature=youtu.be
+https://creativecommons.org/licenses/by-nc-nd/4.0/
+Author: QamiKazu (https://www.youtube.com/channel/UCOaptYjiswhPMVTCtQQuh2A)
+Was modified: Yes
+
+Hedgehog drawing
+https://creativecommons.org/licenses/by/4.0/
+Author: QamiKazu (https://www.youtube.com/channel/UCOaptYjiswhPMVTCtQQuh2A)
+Was modified: Yes
+
+Fox drawing
+https://creativecommons.org/licenses/by/4.0/
+Author: QamiKazu (https://www.youtube.com/channel/UCOaptYjiswhPMVTCtQQuh2A)
+Was modified: Yes
+
+https://unsplash.com/photos/C2y9b2eOA1E
+https://unsplash.com/license
+Was modified: Yes
+
+https://openclipart.org/detail/300087/alien-character
+https://creativecommons.org/publicdomain/zero/1.0/
+Was modified: Yes
+
+https://openclipart.org/detail/245168/international-flags-scene
+https://creativecommons.org/publicdomain/zero/1.0/
+Was modified: Yes
+
+https://openclipart.org/detail/203248/water-drop-shaded
+https://creativecommons.org/publicdomain/zero/1.0/
+Was modified: Yes
+
+https://openclipart.org/detail/14536/plane-tree-autumn-leaf
+https://creativecommons.org/publicdomain/zero/1.0/
+Was modified: Yes
+
+https://openclipart.org/detail/137929/apple
+https://creativecommons.org/publicdomain/zero/1.0/
+Was modified: Yes
+
+https://openclipart.org/detail/173452/mushrooms-3
+https://creativecommons.org/publicdomain/zero/1.0/
+Was modified: Yes
+
+https://openclipart.org/detail/62629/checkered-flag
+https://creativecommons.org/publicdomain/zero/1.0/
+Was modified: Yes
+
+https://openclipart.org/detail/17814/cartoon-beaver
+https://creativecommons.org/publicdomain/zero/1.0/
+Was modified: Yes
+
+https://openclipart.org/detail/299648/rustic-house-from-glitch
+https://creativecommons.org/publicdomain/zero/1.0/
+Was modified: Yes
+
+https://openclipart.org/detail/311437/cottage-from-glitch
+https://creativecommons.org/publicdomain/zero/1.0/
+Was modified: Yes
+
+https://openclipart.org/detail/2111/frog-on-a-lily-pad
+https://creativecommons.org/publicdomain/zero/1.0/
+Was modified: Yes
+
+https://openclipart.org/detail/2112/green-sitting-frog
+https://creativecommons.org/publicdomain/zero/1.0/
+Was modified: Yes
+
+https://openclipart.org/detail/170650/small-hedgehog
+https://creativecommons.org/publicdomain/zero/1.0/
+Was modified: Yes
+
+https://openclipart.org/detail/168496/cartoon-mole
+https://creativecommons.org/publicdomain/zero/1.0/
+Was modified: Yes
+
+https://openclipart.org/detail/262114/enraged-owl-front-view
+https://creativecommons.org/publicdomain/zero/1.0/
+Was modified: Yes
+
+https://opengameart.org/content/4-hand-painted-ground-textures
+https://creativecommons.org/publicdomain/zero/1.0/
+Was modified: Yes
+
+https://www.freepik.com/free-vector/cartoon-wooden-buttons-vector-set-ui-game-illustration-oblong-board-arrow_10603001.htm
+https://www.freepikcompany.com/legal#nav-freepik
+Author: macrovector (https://www.freepik.com/macrovector)
+Was modified: Yes
+
+https://openclipart.org/detail/203107/plant08
+https://creativecommons.org/publicdomain/zero/1.0/
+Was modified: Yes
+
+https://openclipart.org/detail/203248/water-drop-shaded
+https://creativecommons.org/publicdomain/zero/1.0/
+Was modified: Yes
+
+https://openclipart.org/detail/192067/vitoria-regia
+https://creativecommons.org/publicdomain/zero/1.0/
+Was modified: Yes
+
+https://openclipart.org/detail/194959/vitoria-regia
+https://creativecommons.org/publicdomain/zero/1.0/
+Was modified: Yes
+
+https://openclipart.org/detail/11488/rpg-map-symbols-pond
+https://creativecommons.org/publicdomain/zero/1.0/
+Was modified: Yes
+
+https://openclipart.org/detail/291418/squirrel
+https://creativecommons.org/publicdomain/zero/1.0/
+Was modified: Yes
+
+https://openclipart.org/detail/321459/tree-stump
+https://creativecommons.org/publicdomain/zero/1.0/
+Was modified: Yes
+
+https://openclipart.org/detail/313776/hatchet-and-stump-2
+https://creativecommons.org/publicdomain/zero/1.0/
+Was modified: Yes
+
+https://openclipart.org/detail/169883/tree-stump
+https://creativecommons.org/publicdomain/zero/1.0/
+Was modified: Yes
+
+https://openclipart.org/detail/315271/squirrels
+https://creativecommons.org/publicdomain/zero/1.0/
+Was modified: Yes
+
+https://opengameart.org/content/cutted-tree
+https://creativecommons.org/publicdomain/zero/1.0/
+Was modified: Yes
+
+https://makeitjellybit.tumblr.com/post/147313986778/taking-the-time-to-do-a-high-pressure-self-test
+https://creativecommons.org/publicdomain/zero/1.0/
+Was modified: Yes
+
+https://freesound.org/people/Adam_N/sounds/144951/
+https://creativecommons.org/publicdomain/zero/1.0/
+Was modified: Yes
+
+https://opengameart.org/content/grassy-world-overture-8bitorchestral (storyMainTheme)
+https://creativecommons.org/licenses/by/3.0/
+Author: Matthew Pablo (https://opengameart.org/users/matthew-pablo)
+Was modified: Yes
+
+https://freesound.org/people/Sheyvan/sounds/470122/ (apple)
+https://creativecommons.org/publicdomain/zero/1.0/
+Was modified: Yes
+
+https://freesound.org/people/giddster/sounds/437356/ (leaves)
+https://creativecommons.org/publicdomain/zero/1.0/
+Was modified: Yes
+
+https://freesound.org/people/Leszek_Szary/sounds/173958/ (failure)
+https://creativecommons.org/publicdomain/zero/1.0/
+Was modified: Yes
+
+https://freesound.org/people/Sjonas88/sounds/538554/ (success)
+https://creativecommons.org/publicdomain/zero/1.0/
+Was modified: Yes
+
+https://opengameart.org/content/hand-painted-grass-grass49png
+https://creativecommons.org/publicdomain/zero/1.0/
+Was modified: Yes
+
+https://opengameart.org/content/trees-mega-pack-cc-by-30-0
+https://creativecommons.org/licenses/by/3.0/
+Author: rrexky (https://opengameart.org/users/rrexky)
+Was modified: Yes
+
+https://freesound.org/people/klankbeeld/sounds/424611/
+https://creativecommons.org/licenses/by/3.0/
+Author: klankbeeld (https://freesound.org/people/klankbeeld/)
+Was modified: Yes
+
+https://freesound.org/people/tilano408/sounds/445637/
+https://creativecommons.org/publicdomain/zero/1.0/
+Was modified: Yes
+
+https://freesound.org/people/nathanaelsams/sounds/127955/
+https://creativecommons.org/publicdomain/zero/1.0/
+Was modified: Yes
+
+https://freesound.org/people/Wagna/sounds/325987/
+https://creativecommons.org/publicdomain/zero/1.0/
+Was modified: Yes
+
+https://freesound.org/people/giovannapaludetto/sounds/414292/
+https://creativecommons.org/publicdomain/zero/1.0/
+Was modified: Yes
+
+https://pixabay.com/de/videos/kinder-cartoon-hintergrund-26796/
+https://pixabay.com/de/service/license/
+Was modified: Yes
+
+Fonts:
+Pangolin-Regular.ttf (SIL OPEN FONT LICENSE Version 1.1 - 26 February 2007)
+https://fonts.google.com/specimen/Pangolin
+
+License information:
+
+======================================================================================================
+
+CC0 1.0 Universal (CC0 1.0):
+
+No Copyright:
+The person who associated a work with this deed has dedicated the work to the public domain by waiving all of his or her rights to the work worldwide under copyright law, including all related and neighboring rights, to the extent allowed by law.
+You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. See Other Information below.
+
+Other Information:
+In no way are the patent or trademark rights of any person affected by CC0, nor are the rights that other persons may have in the work or in how the work is used, such as publicity or privacy rights.
+Unless expressly stated otherwise, the person who associated a work with this deed makes no warranties about the work, and disclaims liability for all uses of the work, to the fullest extent permitted by applicable law.
+When using or citing the work, you should not imply endorsement by the author or the affirmer.
+
+======================================================================================================
+
+Attribution 3.0 Unported (CC BY 3.0):
+
+You are free to:
+Share — copy and redistribute the material in any medium or format
+Adapt — remix, transform, and build upon the material
+for any purpose, even commercially.
+The licensor cannot revoke these freedoms as long as you follow the license terms.
+
+Under the following terms:
+Attribution — You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.
+No additional restrictions — You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.
+
+Notices:
+You do not have to comply with the license for elements of the material in the public domain or where your use is permitted by an applicable exception or limitation.
+No warranties are given. The license may not give you all of the permissions necessary for your intended use. For example, other rights such as publicity, privacy, or moral rights may limit how you use the material.
+
+======================================================================================================
+
+Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0):
+
+You are free to:
+Share — copy and redistribute the material in any medium or format
+The licensor cannot revoke these freedoms as long as you follow the license terms.
+
+Under the following terms:
+Attribution — You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.
+NonCommercial — You may not use the material for commercial purposes.
+NoDerivatives — If you remix, transform, or build upon the material, you may not distribute the modified material.
+No additional restrictions — You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.
+
+Notices:
+You do not have to comply with the license for elements of the material in the public domain or where your use is permitted by an applicable exception or limitation.
+No warranties are given. The license may not give you all of the permissions necessary for your intended use. For example, other rights such as publicity, privacy, or moral rights may limit how you use the material.
+
+======================================================================================================
+
+Attribution 4.0 International (CC BY 4.0):
+
+You are free to:
+Share — copy and redistribute the material in any medium or format
+Adapt — remix, transform, and build upon the material
+for any purpose, even commercially.
+This license is acceptable for Free Cultural Works.
+The licensor cannot revoke these freedoms as long as you follow the license terms.
+
+Under the following terms:
+Attribution — You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.
+No additional restrictions — You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.
+
+Notices:
+You do not have to comply with the license for elements of the material in the public domain or where your use is permitted by an applicable exception or limitation.
+No warranties are given. The license may not give you all of the permissions necessary for your intended use. For example, other rights such as publicity, privacy, or moral rights may limit how you use the material.
+
+======================================================================================================
+
+Unsplash:
+
+Unsplash grants you an irrevocable, nonexclusive, worldwide copyright 
+license to download, copy, modify, distribute, perform, and use photos 
+from Unsplash for free, including for commercial purposes, without permission 
+from or attributing the photographer or Unsplash. This license does not include 
+the right to compile photos from Unsplash to replicate a similar or competing service.
+
+======================================================================================================
+
+Freepik:
+
+License Agreement for Freepik Content
+The Company authorizes the User to download and use the Freepik Content under the terms of this Section (see Section 7 in relation to Third Party Content and Sponsored Content). The Company and its licensors reserve all rights over the Freepik Content not expressly granted in this license to the User.
+The Company authorizes the User in a non-transferable, limited, non-exclusive manner and on a worldwide basis for the duration of the relevant rights; to download, use and modify the Freepik Content, in a device the User owns or controls and only for the purposes and uses allowed in these Terms.
+The User may use the content in the Freepik Content provided that it:
+Does not involve collective use;
+The content in the Freepik Content is not used in a manner that suggests an association or endorsement by the Company or the Website;
+The content in the Freepik Content or any derivative work is not used or included (in whole or in part) in a database, archive or in any other media/stock product, collection, set of clips, or library, for distribution or resale or used in any other way that could prevent or limit future visits or downloads from the Website;
+Does not resell, assign, transfer or sublicense the content in the Freepik Content or any derived work from a content in the Freepik Content;
+Does not use the content in the Freepik Content in printed or electronic items (e.g. t-shirts, cups, postcards, birthday or greeting cards, invitations, calendars, web models or electronic devices, apps, videogames, advertising spots, audiovisual animations) aimed to be resold, in which the content in the Freepik Content is the main element (because of size, relevance or any other cause, in case of doubt about whether the content is main element, it shall be deemed that the content is main element);
+Does not use the content in the Freepik Content (totally or partially) in any trademark, logo or part of the same, which may be used by any other means to guarantee or to imply a guaranty of any product and/or service, unless the content in the Freepik Content used in such cases is modified in such a way as to be a new and different content not confusingly similar with the original content in the Freepik Content or implies a use of the content in the Freepik Content as a template or test, and not as a final item or material;
+Does not make any use of the content in the Freepik Content which might be considered defamatory, libellous, obscene, immoral or illegal, including, without limitation, using it in a way that places any person appearing in the content in the Freepik Content in a negative light or depicts them in a way that they may find offensive such as the use in pornography, advertisements for escort or similar services, political endorsements, birth control products, and;
+Does not make any use of the content in the Freepik Content to slander, libel or to vilify a person, race, sex, culture, religion, country, region, town, village or any other place.
+When any content of the Freepik Content is marked or identified as for editorial use, or when within the same there are logos, recognizable products, public buildings, public events or images taken in places where recognizable persons appear on the background, the User shall only be entitled to use it for such editorial use. In such cases, the User undertakes not to use that content in any manner that entails advertising, marketing or commercialization of any product or service. The User shall be directly liable and the Company shall not assume any liability as a result of the use for commercial purposes by the User of any content belonging to the Freepik Content, which according to this paragraph should be for editorial use only.
+The authorization to use the content in the Freepik Content shall be free provided that any use of the content in the Freepik Content by the User is credited to the Company/Website as stated by the Company from time to time. In order to benefit from the Service or to use the content in the Freepik Content without acknowledging the Company/Website, the User must purchase a subscription (hereinafter, the "Subscription") in the Website and download the content in the Freepik Content during the term of any such Subscription. Conditions in Section 9 shall apply to the purchase of the Subscription.
+It is forbidden for a User to authorize any third parties to use the Freepik Content (or any modification of any content in the Freepik Content). As an exception to the prohibition, the User may allow third parties to use the content in the Freepik Content, when each and every of the following conditions are met:
+The third party has professionally instructed the User to produce goods or provide services to it/him/her and the User uses a limited number of items within the content in the Freepik Content to produce such goods or provide such services to the instructing third party;
+The authorization granted by the User to the third party is in writing and complies with every restriction of the User’s authorization to use the relevant content in the Freepik Content and includes, without limitation, a restriction for the third party to distribute, resell or license the relevant content in the Freepik Content (i.e. the third party is the final user of the relevant content in the Freepik Content);
+None of the contents in the Freepik Content which are subject to the authorization are used as the main element (because of size, relevance or any other cause; in case of doubt about whether the content is the main element, it shall be deemed as the main element) in printed or electronic items (e.g. t-shirts, cups, postcards, birthday or greeting cards, invitations, calendars, web models or electronic devices, apps, videogames, advertising spots, audiovisual animations) aimed to be resold by the third party;
+The production of goods or provision of services by the User to the third party is not done by automatic means, it is tailor-made for the third party (and therefore its use is not authorized by the User to any other third party) and requires a specific substantial human intervention from the User in relation to each third party; and
+The User -and not the third party- chooses the specific items within the content of the Freepik Content to be used in the production of goods or provision of services for the third party.
+When all of the above conditions are met, the User shall be entitled to authorize a third party to use the relevant content in the Freepik Content. This exception refers only to the prohibition for the User to authorize third parties to use the content in the Freepik Content without affecting or limiting in any way the remaining conditions of the User’s right to use the Freepik Content. Whether the above conditions regarding the exception to the prohibition for Users to authorize third parties to use the content in the Freepik Content are met shall be interpreted restrictively so that, in case of doubt, it shall be deemed that the conditions are not met.
+The User does not acquire any right as a result of the use of the content in the Freepik Content. In particular, the User is not authorized to distribute, resell or rent any content in the Freepik Content (or any modification of any content in the Freepik Content).
+The User’s rights under this Section will end automatically without any notice if the User breaches any of the Terms. In case of termination of the rights hereunder, the User shall cease using content in the Freepik Content and will destroy every copy, whether total or partial, thereof.
+
+======================================================================================================
+
+Pixabay-License:
+
+Our license empowers creators and protects our community. We want to keep it as simple as possible. Here is an overview of what Pixabay content can and can't be used for.
+What is allowed?
+- All content on Pixabay can be used for free for commercial and noncommercial use across print and digital, except in the cases mentioned in "What is not allowed".
+- Attribution is not required. Giving credit to the contributor or Pixabay is not necessary but is always appreciated by our community.
+- You can make modifications to content from Pixabay.
+
+What is not allowed?
+
+This section only applies to image users and not to the appropriate image authors.
+- Don't redistribute or sell someone else's Pixabay images or videos on other stock or wallpaper platforms.
+- Don't sell unaltered copies of an image. e.g. sell an exact copy of a stock photo as a poster, print or on a physical product.
+- Don't portray identifiable people in a bad light or in a way that is offensive.
+- Don't use images with identifiable brands to create a misleading association with a product or service.

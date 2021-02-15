@@ -1,0 +1,16 @@
+#Project
+/.idea/
+/.settings/
+
+#openSpeedyFX
+/openSpeedyFX/.idea/
+/openSpeedyFX/.settings/
+/openSpeedyFX/target/
+/openSpeedyFX/openSpeedyFX.iml
+
+#osfxEngine
+/osfxEngine/.idea/
+/osfxEngine/.settings/
+/osfxEngine/target/
+/osfxEngine/osfxEngine.iml
+/openSpeedyFX/openSpeedy.properties

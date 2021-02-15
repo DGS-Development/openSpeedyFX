@@ -1,0 +1,23 @@
+.background-white {
+    -fx-background-color: white;
+}
+
+.button {
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-radius: 0;
+    -fx-background-color: transparent;
+    -fx-font-family:"Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 1em;
+    -fx-text-fill: #828282;
+    -fx-focus-color: transparent;
+}
+
+.button:focused {
+    -fx-border-color: transparent;
+    -fx-focus-color: transparent;
+}
+
+.button:hover {
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 7, 0.5, 0.0, 0.0);
+}

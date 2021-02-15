@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="bpRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" styleClass="backgroundColorLightDark" stylesheets="@mapeditor.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <left>
+      <VBox prefHeight="475.0" prefWidth="170.0" spacing="5.0" styleClass="backgroundColorDark" BorderPane.alignment="CENTER">
+         <children>
+            <BorderPane>
+               <center>
+                  <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@mapIcon.png" />
+                     </image>
+                     <effect>
+                        <DropShadow />
+                     </effect>
+                  </ImageView>
+               </center>
+               <VBox.margin>
+                  <Insets top="15.0" />
+               </VBox.margin>
+            </BorderPane>
+            <Label text="%mapeditor.map" textFill="WHITE">
+               <VBox.margin>
+                  <Insets left="5.0" top="10.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label text="%mapeditor.name" textFill="WHITE">
+               <VBox.margin>
+                  <Insets left="5.0" />
+               </VBox.margin>
+            </Label>
+            <TextField fx:id="txtMapName" disable="true">
+               <VBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </VBox.margin>
+            </TextField>
+            <Label text="%mapeditor.type" textFill="WHITE">
+               <VBox.margin>
+                  <Insets left="5.0" />
+               </VBox.margin>
+            </Label>
+            <TextField fx:id="txtMapType" editable="false">
+               <VBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </VBox.margin>
+            </TextField>
+            <Label text="%mapeditor.fxml" textFill="WHITE">
+               <VBox.margin>
+                  <Insets left="5.0" />
+               </VBox.margin>
+            </Label>
+            <TextField fx:id="txtFxmlPath" editable="false">
+               <VBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </VBox.margin>
+            </TextField>
+            <Button fx:id="btnLoadFxml" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefWidth="160.0" text="%mapeditor.loadFxml">
+               <VBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+         <effect>
+            <InnerShadow height="6.17" radius="2.585" width="6.17" />
+         </effect>
+      </VBox>
+   </left>
+   <top>
+      <MenuBar fx:id="mbMenu" BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="%mapeditor.file">
+            <items>
+                  <MenuItem fx:id="miNewMap" mnemonicParsing="false" text="%mapeditor.new">
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@new.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </MenuItem>
+              <MenuItem fx:id="miLoadMap" mnemonicParsing="false" text="%mapeditor.loadMap">
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@folderIcon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </MenuItem>
+                  <MenuItem fx:id="miSaveMap" disable="true" mnemonicParsing="false" text="%mapeditor.saveMap">
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@floppydiskIcon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </MenuItem>
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <right>
+      <VBox prefHeight="575.0" prefWidth="100.0" spacing="5.0" styleClass="backgroundColorDark" BorderPane.alignment="CENTER">
+         <effect>
+            <InnerShadow height="6.17" radius="2.585" width="6.17" />
+         </effect>
+         <children>
+            <Label text="%mapeditor.tools" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="5.0" top="5.0" />
+               </VBox.margin>
+            </Label>
+            <Label text="%mapeditor.pathTools" textFill="WHITE">
+               <VBox.margin>
+                  <Insets left="5.0" />
+               </VBox.margin>
+            </Label>
+            <VBox fx:id="vbPathTools" spacing="5.0">
+               <children>
+                  <Button fx:id="btnPathAdd" contentDisplay="TOP" disable="true" graphicTextGap="0.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%mapeditor.add">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@add.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="btnPathEdit" contentDisplay="TOP" disable="true" graphicTextGap="0.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%mapeditor.edit">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@edit.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="btnPathRemove" contentDisplay="TOP" disable="true" graphicTextGap="0.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%mapeditor.remove">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@remove.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="btnPathRemoveAll" contentDisplay="TOP" disable="true" graphicTextGap="0.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%mapeditor.removeAll">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@removeAll.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Separator prefWidth="200.0">
+                     <VBox.margin>
+                        <Insets top="2.0" />
+                     </VBox.margin>
+                  </Separator>
+                  <Button fx:id="btnPathAccept" contentDisplay="TOP" disable="true" graphicTextGap="0.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%mapeditor.accept">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@accept.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="btnPathCancel" contentDisplay="TOP" disable="true" graphicTextGap="0.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%mapeditor.cancel">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@cancel.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </VBox.margin>
+            </VBox>
+            <Label text="%mapeditor.general" textFill="WHITE">
+               <VBox.margin>
+                  <Insets left="5.0" />
+               </VBox.margin>
+            </Label>
+            <Button fx:id="btnCenterMap" contentDisplay="TOP" disable="true" graphicTextGap="0.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%mapeditor.centerMap">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@mapIcon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <VBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+      </VBox>
+   </right>
+   <bottom>
+      <HBox prefHeight="25.0" prefWidth="900.0" styleClass="backgroundColorDark" BorderPane.alignment="CENTER">
+         <effect>
+            <Glow level="0.2" />
+         </effect>
+         <children>
+            <Label text="%mapeditor.statusLabel" textFill="WHITE">
+               <HBox.margin>
+                  <Insets left="5.0" top="3.0" />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="lblStatus" text="-" textFill="WHITE">
+               <HBox.margin>
+                  <Insets left="5.0" top="3.0" />
+               </HBox.margin>
+            </Label>
+         </children>
+      </HBox>
+   </bottom>
+   <center>
+      <Pane fx:id="paneRoot" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>

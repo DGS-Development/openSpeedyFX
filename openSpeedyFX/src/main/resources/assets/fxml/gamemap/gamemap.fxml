@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="bpRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="665.0" prefWidth="900.0" styleClass="background" stylesheets="@gamemap.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <left>
+      <VBox prefHeight="475.0" prefWidth="170.0" spacing="5.0" styleClass="backgroundColorDark" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="%gamemap.turnInfoLabel" textFill="WHITE">
+               <VBox.margin>
+                  <Insets left="5.0" top="10.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <Label text="%gamemap.activePlayerLabel" textFill="WHITE">
+               <VBox.margin>
+                  <Insets left="5.0" top="5.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <HBox alignment="CENTER">
+               <children>
+                  <Label fx:id="lblActivePlayerText" text="-" textFill="WHITE">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblActivePlayerIdText" textFill="WHITE">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="5.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </HBox>
+            <BorderPane>
+               <VBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </VBox.margin>
+               <center>
+                  <ImageView fx:id="imgActivePlayer" fitHeight="119.0" fitWidth="121.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../../resourcepack/default/figures/hedgehogPlayerYellow.png" />
+                     </image>
+                  </ImageView>
+               </center>
+            </BorderPane>
+            <Pane>
+               <children>
+                  <BorderPane maxWidth="1.7976931348623157E308" prefHeight="188.0" prefWidth="170.0">
+                     <center>
+                        <ImageView fitHeight="188.0" fitWidth="168.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@speechBubble.png" />
+                           </image>
+                        </ImageView>
+                     </center>
+                  </BorderPane>
+                  <Label fx:id="lblActivePlayerDescriptionText" alignment="TOP_LEFT" layoutX="12.0" layoutY="40.0" prefHeight="144.0" prefWidth="146.0" wrapText="true" />
+               </children>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </Pane>
+            <VBox>
+               <children>
+                  <Label text="%gamemap.availableItemsLabel" textFill="WHITE">
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <HBox alignment="CENTER_LEFT" maxWidth="1.7976931348623157E308" prefHeight="51.0" prefWidth="170.0">
+                     <children>
+                        <ImageView fx:id="imgCollectedApples" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../resourcepack/default/fields/appleField.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="lblApplesItemCount" text="0" textFill="WHITE">
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label text="x" textFill="WHITE">
+                           <HBox.margin>
+                              <Insets left="5.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" maxWidth="1.7976931348623157E308" prefHeight="51.0" prefWidth="170.0">
+                     <children>
+                        <ImageView fx:id="imgCollectedLeafs" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../resourcepack/default/fields/leafField.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="lblLeafsItemsCount" text="0" textFill="WHITE">
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label text="x" textFill="WHITE">
+                           <HBox.margin>
+                              <Insets left="5.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" maxWidth="1.7976931348623157E308" prefHeight="51.0" prefWidth="170.0">
+                     <children>
+                        <ImageView fx:id="imgCollectedMushrooms" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../resourcepack/default/fields/mushroomField.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="lblMushroomsItemCount" text="0" textFill="WHITE">
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label text="x" textFill="WHITE">
+                           <padding>
+                              <Insets left="5.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                  </HBox>
+               </children>
+               <VBox.margin>
+                  <Insets left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </VBox>
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+         <effect>
+            <InnerShadow height="6.17" radius="2.585" width="6.17" />
+         </effect>
+      </VBox>
+   </left>
+   <center>
+      <BorderPane fx:id="bpMap" BorderPane.alignment="CENTER">
+         <center>
+            <Pane fx:id="paneRoot" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+               <effect>
+                  <DropShadow />
+               </effect></Pane>
+         </center>
+      </BorderPane>
+   </center>
+</BorderPane>

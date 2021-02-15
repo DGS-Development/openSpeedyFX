@@ -1,0 +1,60 @@
+.preview-background {
+    -fx-background-image: url("backgroundVideoPreview.png");
+    -fx-background-repeat: stretch;
+    -fx-background-position: center;
+    -fx-background-size: cover;
+}
+
+.hidden-tabbar {
+    -fx-tab-max-height: 0 ;
+}
+.hidden-tabbar .tab-header-area {
+    visibility: hidden ;
+}
+
+.background-transparent {
+    -fx-background-color: transparent;
+}
+
+.button {
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-radius: 0;
+    -fx-background-color: transparent;
+    -fx-font-family:"Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 1em; /* 12 */
+    -fx-text-fill: #828282;
+    -fx-focus-color: transparent;
+}
+
+.button:focused {
+    -fx-border-color: transparent;
+    -fx-focus-color: transparent;
+}
+
+.button:hover {
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 7, 0.5, 0.0, 0.0);
+}
+
+.text-area {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+}
+
+.text-area .scroll-pane {
+    -fx-background-color: transparent;
+    -fx-hbar-policy : never;
+    -fx-vbar-policy : never;
+}
+
+.text-area .scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-pane .content {
+    -fx-background-color: transparent;
+}
+
+.text-area *.text {
+    -fx-text-alignment: center;
+}

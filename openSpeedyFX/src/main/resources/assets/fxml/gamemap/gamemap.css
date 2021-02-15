@@ -1,0 +1,13 @@
+.background {
+    -fx-background-image: url("seamlessPlanks.jpg");
+  	-fx-background-repeat: repeat;
+  	-fx-background-position: left;
+}
+
+.backgroundColorDark {
+    -fx-background-color: #212121;
+}
+
+.backgroundColorLightDark {
+    -fx-background-color: #2e2e2e;
+}

@@ -1,0 +1,40 @@
+.borderColorGreen {
+    -fx-background-color: green;
+}
+
+.borderColorRed {
+    -fx-background-color: red;
+}
+
+.backgroundColorDark {
+    -fx-background-color: #212121;
+}
+
+.progress-bar {
+    -fx-background-radius: 0;
+}
+
+.progress-bar .bar {
+    -fx-padding: 1px;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-box-border: #ff1636;
+    -fx-accent: #ff1636;
+}
+
+.progress-bar .track {
+    -fx-padding: 1px;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+}
+
+.progress-bar > .bar {
+    -fx-background-color: linear-gradient(
+        from 0px .75em to .75em 0px,
+        repeat,
+        -fx-accent 0%,
+        -fx-accent 49%,
+        derive(-fx-accent, 30%) 50%,
+        derive(-fx-accent, 30%) 99%
+    );
+}
