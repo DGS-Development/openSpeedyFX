@@ -47,11 +47,7 @@
                   <Insets bottom="25.0" top="10.0" />
                </VBox.margin>
                <center>
-                  <ImageView fx:id="imgHedgehog" fitHeight="140.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
-                     <image>
-                        <Image url="@hedgehog.png" />
-                     </image>
-                  </ImageView>
+                  <ImageView fx:id="imgHedgehog" fitHeight="155.0" fitWidth="346.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
                </center>
             </BorderPane>
             <BorderPane fx:id="bpControls" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">

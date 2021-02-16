@@ -7,7 +7,9 @@ import de.dgs.apps.openspeedyfx.game.logic.model.Color;
 import de.dgs.apps.openspeedyfx.game.logic.model.Player;
 import de.dgs.apps.openspeedyfx.game.resourcepacks.Resourcepack;
 import de.dgs.apps.osfxe.audio.AudioPlayer;
+import de.dgs.apps.osfxe.gui.SpriteAnimation;
 import de.dgs.apps.osfxe.scenes.GameController;
+import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
@@ -16,6 +18,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -205,7 +208,28 @@ public class MainMenuScene extends GameController {
     @Override
     public void onInitialized() {
         //Setup animations.
-        imgHedgehog.setImage(new Image(getClass().getResourceAsStream("/assets/fxml/mainmenu/hedgehogWalking.gif")));
+        final Image image = new Image(getClass().getResourceAsStream("/assets/fxml/mainmenu/hedgehogSpriteAnimation.png"));
+
+        final int COLUMNS = 8;
+        final int COUNT = 8;
+        final double OFFSET_X = 0;
+        final double OFFSET_Y = 0;
+        final double WIDTH = 608;
+        final double HEIGHT = 340;
+
+        imgHedgehog.setImage(image);
+        imgHedgehog.setViewport(new Rectangle2D(OFFSET_X, OFFSET_Y, WIDTH, HEIGHT));
+
+        final Animation spriteAnimation = new SpriteAnimation(
+                imgHedgehog,
+                Duration.millis(1000),
+                COUNT, COLUMNS,
+                OFFSET_X, OFFSET_Y,
+                WIDTH, HEIGHT
+        );
+
+        spriteAnimation.setCycleCount(Animation.INDEFINITE);
+        spriteAnimation.play();
 
         new Pulse(imgLogo).setCycleCount(AnimationFX.INDEFINITE).play();
         new FadeInUpBig(bpControls).setDelay(Duration.millis(1500)).play();
@@ -219,7 +243,7 @@ public class MainMenuScene extends GameController {
         setupCreditsText();
 
         txtPlayerName.textProperty().addListener((observable, oldValue, newValue) -> {
-            if(!newValue.isBlank())
+            if (!newValue.isBlank())
                 lblNameError.setVisible(false);
         });
 
@@ -248,8 +272,7 @@ public class MainMenuScene extends GameController {
 
         try {
             content = Files.readString(Path.of(getClass().getResource("/resources.txt").toURI()));
-        }
-        catch (Exception exception) {
+        } catch (Exception exception) {
             content = "Unable to load credits: " + exception.toString();
         }
 
@@ -348,26 +371,25 @@ public class MainMenuScene extends GameController {
             mediaPlayer.setAutoPlay(true);
 
             mvBackground.setMediaPlayer(mediaPlayer);
-        }
-        catch (Exception exception) {
+        } catch (Exception exception) {
             menuSceneCallback.onException(exception);
         }
     }
 
     public void playAudioIfAvailable() {
-        if(audioPlayer != null)
+        if (audioPlayer != null)
             audioPlayer.play();
     }
 
     public void stopAudioIfAvailable() {
-        if(audioPlayer != null)
+        if (audioPlayer != null)
             audioPlayer.stop();
     }
 
     private void createPlayer(Color color, Button btnColor, MenuSceneCallback menuSceneCallback, MainMenuSettingsData settingsData) {
         String name = txtPlayerName.getText();
 
-        if(name.isBlank()) {
+        if (name.isBlank()) {
             lblNameError.setVisible(true);
             return;
         }
@@ -378,14 +400,12 @@ public class MainMenuScene extends GameController {
 
         if (isCooperativeMode) {
             loadMaps(menuSceneCallback, settingsData, List.of(player));
-        }
-        else {
+        } else {
             players.add(player);
 
             if (players.size() == playersCount) {
                 loadMaps(menuSceneCallback, settingsData, players);
-            }
-            else {
+            } else {
                 txtPlayerName.setText("");
             }
         }
@@ -488,10 +508,9 @@ public class MainMenuScene extends GameController {
             //Load maps from classpath.
             Path mapFilesPath;
 
-            if(isCooperativeMode){
+            if (isCooperativeMode) {
                 mapFilesPath = Path.of(getClass().getResource("/assets/fxml/defaultmaps/cooperative").toURI());
-            }
-            else{
+            } else {
                 mapFilesPath = Path.of(getClass().getResource("/assets/fxml/defaultmaps/competitive").toURI());
             }
 
@@ -502,7 +521,7 @@ public class MainMenuScene extends GameController {
             //Load maps from filesystem.
             File customMapDirectory = new File(settingsData.getCustomMapPath());
 
-            if(customMapDirectory.isDirectory()) {
+            if (customMapDirectory.isDirectory()) {
                 Files.list(customMapDirectory.toPath())
                         .filter(path -> path.getFileName().toString().endsWith(".mapj") && path.toFile().isFile())
                         .forEach(tmpPath -> mapPaths.add(tmpPath));
@@ -534,7 +553,7 @@ public class MainMenuScene extends GameController {
                 if (selectedMapName != null) {
                     Path mapPath = namePathMap.get(selectedMapName);
 
-                    if(mapPath != null) {
+                    if (mapPath != null) {
                         Path fxmlPath = mapPath.getParent().resolve(nameMapInfoMap.get(selectedMapName).getFxmlName());
 
                         vbMapSelection.setDisable(true);
@@ -571,8 +590,7 @@ public class MainMenuScene extends GameController {
 
             changeListenerSimpleObjectProperty.set(selectionChangeListener);
             lvMaps.getSelectionModel().selectedItemProperty().addListener(selectionChangeListener);
-        }
-        catch (Exception exception) {
+        } catch (Exception exception) {
             menuSceneCallback.onException(exception);
         }
     }
@@ -588,12 +606,11 @@ public class MainMenuScene extends GameController {
                 Scene tmpScene = new Scene(rootNode);
 
                 sceneObjectProperty.set(tmpScene);
-            }
-            catch (Exception exception) {
+            } catch (Exception exception) {
                 menuSceneCallback.onException(exception);
             }
 
-            if(sceneObjectProperty.get() != null)
+            if (sceneObjectProperty.get() != null)
                 Platform.runLater(() -> imageLoadedCallback.onImageLoaded(sceneObjectProperty.get().snapshot(null)));
         }).start();
     }
