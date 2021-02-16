@@ -1,11 +1,10 @@
 package de.dgs.apps.openspeedyfx.game.logic;
 
-import de.dgs.apps.openspeedyfx.engine.scenes.SceneManager;
 import de.dgs.apps.openspeedyfx.game.resourcepacks.DefaultResourcepack;
 import de.dgs.apps.openspeedyfx.game.resourcepacks.Resourcepack;
 import de.dgs.apps.openspeedyfx.scenes.ballscene.InteractiveBallScene;
 import de.dgs.apps.openspeedyfx.scenes.ballscene.logic.*;
-import de.dgs.apps.osfxe.openspeedyfx.scenes.ballscene.logic.*;
+import de.dgs.apps.osfxe.scenes.SceneManager;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.geometry.Bounds;
