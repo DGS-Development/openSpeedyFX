@@ -3,6 +3,7 @@ package de.dgs.apps.openspeedyfx;
 import de.dgs.apps.openspeedyfx.game.logic.model.Player;
 import de.dgs.apps.openspeedyfx.game.resourcepacks.DefaultResourcepack;
 import de.dgs.apps.openspeedyfx.game.resourcepacks.Resourcepack;
+import de.dgs.apps.openspeedyfx.game.resourcepacks.ResourcepackPaths.Figures;
 import de.dgs.apps.openspeedyfx.scenes.ballscene.logic.RollProperties;
 import de.dgs.apps.openspeedyfx.scenes.ballscene.logic.SelectiveRollProperties;
 import de.dgs.apps.openspeedyfx.scenes.dialogues.NotificationDialogueScene;
@@ -40,11 +41,7 @@ public class OpenSpeedyGameApp extends Application {
 
     private Stage mapeditorStage;
 
-    /**
-     * Necessary to create a new instance of the game scene.
-     * @param resourceBundle
-     * @throws Exception
-     */
+    //Necessary to create a new instance of the game scene.
     private void setupGameMap(ResourceBundle resourceBundle) throws Exception {
         gameMapScene = GameControllerLoader.loadController(GameMapScene.class, resourceBundle);
 
@@ -179,7 +176,7 @@ public class OpenSpeedyGameApp extends Application {
                 try {
                     Stage notificationStage = createNotificationStage(
                             resourceBundle.getString("app.loadingGameData"),
-                            new Image(resourcepack.getResourceAsStream("/figures/hedgehogBall.png")));
+                            new Image(resourcepack.getResourceAsStream(Figures.HEDGEHOG_PNG)));
 
                     notificationStage.setOnShown(showEvent -> {
                         showEvent.consume();
@@ -232,7 +229,7 @@ public class OpenSpeedyGameApp extends Application {
                 try {
                     Stage notificationStage = createNotificationStage(
                             resourceBundle.getString("app.loadingGameData"),
-                            new Image(resourcepack.getResourceAsStream("/figures/hedgehog.png")));
+                            new Image(resourcepack.getResourceAsStream(Figures.HEDGEHOG_PNG)));
 
                     notificationStage.setOnShown(showEvent -> {
                         showEvent.consume();

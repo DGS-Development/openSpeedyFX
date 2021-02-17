@@ -4,10 +4,10 @@ package de.dgs.apps.openspeedyfx.scenes.ballscene.logic;
  * POJO class to represent the hedgehog physics.
  */
 public class HedgehogPhysicsProperties {
-    private float linearDamping;
-    private float density;
-    private float friction;
-    private float restitution;
+    private final float linearDamping;
+    private final float density;
+    private final float friction;
+    private final float restitution;
 
     /**
      * Creates new {@link HedgehogPhysicsProperties}.

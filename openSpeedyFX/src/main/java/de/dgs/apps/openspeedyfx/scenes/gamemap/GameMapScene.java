@@ -7,6 +7,10 @@ import de.dgs.apps.openspeedyfx.game.mapinfo.MapInfo;
 import de.dgs.apps.openspeedyfx.game.mapinfo.MapInfoParser;
 import de.dgs.apps.openspeedyfx.game.mapinfo.MapInfoParser.MapData;
 import de.dgs.apps.openspeedyfx.game.resourcepacks.Resourcepack;
+import de.dgs.apps.openspeedyfx.game.resourcepacks.ResourcepackPaths.Fields;
+import de.dgs.apps.openspeedyfx.game.resourcepacks.ResourcepackPaths.Figures;
+import de.dgs.apps.openspeedyfx.game.resourcepacks.ResourcepackPaths.Music;
+import de.dgs.apps.openspeedyfx.game.resourcepacks.ResourcepackPaths.Sounds;
 import de.dgs.apps.openspeedyfx.scenes.ballscene.InteractiveBallScene;
 import de.dgs.apps.openspeedyfx.scenes.dialogues.InformationDialogueScene;
 import de.dgs.apps.openspeedyfx.scenes.dialogues.SelectionDialogueScene;
@@ -244,9 +248,7 @@ public class GameMapScene extends GameController {
 
         activePlayerIdIntegerProperty = new SimpleIntegerProperty(0);
 
-        activePlayerIdIntegerProperty.addListener((observable, oldValue, newValue) -> {
-            lblActivePlayerIdText.setText("(" + newValue + ")");
-        });
+        activePlayerIdIntegerProperty.addListener((observable, oldValue, newValue) -> lblActivePlayerIdText.setText("(" + newValue + ")"));
     }
 
     public boolean setupGameMap(GameMapData gameMapData) throws Exception {
@@ -265,21 +267,21 @@ public class GameMapScene extends GameController {
 
         //Load icons.
         imgCollectedApples.setImage(
-                new Image(gameMapData.getResourcepack().getResourceAsStream("/fields/appleField.png"),
+                new Image(gameMapData.getResourcepack().getResourceAsStream(Fields.APPLE_FIELD_PNG),
                         imgCollectedApples.getFitWidth(),
                         imgCollectedApples.getFitHeight(),
                         true,
                         true));
 
         imgCollectedLeafs.setImage(
-                new Image(gameMapData.getResourcepack().getResourceAsStream("/fields/leafField.png"),
+                new Image(gameMapData.getResourcepack().getResourceAsStream(Fields.LEAF_FIELD_PNG),
                         imgCollectedLeafs.getFitWidth(),
                         imgCollectedLeafs.getFitHeight(),
                         true,
                         true));
 
         imgCollectedMushrooms.setImage(
-                new Image(gameMapData.getResourcepack().getResourceAsStream("/fields/mushroomField.png"),
+                new Image(gameMapData.getResourcepack().getResourceAsStream(Fields.MUSHROOM_FIELD_PNG),
                         imgCollectedMushrooms.getFitWidth(),
                         imgCollectedMushrooms.getFitHeight(),
                         true,
@@ -316,13 +318,13 @@ public class GameMapScene extends GameController {
         };
 
         musicLoop1AudioPlayer = new AudioPlayer(
-                gameMapData.getResourcepack().getResourceAsStream("/music/ingameMusic1.ogg").readAllBytes(),
+                gameMapData.getResourcepack().getResourceAsStream(Music.INGAME_MUSIC_1_OGG).readAllBytes(),
                 false,
                 gameMapData.getMusicVolume(),
                 musicLoop1Listener);
 
         musicLoop2AudioPlayer = new AudioPlayer(
-                gameMapData.getResourcepack().getResourceAsStream("/music/ingameMusic2.ogg").readAllBytes(),
+                gameMapData.getResourcepack().getResourceAsStream(Music.INGAME_MUSIC_2_OGG).readAllBytes(),
                 false,
                 gameMapData.getMusicVolume(),
                 musicLoop2Listener);
@@ -334,11 +336,20 @@ public class GameMapScene extends GameController {
             musicLoop2AudioPlayer.play();
         }
 
-        int randomNoiseId = gameMapData.getRandom().nextInt(2) + 1;
+        boolean useFirstNoise = gameMapData.getRandom().nextBoolean();
+
+        String ambientNoisePath;
+
+        if(useFirstNoise) {
+            ambientNoisePath = Sounds.GameMapScene.AMBIENT_NOISE_1_OGG;
+        }
+        else {
+            ambientNoisePath = Sounds.GameMapScene.AMBIENT_NOISE_2_OGG;
+        }
 
         ambientAudioPlayer = new AudioPlayer(
                 gameMapData.getResourcepack()
-                        .getResourceAsStream("/sounds/gamemapscene/ambientNoise" + randomNoiseId + ".ogg").readAllBytes(),
+                        .getResourceAsStream(ambientNoisePath).readAllBytes(),
                 true,
                 gameMapData.getSoundsVolume());
 
@@ -347,25 +358,25 @@ public class GameMapScene extends GameController {
         winSoundAudioPlayer = new SoundAudioPlayer(gameMapData.getSoundsVolume(), gameMapData.getRandom());
 
         winSoundAudioPlayer.addSound(gameMapData.getResourcepack()
-                .getResourceAsStream("/sounds/gamemapscene/applause1.wav"));
+                .getResourceAsStream(Sounds.GameMapScene.APPLAUSE_1_WAV));
 
         winSoundAudioPlayer.addSound(gameMapData.getResourcepack()
-                .getResourceAsStream("/sounds/gamemapscene/applause2.wav"));
+                .getResourceAsStream(Sounds.GameMapScene.APPLAUSE_2_WAV));
 
         hedgehogSoundAudioPlayer = new SoundAudioPlayer(gameMapData.getSoundsVolume(), gameMapData.getRandom());
 
         hedgehogSoundAudioPlayer.addSound(gameMapData.getResourcepack()
-                .getResourceAsStream("/sounds/gamemapscene/hedgehogMove.wav"));
+                .getResourceAsStream(Sounds.GameMapScene.HEDGEHOG_MOVE_WAV));
 
         foxSoundAudioPlayer = new SoundAudioPlayer(gameMapData.getSoundsVolume(), gameMapData.getRandom());
 
         foxSoundAudioPlayer.addSound(gameMapData.getResourcepack()
-                .getResourceAsStream("/sounds/gamemapscene/foxMove.wav"));
+                .getResourceAsStream(Sounds.GameMapScene.FOX_MOVE_WAV));
 
         foxIsNearAudioPlayer = new SoundAudioPlayer(gameMapData.getSoundsVolume(), gameMapData.getRandom());
 
         foxIsNearAudioPlayer.addSound(gameMapData.getResourcepack()
-                .getResourceAsStream("/sounds/gamemapscene/foxIsNear.wav"));
+                .getResourceAsStream(Sounds.GameMapScene.FOX_IS_NEAR_WAV));
 
         //Start game.
         setupUi(gameMapData.getResourcepack());
@@ -466,16 +477,14 @@ public class GameMapScene extends GameController {
                     showNotificationDialog(actorToImageStream(gameMapData.getResourcepack(), activePlayer),
                             text,
                             gameMapData.getResourceBundle().getString("gamemap.rollTheBall"),
-                            event -> {
-                                hideNotificationDialog(0, hideEvent -> {
-                                    try {
-                                        performRoll(gameMapData, gameMode, new CollectablesCount(appleCount, leafCount, mushroomCount));
-                                    }
-                                    catch (Exception exception) {
-                                        gameMapData.getGameMapCallback().onException(exception);
-                                    }
-                                });
-                            });
+                            event -> hideNotificationDialog(0, hideEvent -> {
+                                try {
+                                    performRoll(gameMapData, gameMode, new CollectablesCount(appleCount, leafCount, mushroomCount));
+                                }
+                                catch (Exception exception) {
+                                    gameMapData.getGameMapCallback().onException(exception);
+                                }
+                            }));
                 }
                 catch (Exception exception) {
                     gameMapData.getGameMapCallback().onException(exception);
@@ -680,7 +689,7 @@ public class GameMapScene extends GameController {
                                 gameMapData.getResourceBundle().getString("gamemap.theGameIsOver"),
                                 gameMapData.getResourceBundle().getString("gamemap.playersWonLabel"),
                                 winnerNames,
-                                new Image(gameMapData.getResourcepack().getResourceAsStream("/figures/hedgehog.png")),
+                                new Image(gameMapData.getResourcepack().getResourceAsStream(Figures.HEDGEHOG_PNG)),
                                 true,
                                 gameMapData.getGameMapCallback());
                     }
@@ -881,10 +890,10 @@ public class GameMapScene extends GameController {
     }
 
     private void showNotificationDialog(InputStream imageStream, String text, String buttonText, EventHandler<ActionEvent> eventHandler) throws Exception {
-        showNotificationDialog(imageStream, text, 15, 100, 10, buttonText, eventHandler);
+        showNotificationDialog(imageStream, text, 100, 10, buttonText, eventHandler);
     }
 
-    private void showNotificationDialog(InputStream imageStream, String text, double fontSize, double height, double padding,
+    private void showNotificationDialog(InputStream imageStream, String text, double height, double padding,
                                         String buttonText, EventHandler<ActionEvent> eventHandler) throws Exception {
         NotificationScene notificationScene = GameControllerLoader.loadController(NotificationScene.class);
 
@@ -932,7 +941,7 @@ public class GameMapScene extends GameController {
     private void performRoll(GameMapData gameMapData, AbstractGameMode gameMode, CollectablesCount collectablesCount) throws Exception {
         rollStage = new Stage();
         rollStage.setTitle(gameMapData.getResourceBundle().getString("gamemap.rollTheBall"));
-        rollStage.getIcons().add(new Image(gameMapData.getResourcepack().getResourceAsStream("/figures/hedgehogBall.png")));
+        rollStage.getIcons().add(new Image(gameMapData.getResourcepack().getResourceAsStream(Figures.HEDGEHOG_BALL_PNG)));
         rollStage.setResizable(false);
 
         SceneManager sceneManager = new SceneManager(rollStage);
@@ -1016,7 +1025,7 @@ public class GameMapScene extends GameController {
 
             Optional<ButtonType> result = alert.showAndWait();
 
-            if(result.get() == ButtonType.OK) {
+            if(result.isPresent() && result.get() == ButtonType.OK) {
                 gameMapData.getGameMapCallback().onGameOver();
             }
             else {
@@ -1071,20 +1080,20 @@ public class GameMapScene extends GameController {
             Player player = (Player) actor;
 
             if(player.getColor() == Color.BLUE) {
-                resourcePath = "/figures/hedgehogPlayerBlue.png";
+                resourcePath = Figures.HEDGEHOG_PLAYER_BLUE_PNG;
             }
             else if(player.getColor() == Color.GREEN) {
-                resourcePath = "/figures/hedgehogPlayerGreen.png";
+                resourcePath = Figures.HEDGEHOG_PLAYER_GREEN_PNG;
             }
             else if(player.getColor() == Color.RED) {
-                resourcePath = "/figures/hedgehogPlayerRed.png";
+                resourcePath = Figures.HEDGEHOG_PLAYER_RED_PNG;
             }
             else if(player.getColor() == Color.YELLOW) {
-                resourcePath = "/figures/hedgehogPlayerYellow.png";
+                resourcePath = Figures.HEDGEHOG_PLAYER_YELLOW_PNG;
             }
         }
         else if(actor instanceof NPC) {
-            resourcePath = "/figures/fox.png";
+            resourcePath = Figures.FOX_PNG;
         }
 
         return resourcepack.getResourceAsStream(resourcePath);
@@ -1101,7 +1110,7 @@ public class GameMapScene extends GameController {
                 case APPLE_ITEM_FIELD:
                     tmpSpeedyFxField.setImage(
                             new Image(
-                                    resourcepack.getResourceAsStream("/fields/appleField.png"),
+                                    resourcepack.getResourceAsStream(Fields.APPLE_FIELD_PNG),
                                     tmpSpeedyFxField.getFitWidth(),
                                     tmpSpeedyFxField.getFitWidth(),
                                     true, true));
@@ -1110,7 +1119,7 @@ public class GameMapScene extends GameController {
                 case LEAF_ITEM_FIELD:
                     tmpSpeedyFxField.setImage(
                             new Image(
-                                    resourcepack.getResourceAsStream("/fields/leafField.png"),
+                                    resourcepack.getResourceAsStream(Fields.LEAF_FIELD_PNG),
                                     tmpSpeedyFxField.getFitWidth(),
                                     tmpSpeedyFxField.getFitWidth(),
                                     true, true));
@@ -1119,7 +1128,7 @@ public class GameMapScene extends GameController {
                 case MUSHROOM_ITEM_FIELD:
                     tmpSpeedyFxField.setImage(
                             new Image(
-                                    resourcepack.getResourceAsStream("/fields/mushroomField.png"),
+                                    resourcepack.getResourceAsStream(Fields.MUSHROOM_FIELD_PNG),
                                     tmpSpeedyFxField.getFitWidth(),
                                     tmpSpeedyFxField.getFitWidth(),
                                     true, true));
@@ -1128,7 +1137,7 @@ public class GameMapScene extends GameController {
                 case END_FIELD:
                     tmpSpeedyFxField.setImage(
                             new Image(
-                                    resourcepack.getResourceAsStream("/fields/endField.png"),
+                                    resourcepack.getResourceAsStream(Fields.END_FIELD_PNG),
                                     tmpSpeedyFxField.getFitWidth(),
                                     tmpSpeedyFxField.getFitWidth(),
                                     true, true));
