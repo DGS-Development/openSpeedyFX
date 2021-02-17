@@ -6,7 +6,7 @@ public class Cooperative extends AbstractGameMode {
     private final NPC fox;
     private final List<Player> winners;
     private final List<Player> losers;
-    private int foxMoves;
+    private final int foxMoves;
 
     public Cooperative(Player player, GameModeCallback cooperativeCallback, de.dgs.apps.openspeedyfx.game.logic.model.Map map) {
         this(List.of(player), cooperativeCallback, map);
@@ -73,9 +73,6 @@ public class Cooperative extends AbstractGameMode {
         Tile playerTile = getPlayers().get(0).getCurrentTile();
 
         Stack<Tile> moves = shortestPath(foxTile, playerTile);
-
-        System.out.println("Moves:");
-        moves.forEach(System.out::println);
 
         if(!moves.isEmpty()){
             foxMoves.add(moves.pop());
