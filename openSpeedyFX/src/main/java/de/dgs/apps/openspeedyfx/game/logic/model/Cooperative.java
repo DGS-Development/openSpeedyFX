@@ -6,7 +6,7 @@ public class Cooperative extends AbstractGameMode {
     private final NPC fox;
     private final List<Player> winners;
     private final List<Player> losers;
-    private int foxMoves;
+    private final int foxMoves;
 
     public Cooperative(Player player, GameModeCallback cooperativeCallback, de.dgs.apps.openspeedyfx.game.logic.model.Map map) {
         this(List.of(player), cooperativeCallback, map);
@@ -67,48 +67,16 @@ public class Cooperative extends AbstractGameMode {
     }
 
     private void moveFox(Turn.Builder turnBuilder){
-        List<Tile> foxMoves = new ArrayList<>(2);
+        List<Tile> foxMoves = new ArrayList<>();
 
         Tile foxTile = fox.getCurrentTile();
+        Tile playerTile = getPlayers().get(0).getCurrentTile();
 
-        if(!getPlayers().isEmpty() && foxTile.getAdjacent().contains(getPlayers().get(0).getCurrentTile())){
-            foxMoves.add(getPlayers().get(0).getCurrentTile());
-        } else if (foxTile.getAdjacent().contains(getMap().getHedgehogStart()) && foxTile.getTileType() == TileType.FOX_OFFSET) {
-            foxMoves.add(foxTile.getAdjacent().get(foxTile.getAdjacent().indexOf(getMap().getHedgehogStart())));
-        } else if (foxTile.getAdjacent().size() == 1) {
-            foxMoves.add(foxTile.getAdjacent().get(0));
-        } else if (foxTile.getAdjacent().size() < 3 && !foxTile.getAdjacent().contains(getMap().getHedgehogStart())) {
-            for (Tile t : foxTile.getAdjacent()) {
-                if (t != foxTile)
-                    foxMoves.add(t);
-            }
+        Stack<Tile> moves = shortestPath(foxTile, playerTile);
+
+        if(!moves.isEmpty()){
+            foxMoves.add(moves.pop());
         }
-
-        List<Move> playerMoves = new LinkedList<>();
-
-        getTurnRepository().getAllForPlayer(getPlayers().get(0)).forEach(turn -> {
-            playerMoves.addAll(turn.getPlayerMoves());
-        });
-
-        List<Tile> playerMoveTiles = new LinkedList<>();
-
-        playerMoves.forEach(move -> {
-            playerMoveTiles.add(move.getEndTile());
-        });
-
-        if (foxTile == getMap().getHedgehogStart()) {
-            foxTile.getAdjacent().forEach(tile -> {
-                if (playerMoveTiles.contains(tile)) {
-                    foxMoves.add(tile);
-                }
-            });
-        }
-
-        foxTile.getAdjacent().forEach(tile -> {
-            if (playerMoveTiles.contains(tile)) {
-                foxMoves.add(tile);
-            }
-        });
 
         for (Tile t : foxMoves) {
             fox.movePiece(t);
@@ -116,7 +84,59 @@ public class Cooperative extends AbstractGameMode {
             turnBuilder.addFoxMove(foxMove);
         }
 
+        if(foxMoves.isEmpty()){
+            return;
+        }
+
         getGameModeCallback().onFoxMove(fox, foxMoves);
+    }
+
+    private Stack<Tile> shortestPath(Tile startTile, Tile endTile){
+        int count = 0;
+        Queue<Tile> queue = new ArrayDeque<>();
+        java.util.Map<Tile, Integer> visited = new LinkedHashMap<>();
+
+        visited.put(startTile, count);
+        queue.offer(startTile);
+
+        while(!queue.isEmpty()){
+            count++;
+            Tile currentTile = queue.remove();
+            if(currentTile == endTile){
+                break;
+            }
+
+            int finalCount = count;
+            currentTile.getAdjacent().forEach(tile -> {
+                if(!visited.containsKey(tile)){
+                    visited.put(tile, finalCount);
+                    queue.offer(tile);
+                }
+            });
+        }
+
+        return reconstructPath(startTile, endTile, visited);
+    }
+
+    private Stack<Tile> reconstructPath(Tile startTile, Tile finalTile, java.util.Map<Tile, Integer> visited){
+        Stack<Tile> tiles = new Stack<>();
+        while(finalTile != startTile){
+            if(startTile.getAdjacent().contains(finalTile)){
+                tiles.push(finalTile);
+                break;
+            }
+            for(Tile tile : finalTile.getAdjacent()){
+                if(visited.containsKey(tile) && visited.get(tile) < visited.get(finalTile)){
+                    finalTile = tile;
+                    tiles.push(tile);
+                    break;
+                }
+            }
+        }
+        if(tiles.size() > 1){
+            tiles.pop();
+        }
+        return tiles;
     }
 
 }
