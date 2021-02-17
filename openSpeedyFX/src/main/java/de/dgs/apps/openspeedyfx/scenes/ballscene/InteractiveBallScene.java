@@ -1,6 +1,7 @@
 package de.dgs.apps.openspeedyfx.scenes.ballscene;
 
 import animatefx.animation.Flash;
+import de.dgs.apps.openspeedyfx.game.resourcepacks.ResourcepackPaths.Sounds.BallScene;
 import de.dgs.apps.osfxe.audio.SoundAudioPlayer;
 import de.dgs.apps.osfxe.physics.*;
 import de.dgs.apps.osfxe.physics.MovementSlowdownDetector.MovementStoppedCallback;
@@ -255,12 +256,10 @@ public class InteractiveBallScene extends AbstractBallScene {
                         physicsSimulation.pauseSimulation();
 
                         //Wait until all animation and layout processing is done.
-                        Platform.runLater(() -> {
-                            roll.getRollCallback().onRollCompleted(new CollectablesCount(
-                                    lblCollectedApplesCountProperty.get(),
-                                    lblCollectedLeafsCountProperty.get(),
-                                    lblCollectedMushroomsCountProperty.get()));
-                        });
+                        Platform.runLater(() -> roll.getRollCallback().onRollCompleted(new CollectablesCount(
+                                lblCollectedApplesCountProperty.get(),
+                                lblCollectedLeafsCountProperty.get(),
+                                lblCollectedMushroomsCountProperty.get())));
                     }
                 };
 
@@ -322,10 +321,10 @@ public class InteractiveBallScene extends AbstractBallScene {
         //Setup collision audio.
         SoundAudioPlayer collisionSoundPlayer = new SoundAudioPlayer(roll.getRollProperties().getEffectsBaseVolume(), random);
 
-        collisionSoundPlayer.addSound(roll.getRollProperties().getResourcepack().getResourceAsStream(ResourcepackPaths.Sounds.Ballscene.WALLCOLLISION_1_WAV));
-        collisionSoundPlayer.addSound(roll.getRollProperties().getResourcepack().getResourceAsStream(ResourcepackPaths.Sounds.Ballscene.WALLCOLLISION_2_WAV));
-        collisionSoundPlayer.addSound(roll.getRollProperties().getResourcepack().getResourceAsStream(ResourcepackPaths.Sounds.Ballscene.WALLCOLLISION_3_WAV));
-        collisionSoundPlayer.addSound(roll.getRollProperties().getResourcepack().getResourceAsStream(ResourcepackPaths.Sounds.Ballscene.WALLCOLLISION_4_WAV));
+        collisionSoundPlayer.addSound(roll.getRollProperties().getResourcepack().getResourceAsStream(BallScene.WALLCOLLISION_1_WAV));
+        collisionSoundPlayer.addSound(roll.getRollProperties().getResourcepack().getResourceAsStream(BallScene.WALLCOLLISION_2_WAV));
+        collisionSoundPlayer.addSound(roll.getRollProperties().getResourcepack().getResourceAsStream(BallScene.WALLCOLLISION_3_WAV));
+        collisionSoundPlayer.addSound(roll.getRollProperties().getResourcepack().getResourceAsStream(BallScene.WALLCOLLISION_4_WAV));
 
         //Add listeners for collisions.
         PhysicsCallbacks wallPhysicsCallback = new PhysicsCallbacks();
@@ -368,8 +367,8 @@ public class InteractiveBallScene extends AbstractBallScene {
 
     private List<CollectableItem> setupAppleCollectables(Roll roll, Random random, CoordinateBlockedDetector blockedDetector) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         SoundAudioPlayer soundAudioPlayer = new SoundAudioPlayer(roll.getRollProperties().getEffectsBaseVolume(), random);
-        soundAudioPlayer.addSound(roll.getRollProperties().getResourcepack().getResourceAsStream(ResourcepackPaths.Sounds.Ballscene.APPLE_1_WAV));
-        soundAudioPlayer.addSound(roll.getRollProperties().getResourcepack().getResourceAsStream(ResourcepackPaths.Sounds.Ballscene.APPLE_2_WAV));
+        soundAudioPlayer.addSound(roll.getRollProperties().getResourcepack().getResourceAsStream(BallScene.APPLE_1_WAV));
+        soundAudioPlayer.addSound(roll.getRollProperties().getResourcepack().getResourceAsStream(BallScene.APPLE_2_WAV));
 
         PhysicsCallbacks generalPhysicsCallbacks = new PhysicsCallbacks();
 
@@ -401,8 +400,9 @@ public class InteractiveBallScene extends AbstractBallScene {
 
     private List<CollectableItem> setupLeafCollectables(Roll roll, Random random, CoordinateBlockedDetector blockedDetector) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         SoundAudioPlayer soundAudioPlayer = new SoundAudioPlayer(roll.getRollProperties().getEffectsBaseVolume(), random);
-        soundAudioPlayer.addSound(roll.getRollProperties().getResourcepack().getResourceAsStream(ResourcepackPaths.Sounds.Ballscene.LEAFS_1_WAV));
-        soundAudioPlayer.addSound(roll.getRollProperties().getResourcepack().getResourceAsStream(ResourcepackPaths.Sounds.Ballscene.LEAFS_2_WAV));
+        soundAudioPlayer.addSound(roll.getRollProperties().getResourcepack().getResourceAsStream(BallScene.LEAFS_1_WAV));
+        soundAudioPlayer.addSound(roll.getRollProperties().getResourcepack().getResourceAsStream(BallScene.LEAFS_2_WAV));
+        soundAudioPlayer.addSound(roll.getRollProperties().getResourcepack().getResourceAsStream(BallScene.LEAFS_3_WAV));
 
         PhysicsCallbacks generalPhysicsCallbacks = new PhysicsCallbacks();
 
@@ -434,8 +434,8 @@ public class InteractiveBallScene extends AbstractBallScene {
 
     private List<CollectableItem> setupMushroomCollectables(Roll roll, Random random, CoordinateBlockedDetector blockedDetector) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         SoundAudioPlayer soundAudioPlayer = new SoundAudioPlayer(roll.getRollProperties().getEffectsBaseVolume(), random);
-        soundAudioPlayer.addSound(roll.getRollProperties().getResourcepack().getResourceAsStream(ResourcepackPaths.Sounds.Ballscene.MUSHROOM_1_WAV));
-        soundAudioPlayer.addSound(roll.getRollProperties().getResourcepack().getResourceAsStream(ResourcepackPaths.Sounds.Ballscene.MUSHROOM_1_WAV));
+        soundAudioPlayer.addSound(roll.getRollProperties().getResourcepack().getResourceAsStream(BallScene.MUSHROOM_1_WAV));
+        soundAudioPlayer.addSound(roll.getRollProperties().getResourcepack().getResourceAsStream(BallScene.MUSHROOM_2_WAV));
 
         PhysicsCallbacks generalPhysicsCallbacks = new PhysicsCallbacks();
 
@@ -472,9 +472,8 @@ public class InteractiveBallScene extends AbstractBallScene {
                 new Point2D(circleElement.getNode().getLayoutX(), circleElement.getNode().getLayoutY()),
                 circleElement.getNode().getRotate());
 
-        collisionCallbacks.setElementCollisionCallback((selfElement, collisionElement, selfIsElementA, contact) -> {
-            rollCallback.onCollectableRemoved(collectableItem);
-        });
+        collisionCallbacks.setElementCollisionCallback((selfElement, collisionElement, selfIsElementA, contact) ->
+                rollCallback.onCollectableRemoved(collectableItem));
 
         circleElement.addPhysicsCallback(collisionCallbacks);
         return collectableItem;

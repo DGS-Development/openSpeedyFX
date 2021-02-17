@@ -170,7 +170,6 @@ public class MapeditorScene extends GameController {
     //Actual map.
     private File fxmlFile;
     private Pane rootNode;
-    private ClipAdaptionHelper clipAdaptionHelper;
     private ZoomingPane zoomingPane;
     private ZoomingPaneInteractionController sceneInteractionController;
 
@@ -211,7 +210,7 @@ public class MapeditorScene extends GameController {
     }
 
     private void setupClipAdaption() {
-        clipAdaptionHelper = new ClipAdaptionHelper();
+        ClipAdaptionHelper clipAdaptionHelper = new ClipAdaptionHelper();
         clipAdaptionHelper.bindClipAdaption(paneRoot);
     }
 
@@ -231,21 +230,13 @@ public class MapeditorScene extends GameController {
         faker = new Faker(resourceBundle.getLocale());
 
         //Setup of UI logic.
-        btnLoadFxml.setOnAction(mouseEvent -> {
-            onLoadFxml(resourceBundle);
-        });
+        btnLoadFxml.setOnAction(mouseEvent -> onLoadFxml(resourceBundle));
 
-        miNewMap.setOnAction(event -> {
-            mapStateProperty.set(MapState.NO_MAP);
-        });
+        miNewMap.setOnAction(event -> mapStateProperty.set(MapState.NO_MAP));
 
-        miLoadMap.setOnAction(event -> {
-            onLoadMap(resourceBundle);
-        });
+        miLoadMap.setOnAction(event -> onLoadMap(resourceBundle));
 
-        miSaveMap.setOnAction(event -> {
-            onSaveMap(resourceBundle);
-        });
+        miSaveMap.setOnAction(event -> onSaveMap(resourceBundle));
 
         mapStateProperty.addListener((observable, oldValue, newValue) -> {
             if(newValue == MapState.NO_MAP) {
@@ -259,33 +250,19 @@ public class MapeditorScene extends GameController {
             }
         });
 
-        btnPathAdd.setOnAction(event -> {
-            onPathAdd(resourceBundle);
-        });
+        btnPathAdd.setOnAction(event -> onPathAdd(resourceBundle));
 
-        btnPathEdit.setOnAction(event -> {
-            onPathEdit(resourceBundle);
-        });
+        btnPathEdit.setOnAction(event -> onPathEdit(resourceBundle));
 
-        btnPathRemove.setOnAction(event -> {
-            onPathRemove(resourceBundle);
-        });
+        btnPathRemove.setOnAction(event -> onPathRemove(resourceBundle));
 
-        btnPathRemoveAll.setOnAction(event -> {
-            onPathRemoveAll(resourceBundle);
-        });
+        btnPathRemoveAll.setOnAction(event -> onPathRemoveAll(resourceBundle));
 
-        btnPathAccept.setOnAction(event -> {
-            onPathAccept();
-        });
+        btnPathAccept.setOnAction(event -> onPathAccept());
 
-        btnPathCancel.setOnAction(event -> {
-            onPathCancel();
-        });
+        btnPathCancel.setOnAction(event -> onPathCancel());
 
-        btnCenterMap.setOnAction(event -> {
-            centerMap();
-        });
+        btnCenterMap.setOnAction(event -> centerMap());
     }
 
     private void onSaveMap(ResourceBundle resourceBundle) {
@@ -304,9 +281,7 @@ public class MapeditorScene extends GameController {
             try {
                 List<PathInfo> pathInfos = new LinkedList<>();
 
-                pathNodeMappings.forEach(tmpMapping -> {
-                    pathInfos.add(pathNodeMappingToPathInfo(tmpMapping));
-                });
+                pathNodeMappings.forEach(tmpMapping -> pathInfos.add(pathNodeMappingToPathInfo(tmpMapping)));
 
                 MapInfo mapInfo = new MapInfo(mapName, !isMapCooperativeMode, fxmlFile.getName(), pathInfos);
                 String mapInfoJson = new Gson().toJson(mapInfo);
@@ -481,7 +456,7 @@ public class MapeditorScene extends GameController {
                     Alert.AlertType.CONFIRMATION);
 
             Optional<ButtonType> result = alert.showAndWait();
-            loadMap = result.get() == ButtonType.OK;
+            loadMap = result.isPresent() && result.get() == ButtonType.OK;
         }
 
         if(loadMap) {
@@ -497,9 +472,7 @@ public class MapeditorScene extends GameController {
     private SpeedyFxField findSpeedyFxField(List<SpeedyFxField> speedyFxFields, String fieldId) {
         SpeedyFxField foundField = null;
 
-        for(int tmpIndex = 0; tmpIndex < speedyFxFields.size(); tmpIndex++) {
-            SpeedyFxField tmpSpeedyFxField = speedyFxFields.get(tmpIndex);
-
+        for(SpeedyFxField tmpSpeedyFxField : speedyFxFields) {
             if(tmpSpeedyFxField.getFieldId().equals(fieldId)) {
                 foundField = tmpSpeedyFxField;
                 break;
@@ -631,7 +604,7 @@ public class MapeditorScene extends GameController {
 
         Optional<ButtonType> dialogResult = alert.showAndWait();
 
-        if(dialogResult.get() == ButtonType.OK) {
+        if(dialogResult.isPresent() && dialogResult.get() == ButtonType.OK) {
             for(PathNodeMapping tmpPathNodeMapping : pathNodeMappings)
                 rootNode.getChildren().remove(tmpPathNodeMapping.getQuadCurve());
 
@@ -647,13 +620,9 @@ public class MapeditorScene extends GameController {
         for(QuadCurve tmpQuadCurve : quadCurves) {
             Effect originalEffect = tmpQuadCurve.getEffect();
 
-            tmpQuadCurve.setOnMouseEntered(event -> {
-                tmpQuadCurve.setEffect(createSelectionDropShadow(selectionColor));
-            });
+            tmpQuadCurve.setOnMouseEntered(event -> tmpQuadCurve.setEffect(createSelectionDropShadow(selectionColor)));
 
-            tmpQuadCurve.setOnMouseExited(event -> {
-                tmpQuadCurve.setEffect(originalEffect);
-            });
+            tmpQuadCurve.setOnMouseExited(event -> tmpQuadCurve.setEffect(originalEffect));
 
             tmpQuadCurve.setOnMouseClicked(event -> {
                 resetQuadCurvesSelection();

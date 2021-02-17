@@ -54,20 +54,30 @@ public class SpeedyFxField extends ImageView {
     }
 
     private void setImage(SpeedyFxFieldTypes fieldType) {
+        String resourcePath;
+
         if (fieldType == SpeedyFxFieldTypes.START_FIELD) {
-            this.setImage(new Image(SpeedyFxField.class.getResourceAsStream(ASSET_TEXTURES_PATH + "/mapStartField.png")));
-        } else if (fieldType == SpeedyFxFieldTypes.END_FIELD) {
-            this.setImage(new Image(SpeedyFxField.class.getResourceAsStream(ASSET_TEXTURES_PATH + "/mapEndField.png")));
-        } else if (fieldType == SpeedyFxFieldTypes.APPLE_ITEM_FIELD) {
-            this.setImage(new Image(SpeedyFxField.class.getResourceAsStream(ASSET_TEXTURES_PATH + "/mapAppleItemField.png")));
-        } else if (fieldType == SpeedyFxFieldTypes.LEAF_ITEM_FIELD) {
-            this.setImage(new Image(SpeedyFxField.class.getResourceAsStream(ASSET_TEXTURES_PATH + "/mapLeafItemField.png")));
-        } else if (fieldType == SpeedyFxFieldTypes.MUSHROOM_ITEM_FIELD) {
-            this.setImage(new Image(SpeedyFxField.class.getResourceAsStream(ASSET_TEXTURES_PATH + "/mapMushroomItemField.png")));
-        } else if (fieldType == SpeedyFxFieldTypes.FOX_OFFSET) {
-            this.setImage(new Image(SpeedyFxField.class.getResourceAsStream(ASSET_TEXTURES_PATH + "/mapFoxOffset.png")));
-        } else {
-            this.setImage(new Image(SpeedyFxField.class.getResourceAsStream(ASSET_TEXTURES_PATH + "/mapRandomItemField.png")));
+            resourcePath = ASSET_TEXTURES_PATH + "/mapStartField.png";
         }
+        else if (fieldType == SpeedyFxFieldTypes.END_FIELD) {
+            resourcePath = ASSET_TEXTURES_PATH + "/mapEndField.png";
+        }
+        else if (fieldType == SpeedyFxFieldTypes.APPLE_ITEM_FIELD) {
+            resourcePath = ASSET_TEXTURES_PATH + "/mapAppleItemField.png";
+        }
+        else if (fieldType == SpeedyFxFieldTypes.LEAF_ITEM_FIELD) {
+            resourcePath = ASSET_TEXTURES_PATH + "/mapLeafItemField.png";
+        }
+        else if (fieldType == SpeedyFxFieldTypes.MUSHROOM_ITEM_FIELD) {
+            resourcePath = ASSET_TEXTURES_PATH + "/mapMushroomItemField.png";
+        }
+        else if (fieldType == SpeedyFxFieldTypes.FOX_OFFSET) {
+            resourcePath = ASSET_TEXTURES_PATH + "/mapFoxOffset.png";
+        }
+        else {
+            resourcePath = ASSET_TEXTURES_PATH + "/mapRandomItemField.png";
+        }
+
+        setImage(new Image(getClass().getResourceAsStream(resourcePath)));
     }
 }

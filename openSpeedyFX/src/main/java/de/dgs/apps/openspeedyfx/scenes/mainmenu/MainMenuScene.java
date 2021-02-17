@@ -6,6 +6,7 @@ import de.dgs.apps.openspeedyfx.game.mapinfo.MapInfo;
 import de.dgs.apps.openspeedyfx.game.logic.model.Color;
 import de.dgs.apps.openspeedyfx.game.logic.model.Player;
 import de.dgs.apps.openspeedyfx.game.resourcepacks.Resourcepack;
+import de.dgs.apps.openspeedyfx.game.resourcepacks.ResourcepackPaths.Music;
 import de.dgs.apps.osfxe.audio.AudioPlayer;
 import de.dgs.apps.osfxe.scenes.GameController;
 import javafx.animation.FadeTransition;
@@ -179,7 +180,7 @@ public class MainMenuScene extends GameController {
     private CheckBox cbAutoScroll;
 
     @FXML
-    private Spinner spFoxMovementCount;
+    private Spinner<Integer> spFoxMovementCount;
 
     @FXML
     private TextField txtCustomMapPath;
@@ -259,7 +260,7 @@ public class MainMenuScene extends GameController {
     public void setupMenuScene(Resourcepack resourcepack, MainMenuSettingsData mainMenuSettingsData,
                                MenuSceneCallback menuSceneCallback) {
         try {
-            byte[] menuLoopBytes = resourcepack.getResourceAsStream("/music/menuLoop.ogg").readAllBytes();
+            byte[] menuLoopBytes = resourcepack.getResourceAsStream(Music.MENU_LOOP_OGG).readAllBytes();
 
             audioPlayer = new AudioPlayer(menuLoopBytes, true, mainMenuSettingsData.getMusicVolume());
             audioPlayer.play();
@@ -284,14 +285,14 @@ public class MainMenuScene extends GameController {
             cbShowHints.setSelected(mainMenuSettingsData.getShowHints());
 
             cbShowHints.selectedProperty().addListener((observable, oldValue, newValue) -> {
-                mainMenuSettingsData.setShowHints(newValue.booleanValue());
+                mainMenuSettingsData.setShowHints(newValue);
                 menuSceneCallback.onMainMenuDataUpdate(mainMenuSettingsData);
             });
 
             cbAutoScroll.setSelected(mainMenuSettingsData.isAutoScroll());
 
             cbAutoScroll.selectedProperty().addListener((observable, oldValue, newValue) -> {
-                mainMenuSettingsData.setAutoScroll(newValue.booleanValue());
+                mainMenuSettingsData.setAutoScroll(newValue);
                 menuSceneCallback.onMainMenuDataUpdate(mainMenuSettingsData);
             });
 
@@ -306,25 +307,15 @@ public class MainMenuScene extends GameController {
             spFoxMovementCount.setValueFactory(valueFactory);
 
             //Setup UI logic.
-            btnQuit.setOnAction(event -> {
-                menuSceneCallback.onQuit();
-            });
+            btnQuit.setOnAction(event -> menuSceneCallback.onQuit());
 
-            btnGreen.setOnAction(event -> {
-                createPlayer(Color.GREEN, btnGreen, menuSceneCallback, mainMenuSettingsData);
-            });
+            btnGreen.setOnAction(event -> createPlayer(Color.GREEN, btnGreen, menuSceneCallback, mainMenuSettingsData));
 
-            btnRed.setOnAction(event -> {
-                createPlayer(Color.RED, btnRed, menuSceneCallback, mainMenuSettingsData);
-            });
+            btnRed.setOnAction(event -> createPlayer(Color.RED, btnRed, menuSceneCallback, mainMenuSettingsData));
 
-            btnBlue.setOnAction(event -> {
-                createPlayer(Color.BLUE, btnBlue, menuSceneCallback, mainMenuSettingsData);
-            });
+            btnBlue.setOnAction(event -> createPlayer(Color.BLUE, btnBlue, menuSceneCallback, mainMenuSettingsData));
 
-            btnYellow.setOnAction(event -> {
-                createPlayer(Color.YELLOW, btnYellow, menuSceneCallback, mainMenuSettingsData);
-            });
+            btnYellow.setOnAction(event -> createPlayer(Color.YELLOW, btnYellow, menuSceneCallback, mainMenuSettingsData));
 
             btnLevelEditor.setOnAction(event -> {
                 audioPlayer.stop();
@@ -497,7 +488,7 @@ public class MainMenuScene extends GameController {
 
             Files.list(mapFilesPath)
                     .filter(path -> path.getFileName().toString().endsWith(".mapj"))
-                    .forEach(tmpPath -> mapPaths.add(tmpPath));
+                    .forEach(mapPaths::add);
 
             //Load maps from filesystem.
             File customMapDirectory = new File(settingsData.getCustomMapPath());
@@ -505,7 +496,7 @@ public class MainMenuScene extends GameController {
             if(customMapDirectory.isDirectory()) {
                 Files.list(customMapDirectory.toPath())
                         .filter(path -> path.getFileName().toString().endsWith(".mapj") && path.toFile().isFile())
-                        .forEach(tmpPath -> mapPaths.add(tmpPath));
+                        .forEach(mapPaths::add);
             }
 
             Map<String, Path> namePathMap = new HashMap<>();
@@ -522,8 +513,8 @@ public class MainMenuScene extends GameController {
                 nameMapInfoMap.put(mapInfo.getMapName(), mapInfo);
             }
 
-            SortedList<String> sortedNames = new SortedList(FXCollections.observableList(names));
-            sortedNames.setComparator((name1, name2) -> name1.compareToIgnoreCase(name2));
+            SortedList<String> sortedNames = new SortedList<>(FXCollections.observableList(names));
+            sortedNames.setComparator(String::compareToIgnoreCase);
             lvMaps.setItems(sortedNames);
 
             SimpleObjectProperty<ChangeListener<String>> changeListenerSimpleObjectProperty = new SimpleObjectProperty<>();

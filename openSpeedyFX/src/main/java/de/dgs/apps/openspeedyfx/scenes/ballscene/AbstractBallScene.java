@@ -3,6 +3,7 @@ package de.dgs.apps.openspeedyfx.scenes.ballscene;
 import animatefx.animation.RotateIn;
 import de.dgs.apps.openspeedyfx.game.resourcepacks.Resourcepack;
 import de.dgs.apps.openspeedyfx.game.resourcepacks.ResourcepackPaths;
+import de.dgs.apps.openspeedyfx.game.resourcepacks.ResourcepackPaths.Textures.BallScene;
 import de.dgs.apps.osfxe.scenes.GameController;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.fxml.FXML;
@@ -101,24 +102,16 @@ public abstract class AbstractBallScene extends GameController {
     public void onInitialized() {
         //Setup bindings.
         lblCollectedApplesCountProperty = new SimpleIntegerProperty();
-        lblCollectedApplesCountProperty.addListener((observable, oldValue, newValue) -> {
-            lblCollectedApplesCount.setText(newValue + "");
-        });
+        lblCollectedApplesCountProperty.addListener((observable, oldValue, newValue) -> lblCollectedApplesCount.setText(newValue + ""));
 
         lblCollectedLeafsCountProperty = new SimpleIntegerProperty();
-        lblCollectedLeafsCountProperty.addListener((observable, oldValue, newValue) -> {
-            lblCollectedLeafsCount.setText(newValue + "");
-        });
+        lblCollectedLeafsCountProperty.addListener((observable, oldValue, newValue) -> lblCollectedLeafsCount.setText(newValue + ""));
 
         lblCollectedMushroomsCountProperty = new SimpleIntegerProperty();
-        lblCollectedMushroomsCountProperty.addListener((observable, oldValue, newValue) -> {
-            lblCollectedMushroomsCount.setText(newValue + "");
-        });
+        lblCollectedMushroomsCountProperty.addListener((observable, oldValue, newValue) -> lblCollectedMushroomsCount.setText(newValue + ""));
 
         //Setup elements.
-        imgHedgehogInstructor.setOnMouseClicked(event -> {
-            new RotateIn(imgHedgehogInstructor).play();
-        });
+        imgHedgehogInstructor.setOnMouseClicked(event -> new RotateIn(imgHedgehogInstructor).play());
     }
 
     protected void setupSceneFont(Resourcepack resourcepack) {
@@ -176,7 +169,7 @@ public abstract class AbstractBallScene extends GameController {
 
         //Setup walls.
         Image bordersTextureImage = new Image(
-                resourcepack.getResourceAsStream(ResourcepackPaths.Textures.Ballscene.BORDER_TEXTURE_PNG));
+                resourcepack.getResourceAsStream(BallScene.BORDER_TEXTURE_PNG));
 
         BackgroundImage bordersBackgroundImage = new BackgroundImage(
                 bordersTextureImage,
@@ -199,7 +192,7 @@ public abstract class AbstractBallScene extends GameController {
 
         //Setup floor.
         Image floorTextureImage = new Image(
-                resourcepack.getResourceAsStream(ResourcepackPaths.Textures.Ballscene.FLOOR_TEXTURE_PNG));
+                resourcepack.getResourceAsStream(BallScene.FLOOR_TEXTURE_PNG));
 
         BackgroundImage floorBackgroundImage = new BackgroundImage(
                 floorTextureImage,
