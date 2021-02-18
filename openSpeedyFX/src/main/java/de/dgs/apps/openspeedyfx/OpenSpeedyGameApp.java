@@ -388,6 +388,9 @@ public class OpenSpeedyGameApp extends Application {
             selectedItem[0] = newValue;
         });
 
+        if(selectionDialogueScene.getLvItems().getItems().size() > 0)
+            selectionDialogueScene.getLvItems().getSelectionModel().select(0);
+
         selectionDialogueScene.getBtnContinue().setOnAction(event -> selectionDialogueStage.close());
         selectionDialogueStage.showAndWait();
 
