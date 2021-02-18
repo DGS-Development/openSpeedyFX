@@ -378,11 +378,17 @@ public class GameMapScene extends GameController {
         foxIsNearAudioPlayer.addSound(gameMapData.getResourcepack()
                 .getResourceAsStream(Sounds.GameMapScene.FOX_IS_NEAR_WAV));
 
-        //Start game.
+        //Setup game.
         setupUi(gameMapData.getResourcepack());
         setupGameLogic(gameMapData);
 
         gameMapData.getGameMapCallback().onMapIsReady();
+
+        //Scroll to start field.
+        SpeedyFxField startField = mapData.getTileFieldMapping().get(mapData.getStartTile());
+        scrollToField(startField, 2500);
+
+        //Start first turn.
         gameMode.nextTurn();
 
         return true;
@@ -807,7 +813,15 @@ public class GameMapScene extends GameController {
         scrollToField(speedyFxField, null);
     }
 
+    private void scrollToField(SpeedyFxField speedyFxField, int durationMilliseconds) {
+        scrollToField(speedyFxField, durationMilliseconds, null);
+    }
+
     private void scrollToField(SpeedyFxField speedyFxField, EventHandler<ActionEvent> onEndEventHandler) {
+        scrollToField(speedyFxField, 1000, onEndEventHandler);
+    }
+
+    private void scrollToField(SpeedyFxField speedyFxField, int durationMilliseconds, EventHandler<ActionEvent> onEndEventHandler) {
         double paneCenterX = (paneRoot.getWidth() / 2);
         double paneCenterY = (paneRoot.getHeight() / 2);
 
@@ -841,7 +855,7 @@ public class GameMapScene extends GameController {
         translateTransition.setToX(mapX);
         translateTransition.setToY(mapY);
         translateTransition.setCycleCount(1);
-        translateTransition.setDuration(Duration.millis(1000));
+        translateTransition.setDuration(Duration.millis(durationMilliseconds));
         translateTransition.setInterpolator(Interpolator.EASE_BOTH);
         translateTransition.play();
     }
