@@ -82,7 +82,7 @@ public class GameMapScene extends GameController {
     private Label lblApplesItemCount;
 
     @FXML
-    private Label lblLeafsItemsCount;
+    private Label lblLeavesItemsCount;
 
     @FXML
     private Label lblMushroomsItemCount;
@@ -94,7 +94,7 @@ public class GameMapScene extends GameController {
     private ImageView imgCollectedApples;
 
     @FXML
-    private ImageView imgCollectedLeafs;
+    private ImageView imgCollectedLeaves;
 
     @FXML
     private ImageView imgCollectedMushrooms;
@@ -186,7 +186,7 @@ public class GameMapScene extends GameController {
 
     //UI
     private SimpleIntegerProperty applesIntegerProperty;
-    private SimpleIntegerProperty leafsIntegerProperty;
+    private SimpleIntegerProperty leavesIntegerProperty;
     private SimpleIntegerProperty mushroomsIntegerProperty;
 
     private SimpleIntegerProperty activePlayerIdIntegerProperty;
@@ -228,13 +228,13 @@ public class GameMapScene extends GameController {
                 new Flash(imgCollectedApples).play();
         });
 
-        leafsIntegerProperty = new SimpleIntegerProperty(0);
+        leavesIntegerProperty = new SimpleIntegerProperty(0);
 
-        leafsIntegerProperty.addListener((observable, oldValue, newValue) -> {
-            lblLeafsItemsCount.setText(newValue + "");
+        leavesIntegerProperty.addListener((observable, oldValue, newValue) -> {
+            lblLeavesItemsCount.setText(newValue + "");
 
             if(newValue.intValue() != 0)
-                new Flash(imgCollectedLeafs).play();
+                new Flash(imgCollectedLeaves).play();
         });
 
         mushroomsIntegerProperty = new SimpleIntegerProperty(0);
@@ -273,10 +273,10 @@ public class GameMapScene extends GameController {
                         true,
                         true));
 
-        imgCollectedLeafs.setImage(
+        imgCollectedLeaves.setImage(
                 new Image(gameMapData.getResourcepack().getResourceAsStream(Fields.LEAF_FIELD_PNG),
-                        imgCollectedLeafs.getFitWidth(),
-                        imgCollectedLeafs.getFitHeight(),
+                        imgCollectedLeaves.getFitWidth(),
+                        imgCollectedLeaves.getFitHeight(),
                         true,
                         true));
 
@@ -508,7 +508,7 @@ public class GameMapScene extends GameController {
                 lblActivePlayerText.setText(player.getName());
 
                 applesIntegerProperty.set(0);
-                leafsIntegerProperty.set(0);
+                leavesIntegerProperty.set(0);
                 mushroomsIntegerProperty.set(0);
 
                 lblActivePlayerDescriptionText.setText(gameMapData.getResourceBundle().getString("gamemap.helloPleaseHelpMeToCollectItemsByRollingTheBall"));
@@ -521,7 +521,7 @@ public class GameMapScene extends GameController {
 
                 applesIntegerProperty.set(appleCount);
                 mushroomsIntegerProperty.set(mushroomCount);
-                leafsIntegerProperty.set(leafCount);
+                leavesIntegerProperty.set(leafCount);
 
                 lblActivePlayerDescriptionText.setText(
                         gameMapData.getResourceBundle().getString("gamemap.greatPleaseClickOnTheMapItemYouWantToMoveToOrClickOnContinue"));
@@ -1002,7 +1002,7 @@ public class GameMapScene extends GameController {
                 Roll roll = new Roll(
                         collectablesCount.getApplesCount(),
                         collectablesCount.getMushroomsCount(),
-                        collectablesCount.getLeafsCount());
+                        collectablesCount.getLeavesCount());
 
                 gameMode.onRollCompleted(roll);
             }

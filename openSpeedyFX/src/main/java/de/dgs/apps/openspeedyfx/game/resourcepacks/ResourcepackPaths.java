@@ -43,9 +43,9 @@ public class ResourcepackPaths {
             public static final String APPLE_1_WAV = BASE_PATH + "/apple1.wav";
             public static final String APPLE_2_WAV = BASE_PATH + "/apple2.wav";
 
-            public static final String LEAFS_1_WAV = BASE_PATH + "/leafs1.wav";
-            public static final String LEAFS_2_WAV = BASE_PATH + "/leafs2.wav";
-            public static final String LEAFS_3_WAV = BASE_PATH + "/leafs3.wav";
+            public static final String LEAVES_1_WAV = BASE_PATH + "/leaves1.wav";
+            public static final String LEAVES_2_WAV = BASE_PATH + "/leaves2.wav";
+            public static final String LEAVES_3_WAV = BASE_PATH + "/leaves3.wav";
 
             public static final String MUSHROOM_1_WAV = BASE_PATH + "/mushroom1.wav";
             public static final String MUSHROOM_2_WAV = BASE_PATH + "/mushroom2.wav";

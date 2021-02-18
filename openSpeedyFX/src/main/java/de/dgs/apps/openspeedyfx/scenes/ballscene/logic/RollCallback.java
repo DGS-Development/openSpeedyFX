@@ -13,10 +13,10 @@ public interface RollCallback {
     void onRollException(Exception exception);
 
     void onHedgehogUpdate(Point2D coordinate, double angle);
-    void onCollectablesSet(List<CollectableItem> collectableApples, List<CollectableItem> collectableLeafs, List<CollectableItem> collectableMushrooms);
+    void onCollectablesSet(List<CollectableItem> collectableApples, List<CollectableItem> collectableLeaves, List<CollectableItem> collectableMushrooms);
     void onCollectableRemoved(CollectableItem collectableItem);
     void onAppleCollected(int applesCount);
-    void onLeafCollected(int leafsCount);
+    void onLeafCollected(int leavesCount);
     void onMushroomCollected(int mushroomsCount);
     void onWallCollision();
     void onPowerUpdate(double percentage);

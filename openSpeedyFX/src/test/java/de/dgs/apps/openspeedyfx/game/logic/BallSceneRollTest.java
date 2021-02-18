@@ -150,7 +150,7 @@ public class BallSceneRollTest {
         }
 
         Assertions.assertThat(collectablesCountProperty.get().getApplesCount()).isEqualTo(2);
-        Assertions.assertThat(collectablesCountProperty.get().getLeafsCount()).isEqualTo(1);
+        Assertions.assertThat(collectablesCountProperty.get().getLeavesCount()).isEqualTo(1);
         Assertions.assertThat(collectablesCountProperty.get().getMushroomsCount()).isEqualTo(1);
     }
 }

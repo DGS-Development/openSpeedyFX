@@ -5,12 +5,12 @@ package de.dgs.apps.openspeedyfx.scenes.ballscene.logic;
  */
 public class CollectablesCount {
     private int applesCount;
-    private int leafsCount;
+    private int leavesCount;
     private int mushroomsCount;
 
-    public CollectablesCount(int applesCount, int leafsCount, int mushroomsCount) {
+    public CollectablesCount(int applesCount, int leavesCount, int mushroomsCount) {
         this.applesCount = applesCount;
-        this.leafsCount = leafsCount;
+        this.leavesCount = leavesCount;
         this.mushroomsCount = mushroomsCount;
     }
 
@@ -18,8 +18,8 @@ public class CollectablesCount {
         return applesCount;
     }
 
-    public int getLeafsCount() {
-        return leafsCount;
+    public int getLeavesCount() {
+        return leavesCount;
     }
 
     public int getMushroomsCount() {

@@ -46,7 +46,7 @@
                   <Image url="@../../resourcepack/default/fields/appleField.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="imgCollectedLeafs" fitHeight="30.0" fitWidth="30.0" layoutX="764.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true" smooth="false">
+            <ImageView fx:id="imgCollectedLeaves" fitHeight="30.0" fitWidth="30.0" layoutX="764.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true" smooth="false">
                <image>
                   <Image url="@../../resourcepack/default/fields/leafField.png" />
                </image>
@@ -57,7 +57,7 @@
                </image>
             </ImageView>
             <Label fx:id="lblCollectedApplesCount" layoutX="728.0" layoutY="43.0" text="0" textFill="WHITE" />
-            <Label fx:id="lblCollectedLeafsCount" layoutX="803.0" layoutY="43.0" text="0" textFill="WHITE" />
+            <Label fx:id="lblCollectedLeavesCount" layoutX="803.0" layoutY="43.0" text="0" textFill="WHITE" />
             <Label fx:id="lblCollectedMushroomsCount" layoutX="867.0" layoutY="43.0" text="0" textFill="WHITE" />
             <ImageView fx:id="imgHedgehogInstructor" fitHeight="47.0" fitWidth="44.0" layoutX="25.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
                <image>

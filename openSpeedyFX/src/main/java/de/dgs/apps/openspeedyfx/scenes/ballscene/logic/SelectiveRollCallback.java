@@ -14,7 +14,7 @@ public interface SelectiveRollCallback extends RollCallback {
     }
 
     @Override
-    default void onCollectablesSet(List<CollectableItem> collectableApples, List<CollectableItem> collectableLeafs, List<CollectableItem> collectableMushrooms) {
+    default void onCollectablesSet(List<CollectableItem> collectableApples, List<CollectableItem> collectableLeaves, List<CollectableItem> collectableMushrooms) {
         //Ignore
     }
 
@@ -29,7 +29,7 @@ public interface SelectiveRollCallback extends RollCallback {
     }
 
     @Override
-    default void onLeafCollected(int leafsCount) {
+    default void onLeafCollected(int leavesCount) {
         //Ignore
     }
 

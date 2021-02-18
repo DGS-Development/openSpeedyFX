@@ -51,7 +51,7 @@ public abstract class AbstractBallScene extends GameController {
     protected Label lblCollectedApplesCount;
 
     @FXML
-    protected Label lblCollectedLeafsCount;
+    protected Label lblCollectedLeavesCount;
 
     @FXML
     protected Label lblCollectedMushroomsCount;
@@ -69,7 +69,7 @@ public abstract class AbstractBallScene extends GameController {
     protected ImageView imgCollectedApples;
 
     @FXML
-    protected ImageView imgCollectedLeafs;
+    protected ImageView imgCollectedLeaves;
 
     @FXML
     protected ImageView imgCollectedMushrooms;
@@ -93,7 +93,7 @@ public abstract class AbstractBallScene extends GameController {
     protected static final int COLLECTABLES_ITEM_FIT_WIDTH = 45;
 
     protected SimpleIntegerProperty lblCollectedApplesCountProperty;
-    protected SimpleIntegerProperty lblCollectedLeafsCountProperty;
+    protected SimpleIntegerProperty lblCollectedLeavesCountProperty;
     protected SimpleIntegerProperty lblCollectedMushroomsCountProperty;
 
     private static final double SCENE_LABEL_FONTSIZE = 14.5;
@@ -104,8 +104,8 @@ public abstract class AbstractBallScene extends GameController {
         lblCollectedApplesCountProperty = new SimpleIntegerProperty();
         lblCollectedApplesCountProperty.addListener((observable, oldValue, newValue) -> lblCollectedApplesCount.setText(newValue + ""));
 
-        lblCollectedLeafsCountProperty = new SimpleIntegerProperty();
-        lblCollectedLeafsCountProperty.addListener((observable, oldValue, newValue) -> lblCollectedLeafsCount.setText(newValue + ""));
+        lblCollectedLeavesCountProperty = new SimpleIntegerProperty();
+        lblCollectedLeavesCountProperty.addListener((observable, oldValue, newValue) -> lblCollectedLeavesCount.setText(newValue + ""));
 
         lblCollectedMushroomsCountProperty = new SimpleIntegerProperty();
         lblCollectedMushroomsCountProperty.addListener((observable, oldValue, newValue) -> lblCollectedMushroomsCount.setText(newValue + ""));
@@ -139,7 +139,7 @@ public abstract class AbstractBallScene extends GameController {
                 true,
                 true));
 
-        imgCollectedLeafs.setImage(new Image(
+        imgCollectedLeaves.setImage(new Image(
                 resourcepack.getResourceAsStream(ResourcepackPaths.Fields.LEAF_FIELD_PNG),
                 MENU_COLLECTED_ITEMS_FIT_WIDTH,
                 MENU_COLLECTED_ITEMS_FIT_WIDTH,

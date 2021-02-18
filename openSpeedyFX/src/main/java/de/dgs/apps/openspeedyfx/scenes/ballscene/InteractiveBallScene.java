@@ -121,7 +121,7 @@ public class InteractiveBallScene extends AbstractBallScene {
         if(ballElement != null) {
             //Reset labels and count.
             lblCollectedApplesCountProperty.set(0);
-            lblCollectedLeafsCountProperty.set(0);
+            lblCollectedLeavesCountProperty.set(0);
             lblCollectedMushroomsCountProperty.set(0);
 
             //Remove collectable items.
@@ -258,7 +258,7 @@ public class InteractiveBallScene extends AbstractBallScene {
                         //Wait until all animation and layout processing is done.
                         Platform.runLater(() -> roll.getRollCallback().onRollCompleted(new CollectablesCount(
                                 lblCollectedApplesCountProperty.get(),
-                                lblCollectedLeafsCountProperty.get(),
+                                lblCollectedLeavesCountProperty.get(),
                                 lblCollectedMushroomsCountProperty.get())));
                     }
                 };
@@ -343,10 +343,10 @@ public class InteractiveBallScene extends AbstractBallScene {
     private void setupSimulationCollectables(Roll roll, CoordinateBlockedDetector blockedDetector, Random random) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         //Add elements.
         List<CollectableItem> collectableApples = setupAppleCollectables(roll, random, blockedDetector);
-        List<CollectableItem> collectableLeafs = setupLeafCollectables(roll, random, blockedDetector);
+        List<CollectableItem> collectableLeaves = setupLeafCollectables(roll, random, blockedDetector);
         List<CollectableItem> collectableMushrooms = setupMushroomCollectables(roll, random, blockedDetector);
 
-        roll.getRollCallback().onCollectablesSet(collectableApples, collectableLeafs, collectableMushrooms);
+        roll.getRollCallback().onCollectablesSet(collectableApples, collectableLeaves, collectableMushrooms);
     }
 
     private double getCollectablesRangeStartX() {
@@ -400,18 +400,18 @@ public class InteractiveBallScene extends AbstractBallScene {
 
     private List<CollectableItem> setupLeafCollectables(Roll roll, Random random, CoordinateBlockedDetector blockedDetector) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         SoundAudioPlayer soundAudioPlayer = new SoundAudioPlayer(roll.getRollProperties().getEffectsBaseVolume(), random);
-        soundAudioPlayer.addSound(roll.getRollProperties().getResourcepack().getResourceAsStream(BallScene.LEAFS_1_WAV));
-        soundAudioPlayer.addSound(roll.getRollProperties().getResourcepack().getResourceAsStream(BallScene.LEAFS_2_WAV));
-        soundAudioPlayer.addSound(roll.getRollProperties().getResourcepack().getResourceAsStream(BallScene.LEAFS_3_WAV));
+        soundAudioPlayer.addSound(roll.getRollProperties().getResourcepack().getResourceAsStream(BallScene.LEAVES_1_WAV));
+        soundAudioPlayer.addSound(roll.getRollProperties().getResourcepack().getResourceAsStream(BallScene.LEAVES_2_WAV));
+        soundAudioPlayer.addSound(roll.getRollProperties().getResourcepack().getResourceAsStream(BallScene.LEAVES_3_WAV));
 
         PhysicsCallbacks generalPhysicsCallbacks = new PhysicsCallbacks();
 
         generalPhysicsCallbacks.setElementCollisionCallback((selfElement, collisionElement, selfIsElementA, contact) -> {
             irritateHedgehog(random, roll.getRollProperties().getHedgehogIrritation());
 
-            int newItemCount = lblCollectedLeafsCountProperty.getValue() + 1;
-            lblCollectedLeafsCountProperty.set(newItemCount);
-            new Flash(imgCollectedLeafs).play();
+            int newItemCount = lblCollectedLeavesCountProperty.getValue() + 1;
+            lblCollectedLeavesCountProperty.set(newItemCount);
+            new Flash(imgCollectedLeaves).play();
             soundAudioPlayer.playRandomSound();
             roll.getRollCallback().onLeafCollected(newItemCount);
 
@@ -421,7 +421,7 @@ public class InteractiveBallScene extends AbstractBallScene {
 
         List<CollectableItem> collectableItems = new LinkedList<>();
 
-        for(int itemsLeft = roll.getRollProperties().getCollectablesCount().getLeafsCount(); itemsLeft != 0; itemsLeft--) {
+        for(int itemsLeft = roll.getRollProperties().getCollectablesCount().getLeavesCount(); itemsLeft != 0; itemsLeft--) {
             CircleElement circleElement = setupCollectableCircleElement(
                     random, blockedDetector, roll.getRollProperties().getResourcepack().getResourceAsStream(ResourcepackPaths.Fields.LEAF_FIELD_PNG));
 
