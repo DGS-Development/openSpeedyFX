@@ -22,7 +22,7 @@
 <?import javafx.scene.media.MediaView?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="spRoot" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="preview-background" stylesheets="@mainmenu.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="spRoot" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="preview-background" stylesheets="@mainmenu.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <MediaView fx:id="mvBackground" fitHeight="200.0" fitWidth="200.0" preserveRatio="false" smooth="false">
          <effect>
@@ -30,27 +30,28 @@
          </effect></MediaView>
       <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="background-transparent">
          <children>
-            <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
-               <center>
-                  <ImageView fx:id="imgLogo" fitHeight="266.0" fitWidth="415.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
-                     <image>
-                        <Image url="@openSpeedyFxLogo.png" />
-                     </image>
-                  </ImageView>
-               </center>
+            <VBox fx:id="vbHead" visible="false">
+               <children>
+                  <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                     <center>
+                        <ImageView fx:id="imgLogo" fitHeight="266.0" fitWidth="415.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                           <image>
+                              <Image url="@openSpeedyFxLogo.png" />
+                           </image>
+                        </ImageView>
+                     </center>
+                  </BorderPane>
+                  <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                     <center>
+                        <ImageView fx:id="imgHedgehog" fitHeight="155.0" fitWidth="346.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+                     </center>
+                  </BorderPane>
+               </children>
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
-            </BorderPane>
-            <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
-               <VBox.margin>
-                  <Insets bottom="25.0" top="10.0" />
-               </VBox.margin>
-               <center>
-                  <ImageView fx:id="imgHedgehog" fitHeight="155.0" fitWidth="346.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
-               </center>
-            </BorderPane>
-            <BorderPane fx:id="bpControls" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+            </VBox>
+            <BorderPane fx:id="bpControls" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" visible="false">
                <center>
                   <TabPane fx:id="tabPaneMenus" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="hidden-tabbar" BorderPane.alignment="CENTER">
                      <BorderPane.margin>

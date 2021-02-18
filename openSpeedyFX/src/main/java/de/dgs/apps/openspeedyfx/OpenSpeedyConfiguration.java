@@ -39,7 +39,7 @@ public interface OpenSpeedyConfiguration extends Mutable, Accessible, Reloadable
     @DefaultValue("955")
     double menuMinWidth();
 
-    @DefaultValue("615")
+    @DefaultValue("740")
     double menuMinHeight();
 
     @DefaultValue("true")

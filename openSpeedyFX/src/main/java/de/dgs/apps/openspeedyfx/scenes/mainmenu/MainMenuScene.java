@@ -15,6 +15,7 @@ import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
@@ -191,6 +192,9 @@ public class MainMenuScene extends GameController {
     @FXML
     private Button btnQuit;
 
+    @FXML
+    private VBox vbHead;
+
     @Override
     public String getFxmlPath() {
         return "/assets/fxml/mainmenu/mainmenu.fxml";
@@ -208,8 +212,12 @@ public class MainMenuScene extends GameController {
 
     @Override
     public void onInitialized() {
+        //----------------------------
         //Setup animations.
-        final Image image = new Image(getClass().getResourceAsStream("/assets/fxml/mainmenu/hedgehogSpriteAnimation.png"));
+        //----------------------------
+
+        //Hedgehog sprite animation.
+        Image image = new Image(getClass().getResourceAsStream("/assets/fxml/mainmenu/hedgehogSpriteAnimation.png"));
 
         final int COLUMNS = 8;
         final int COUNT = 8;
@@ -221,7 +229,7 @@ public class MainMenuScene extends GameController {
         imgHedgehog.setImage(image);
         imgHedgehog.setViewport(new Rectangle2D(OFFSET_X, OFFSET_Y, WIDTH, HEIGHT));
 
-        final Animation spriteAnimation = new SpriteAnimation(
+        Animation spriteAnimation = new SpriteAnimation(
                 imgHedgehog,
                 Duration.millis(1000),
                 COUNT, COLUMNS,
@@ -232,10 +240,39 @@ public class MainMenuScene extends GameController {
         spriteAnimation.setCycleCount(Animation.INDEFINITE);
         spriteAnimation.play();
 
+        //Pulsing logo.
         new Pulse(imgLogo).setCycleCount(AnimationFX.INDEFINITE).play();
-        new FadeInUpBig(bpControls).setDelay(Duration.millis(1500)).play();
 
+        //Controls fade in effect.
+        FadeInDownBig headFadeInDownBig = new FadeInDownBig(vbHead);
+        headFadeInDownBig.setDelay(Duration.millis(1500));
+
+        headFadeInDownBig.getTimeline().currentTimeProperty().addListener(new ChangeListener<>() {
+            @Override
+            public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {
+                headFadeInDownBig.getTimeline().currentTimeProperty().removeListener(this);
+                vbHead.setVisible(true);
+            }
+        });
+
+        headFadeInDownBig.play();
+
+        FadeInUpBig controlsFadeInUpBig = new FadeInUpBig(bpControls);
+        controlsFadeInUpBig.setDelay(Duration.millis(2000));
+
+        controlsFadeInUpBig.getTimeline().currentTimeProperty().addListener(new ChangeListener<>() {
+            @Override
+            public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {
+                controlsFadeInUpBig.getTimeline().currentTimeProperty().removeListener(this);
+                bpControls.setVisible(true);
+            }
+        });
+
+        controlsFadeInUpBig.play();
+
+        //----------------------------
         //Setup logic.
+        //----------------------------
         setupMainMenuLogic();
 
         SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 10, 3);
