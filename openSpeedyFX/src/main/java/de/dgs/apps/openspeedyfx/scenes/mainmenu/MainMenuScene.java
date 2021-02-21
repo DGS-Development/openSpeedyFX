@@ -15,7 +15,9 @@ import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -183,13 +185,13 @@ public class MainMenuScene extends GameController {
     private CheckBox cbAutoScroll;
 
     @FXML
-    private Spinner<Integer> spFoxMovementCount;
-
-    @FXML
     private TextField txtCustomMapPath;
 
     @FXML
     private Button btnQuit;
+
+    @FXML
+    private ChoiceBox<String> cbDifficulties;
 
     @Override
     public String getFxmlPath() {
@@ -205,6 +207,8 @@ public class MainMenuScene extends GameController {
     private List<Player> players;
 
     private AudioPlayer audioPlayer;
+
+    private Difficulty difficulty = Difficulty.EASY;
 
     @Override
     public void onInitialized() {
@@ -236,8 +240,6 @@ public class MainMenuScene extends GameController {
         new FadeInUpBig(bpControls).setDelay(Duration.millis(1500)).play();
 
         //Setup logic.
-        setupMainMenuLogic();
-
         SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 10, 3);
         spPlayersCount.setValueFactory(valueFactory);
 
@@ -281,8 +283,11 @@ public class MainMenuScene extends GameController {
     }
 
     public void setupMenuScene(Resourcepack resourcepack, MainMenuSettingsData mainMenuSettingsData,
-                               MenuSceneCallback menuSceneCallback) {
+                               MenuSceneCallback menuSceneCallback, ResourceBundle resourceBundle) {
+
         try {
+            setupMainMenuLogic(resourceBundle);
+
             byte[] menuLoopBytes = resourcepack.getResourceAsStream(Music.MENU_LOOP_OGG).readAllBytes();
 
             audioPlayer = new AudioPlayer(menuLoopBytes, true, mainMenuSettingsData.getMusicVolume());
@@ -320,14 +325,6 @@ public class MainMenuScene extends GameController {
             });
 
             txtCustomMapPath.setText(mainMenuSettingsData.getCustomMapPath());
-
-            spFoxMovementCount.valueProperty().addListener((observable, oldValue, newValue) -> {
-                mainMenuSettingsData.setFoxMovementCount(Integer.parseInt(newValue.toString()));
-                menuSceneCallback.onMainMenuDataUpdate(mainMenuSettingsData);
-            });
-
-            SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(2, 8, mainMenuSettingsData.getFoxMovementCount());
-            spFoxMovementCount.setValueFactory(valueFactory);
 
             //Setup UI logic.
             btnQuit.setOnAction(event -> menuSceneCallback.onQuit());
@@ -402,7 +399,7 @@ public class MainMenuScene extends GameController {
         }
     }
 
-    private void setupMainMenuLogic() {
+    private void setupMainMenuLogic(ResourceBundle resourceBundle) {
         btnCompetitiveMode.setOnAction(event -> {
             players = new LinkedList<>();
             tabPaneMenus.getSelectionModel().select(tabCompetitiveMenu);
@@ -487,6 +484,18 @@ public class MainMenuScene extends GameController {
             tabPaneMenus.getSelectionModel().select(tabPlayMenu);
             playTabPaneFadeTransition();
         });
+
+        ObservableList<String> options = FXCollections.observableArrayList(
+                resourceBundle.getString("mainmenu.difficultyEasy"),
+                resourceBundle.getString("mainmenu.difficultyMedium"),
+                resourceBundle.getString("mainmenu.difficultyHard"));
+
+        cbDifficulties.setValue(options.get(0));
+        cbDifficulties.setItems(options);
+
+        cbDifficulties.getSelectionModel().selectedIndexProperty().addListener((ov, value, new_value) -> {
+            difficulty = Difficulty.values()[new_value.intValue()];
+        });
     }
 
     private void loadMaps(MenuSceneCallback menuSceneCallback, MainMenuSettingsData settingsData, List<Player> players) {
@@ -568,9 +577,9 @@ public class MainMenuScene extends GameController {
                             lvMaps.getSelectionModel().selectedItemProperty().removeListener(changeListenerSimpleObjectProperty.get());
 
                             if (isCooperativeMode) {
-                                menuSceneCallback.onCooperativeStart(spPlayersCount.getValue(), players.get(0), mapPath);
+                                menuSceneCallback.onCooperativeStart(spPlayersCount.getValue(), players.get(0), mapPath, difficulty);
                             } else {
-                                menuSceneCallback.onCompetitiveStart(players, mapPath);
+                                menuSceneCallback.onCompetitiveStart(players, mapPath, difficulty);
                             }
 
                             reset();

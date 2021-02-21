@@ -1,5 +1,6 @@
 package de.dgs.apps.openspeedyfx;
 
+import de.dgs.apps.openspeedyfx.scenes.ballscene.logic.HedgehogIrritation;
 import org.aeonbits.owner.Accessible;
 import org.aeonbits.owner.Config.Sources;
 import org.aeonbits.owner.Mutable;
@@ -48,6 +49,31 @@ public interface OpenSpeedyConfiguration extends Mutable, Accessible, Reloadable
     @DefaultValue("CUSTOM_MAPS")
     String customMapsDirectoryPath();
 
-    @DefaultValue("4")
-    int foxMovementCount();
+    @Separator(";")
+    @DefaultValue("4;6;8")
+    int[] foxMovementCount();
+
+    @Separator(";")
+    @DefaultValue("1;1;0")
+    int[] difficultiesIrritationImbalance();
+
+    @Separator(";")
+    @DefaultValue("0.05f;0.09f;0.13f")
+    float[] difficultiesIrritationSlowdownFactor();
+
+    @Separator(";")
+    @DefaultValue("0.60f;0.65f;0.70f")
+    float[] difficultiesPhysicsLinearDamping();
+
+    @Separator(";")
+    @DefaultValue("0.2f;0.5f;0.8f")
+    float[] difficultiesPhysicsDestiny();
+
+    @Separator(";")
+    @DefaultValue("0.94f;0.99f;1.04f")
+    float[] difficultiesPhysicsFriction();
+
+    @Separator(";")
+    @DefaultValue("0.3f;0.6f;0.9f")
+    float[] difficultiesPhysicsRestitution();
 }
