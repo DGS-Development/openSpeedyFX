@@ -9,6 +9,9 @@ import javafx.scene.layout.Priority;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+/**
+ * Helper class to create common JavaFX dialogs.
+ */
 public class JavaFxDialogs {
     public static Alert createAlertDialog(String title, String header, String content, Alert.AlertType alertType) {
         Alert alert = new Alert(alertType);

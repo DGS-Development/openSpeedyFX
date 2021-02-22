@@ -14,19 +14,38 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Helper class to manipulate {@link QuadCurve} elements, by displaying a {@link Circle} element to manipulate the "control"-property.
+ */
 public class QuadCurveManipulationHelper {
-    private ObservableList<Node> rootChildren;
+    private final ObservableList<Node> rootChildren;
 
-    private Map<QuadCurve, List<Node>> curveNodesMap = new HashMap<>();
+    private final Map<QuadCurve, List<Node>> curveNodesMap = new HashMap<>();
 
+    /**
+     * Creates an new {@link QuadCurveManipulationHelper}.
+     * @param rootChildren The list to containing the {@link QuadCurve} elements.
+     */
     public QuadCurveManipulationHelper(ObservableList<Node> rootChildren) {
         this.rootChildren = rootChildren;
     }
 
+    /**
+     * Adds a control-element for a certain {@link QuadCurve} element.
+     * @param quadCurve The {@link QuadCurve} to manipulate.
+     */
     public void add(QuadCurve quadCurve) {
         add(quadCurve, Color.rgb(0,0,0, 0.5), 2, 7, Color.WHITE);
     }
 
+    /**
+     * Adds a control-element for a certain {@link QuadCurve} element.
+     * @param quadCurve The {@link QuadCurve} to manipulate.
+     * @param strokeColor The {@link Color} of the lines to the {@link Circle} control element.
+     * @param strokeWidth The width of the lines to the {@link Circle} control element.
+     * @param circleRadius The radius of the {@link Circle} control element.
+     * @param circleColor The color of the {@link Circle} control element.
+     */
     public void add(QuadCurve quadCurve, Color strokeColor, double strokeWidth, double circleRadius, Color circleColor) {
         Line startLine = new Line();
         startLine.setStroke(strokeColor);
@@ -68,6 +87,10 @@ public class QuadCurveManipulationHelper {
         rootChildren.addAll(curveNodes);
     }
 
+    /**
+     * Removes a control-element for a certain {@link QuadCurve} element.
+     * @param quadCurve The {@link QuadCurve} to remove the manipulation.
+     */
     public void remove(QuadCurve quadCurve) {
         if(curveNodesMap.containsKey(quadCurve)) {
             rootChildren.removeAll(curveNodesMap.get(quadCurve));
@@ -75,6 +98,9 @@ public class QuadCurveManipulationHelper {
         }
     }
 
+    /**
+     * Removes all control-elements for all registered {@link QuadCurve} elements.
+     */
     public void removeAll() {
         curveNodesMap.keySet().forEach(quadCurve -> rootChildren.removeAll(curveNodesMap.get(quadCurve)));
         curveNodesMap.clear();

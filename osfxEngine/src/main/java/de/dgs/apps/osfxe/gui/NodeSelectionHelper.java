@@ -7,7 +7,15 @@ import javafx.scene.paint.Color;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Helper class to select a certain amount of {@link Node} elements, by highlighting the selections.
+ * @param <FxNode> The {@link Node} element-type to select.
+ */
 public class NodeSelectionHelper<FxNode extends Node> {
+    /**
+     * Callback to signalize that a {@link FxNode} was selected.
+     * @param <FxNode> The selected node.
+     */
     public interface OnNodeSelectedCallback<FxNode extends Node> {
         void onNodeSelected(FxNode node);
     }
@@ -20,20 +28,29 @@ public class NodeSelectionHelper<FxNode extends Node> {
     private double startOpacity;
     private double selectionOpacity;
 
+    /**
+     * Creates a new {@link NodeSelectionHelper}.
+     * @param selectionColor The highlighting {@link Color} of the selected nodes.
+     * @param startOpacity The opacity of all {@link FxNode} elements before their selection.
+     * @param selectionOpacity The opacity of a selected {@link FxNode}.
+     */
     public NodeSelectionHelper(Color selectionColor, double startOpacity, double selectionOpacity) {
         this.selectionColor = selectionColor;
         this.startOpacity = startOpacity;
         this.selectionOpacity = selectionOpacity;
     }
 
+    /**
+     * Indicates if a selection was started.
+     * @return True if a node selection was enabled.
+     */
     public boolean isActive() {
         return isActive;
     }
 
-    public void setActive(boolean active) {
-        isActive = active;
-    }
-
+    /**
+     * Resets all selected {@link FxNode} elements.
+     */
     public void reset() {
         isActive = false;
         resetSelectableNodes();
@@ -41,14 +58,20 @@ public class NodeSelectionHelper<FxNode extends Node> {
     }
 
     private void resetNodesToKeep() {
-        nodesToKeep.forEach(tmpNode -> resetSelectableNode(tmpNode));
+        nodesToKeep.forEach(this::resetSelectableNode);
     }
 
     private void resetSelectableNodes() {
-        if(this.selectableNodes != null)
-            this.selectableNodes.forEach(tmpNode -> resetSelectableNode(tmpNode));
+        if(selectableNodes != null)
+            selectableNodes.forEach(this::resetSelectableNode);
     }
 
+    /**
+     * Enables a node selection for all selectable {@link FxNode} elements.
+     * @param selectableNodes The selectable nodes.
+     * @param keepSelection True if the selected node remains highlighted, after its selection.
+     * @param onSelectionCallback Callback returning the selected {@link FxNode} element.
+     */
     public void getSelectableNode(List<FxNode> selectableNodes, boolean keepSelection, OnNodeSelectedCallback<FxNode> onSelectionCallback) {
         isActive = true;
         this.selectableNodes = selectableNodes;

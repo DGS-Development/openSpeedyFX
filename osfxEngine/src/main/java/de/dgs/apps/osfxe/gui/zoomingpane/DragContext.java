@@ -1,5 +1,8 @@
 package de.dgs.apps.osfxe.gui.zoomingpane;
 
+/**
+ * Simple POJO container for drag information.
+ */
 public class DragContext {
     private double mouseAnchorX;
     private double mouseAnchorY;

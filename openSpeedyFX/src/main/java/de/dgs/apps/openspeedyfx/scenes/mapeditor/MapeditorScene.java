@@ -205,8 +205,6 @@ public class MapeditorScene extends GameController {
                 true,
                 ZoomingPaneInteractionController.DEFAULT_MIN_SCALE,
                 1);
-
-        sceneInteractionController.registerEventFilters(zoomingPane);
     }
 
     private void setupClipAdaption() {

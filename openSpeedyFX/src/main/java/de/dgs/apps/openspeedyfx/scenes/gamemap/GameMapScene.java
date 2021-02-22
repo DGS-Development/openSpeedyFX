@@ -408,8 +408,6 @@ public class GameMapScene extends GameController {
                 ZoomingPaneInteractionController.DEFAULT_MOUSE_DELTA_FACTOR,
                 false);
 
-        sceneInteractionController.registerEventFilters(zoomingPane);
-
         clipAdaptionHelper = new ClipAdaptionHelper();
         clipAdaptionHelper.bindClipAdaption(paneRoot);
 
