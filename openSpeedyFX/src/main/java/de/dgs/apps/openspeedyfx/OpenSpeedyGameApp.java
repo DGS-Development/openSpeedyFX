@@ -330,7 +330,6 @@ public class OpenSpeedyGameApp extends Application {
         mainMenuSettingsData.setMusicVolume(configuration.musicVolume());
         mainMenuSettingsData.setShowHints(configuration.showHints());
         mainMenuSettingsData.setAutoScroll(configuration.autoScroll());
-        // mainMenuSettingsData.setFoxMovementCount(configuration.foxMovementCount());
         mainMenuSettingsData.setCustomMapPath(configuration.customMapsDirectoryPath());
 
         mainMenuScene.setupMenuScene(resourcepack, mainMenuSettingsData, menuSceneCallback, resourceBundle);
@@ -365,7 +364,6 @@ public class OpenSpeedyGameApp extends Application {
     private int foxMovementCountFromDifficulty(Difficulty difficulty, OpenSpeedyConfiguration configuration) {
         int index = indexFromDifficulty(difficulty);
 
-        System.out.println(Arrays.toString(configuration.foxMovementCount()));
         return configuration.foxMovementCount()[index];
     }
 
@@ -374,7 +372,7 @@ public class OpenSpeedyGameApp extends Application {
         int index = indexFromDifficulty(difficulty);
 
         HedgehogIrritation hedgehogIrritation = new HedgehogIrritation(
-                configuration.difficultiesIrritationImbalance()[index] == 1,
+                configuration.difficultiesIrritationImbalance()[index],
                 configuration.difficultiesIrritationSlowdownFactor()[index]);
 
         return hedgehogIrritation;
@@ -385,7 +383,7 @@ public class OpenSpeedyGameApp extends Application {
 
         HedgehogPhysicsProperties hedgehogPhysicsProperties = new HedgehogPhysicsProperties(
                 configuration.difficultiesPhysicsLinearDamping()[index],
-                configuration.difficultiesPhysicsDestiny()[index],
+                configuration.difficultiesPhysicsDensity()[index],
                 configuration.difficultiesPhysicsFriction()[index],
                 configuration.difficultiesPhysicsRestitution()[index]);
 

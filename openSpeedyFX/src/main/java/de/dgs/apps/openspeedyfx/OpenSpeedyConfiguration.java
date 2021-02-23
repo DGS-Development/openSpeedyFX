@@ -16,7 +16,6 @@ public interface OpenSpeedyConfiguration extends Mutable, Accessible, Reloadable
     String PROPERTY_SHOW_HINTS = "showHints";
     String PROPERTY_AUTO_SCROLL = "autoScroll";
     String PROPERTY_CUSTOM_MAPS_DIRECTORY_PATH = "customMapsDirectoryPath";
-    String PROPERTY_FOX_MOVEMENT_COUNT = "foxMovementCount";
 
     @Separator(";")
     @DefaultValue("DE;EN")
@@ -50,30 +49,30 @@ public interface OpenSpeedyConfiguration extends Mutable, Accessible, Reloadable
     String customMapsDirectoryPath();
 
     @Separator(";")
-    @DefaultValue("4;6;8")
+    @DefaultValue("3;3;4")
     int[] foxMovementCount();
 
     @Separator(";")
-    @DefaultValue("1;1;0")
-    int[] difficultiesIrritationImbalance();
+    @DefaultValue("false;true;true")
+    boolean[] difficultiesIrritationImbalance();
 
     @Separator(";")
-    @DefaultValue("0.05f;0.09f;0.13f")
+    @DefaultValue("0.09f;0.15f;0.25f")
     float[] difficultiesIrritationSlowdownFactor();
 
     @Separator(";")
-    @DefaultValue("0.60f;0.65f;0.70f")
+    @DefaultValue("0.65f;0.70f;0.75f")
     float[] difficultiesPhysicsLinearDamping();
 
     @Separator(";")
-    @DefaultValue("0.2f;0.5f;0.8f")
-    float[] difficultiesPhysicsDestiny();
+    @DefaultValue("0.5f;0.5f;0.5f")
+    float[] difficultiesPhysicsDensity();
 
     @Separator(";")
-    @DefaultValue("0.94f;0.99f;1.04f")
+    @DefaultValue("0.90f;0.99f;1.15f")
     float[] difficultiesPhysicsFriction();
 
     @Separator(";")
-    @DefaultValue("0.3f;0.6f;0.9f")
+    @DefaultValue("0.6f;0.6f;0.6f")
     float[] difficultiesPhysicsRestitution();
 }
