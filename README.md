@@ -7,8 +7,16 @@ openSpeedyFX is a free open-source 2D board game, inspired by Urtis Šulinskas's
 
 This repository includes the game itself ("openSpeedyFX") and an expandable game engine, using JavaFX and jbox2d ("osfxEngine"). It's the foundation for the project, but can be used for any 2D-based games. 
 
-Although the code is covered by a permissive open-source-license, and no assets of "Speedy Roll" were used, you can't use the project commercially ("as it is"). It includes some assets which forbid any commercial use.
-Please check the file "LICENSE.txt" for more detailed information.
+Although the code is covered by a permissive open-source-license (Apache-2.0 License) , and no assets of "Speedy Roll" were used, you can't use the project commercially ("as it is"). It includes some assets which forbid any commercial use.
+Please check the file "ASSETS-LICENSES.txt" for more detailed information.
+
+## Features
+
+* Competitive mode (hedgehog race for 2-4 players)
+* Cooperative mode (hedgehog chase for 1-10 players)
+* Difficulty support (easy, medium and hard)
+* Mapeditor to create custom maps
+* Localization support (includes English and German by default)
 
 # Developer instructions
 
@@ -32,9 +40,9 @@ Please check the file "LICENSE.txt" for more detailed information.
 13. Open "openSpeedyFX"
 14. Open the "Lifecycle" category
 15. Run "clean"
-16. Open the "Plugins" category
-17. Open the "javafx" category
-18. Run "javafx:compile"
+16. Run "install"
+17. Open the "Plugins" category
+18. Open the "javafx" category
 19. Run "javafx:run"
 
 ## Custom Run-Configuration with IntelliJ
@@ -43,5 +51,5 @@ Please check the file "LICENSE.txt" for more detailed information.
 3. Select "Maven"
 4. Select "openSpeedyFX" as directory of "Working directory"
 5. Enter a name into the "Name" text field (for instance "openSpeedyFX")
-6. Type "javafx:compile javafx:run" into the "Command line" text field
+6. Type "compile javafx:run" into the "Command line" text field
 7. Click on "OK"
