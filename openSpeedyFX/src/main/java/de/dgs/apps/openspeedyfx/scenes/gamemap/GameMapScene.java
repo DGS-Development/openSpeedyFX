@@ -32,6 +32,7 @@ import de.dgs.apps.osfxe.scenes.SceneManager;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -435,12 +436,56 @@ public class GameMapScene extends GameController {
         zoomingPane.getChildren().add(mapData.getRootNode());
     }
 
+    //Game logic bug workaround, until improved game logic is available.
+    private boolean gameIsOver = false;
+    private volatile boolean gameDoneCalled = false;
+    private List<Player> playersWon = new LinkedList<>();
+
+    private class GameOverWorkaroundThread extends Thread {
+        private final GameMapData gameMapData;
+
+        public GameOverWorkaroundThread(GameMapData gameMapData) {
+            this.gameMapData = gameMapData;
+        }
+
+        @Override
+        public void run() {
+            try {
+                Thread.sleep(1000);
+
+                if(!gameDoneCalled)
+                    Platform.runLater(() -> {
+                        boolean isCompetitive = mapData.getStartTile().getTileType() == TileType.HEDGEHOG_START;
+
+                        if(isCompetitive && playersWon.size() == gameMapData.getPlayers().size() - 1) {
+                            gameDoneCalled = true;
+                            gameIsOver = true;
+
+                            lblApplesItemCount.setText("0");
+                            lblLeavesItemsCount.setText("0");
+                            lblMushroomsItemCount.setText("0");
+
+                            showWinnersDialogue(playersWon, gameMapData);
+
+                            gameMapData.getGameMapCallback().onGameOver();
+                        }
+                    });
+            }
+            catch (Exception exception) {
+                //Ignore...
+            }
+        }
+    }
+
     private void setupGameLogic(GameMapData gameMapData) {
         map = new Map(mapData.getFirstTile());
 
         GameModeCallback gameModeCallback = new GameModeCallback() {
             @Override
             public void onInitialized(List<? extends Actor> actors) {
+                if(gameIsOver)
+                    return;
+
                 //Add actors to map.
                 SpeedyFxField startField = mapData.getTileFieldMapping().get(mapData.getStartTile());
 
@@ -487,6 +532,9 @@ public class GameMapScene extends GameController {
 
             @Override
             public void onRoll(int appleCount, int mushroomCount, int leafCount) {
+                if(gameIsOver)
+                    return;
+
                 lblActivePlayerDescriptionText.setText(
                         gameMapData.getResourceBundle().getString("gamemap.helloPleaseHelpMeToCollectItemsByRollingTheBall"));
 
@@ -513,6 +561,9 @@ public class GameMapScene extends GameController {
 
             @Override
             public void onActivePlayerSet(Player player) {
+                if(gameIsOver)
+                    return;
+
                 if(gameMapData.getPhysicalPlayersCount() > 0) {
                     if(activePlayerIdIntegerProperty.get() < gameMapData.getPhysicalPlayersCount()) {
                         activePlayerIdIntegerProperty.set(activePlayerIdIntegerProperty.get() + 1);
@@ -536,6 +587,9 @@ public class GameMapScene extends GameController {
 
             @Override
             public void onReadyToMove(List<Move> possibleMoves, int appleCount, int mushroomCount, int leafCount) {
+                if(gameIsOver)
+                    return;
+
                 if(gameMapData.isAutoScroll())
                     scrollToField(mapData.getTileFieldMapping().get(activePlayer.getCurrentTile()));
 
@@ -588,9 +642,10 @@ public class GameMapScene extends GameController {
                         movePlayer(activePlayer, mapData.getTileFieldMapping().get(move.getStartTile()), selectedField);
 
                         mapData.getRootNode().getChildren().removeAll(selectableFieldsMarkers);
-                        gameMode.onMoveSelected(move);
 
                         hedgehogSoundAudioPlayer.playRandomSound();
+
+                        gameMode.onMoveSelected(move);
                     }
                     catch (Exception exception) {
                         gameMapData.getGameMapCallback().onException(exception);
@@ -622,6 +677,9 @@ public class GameMapScene extends GameController {
 
             @Override
             public void onUnableToMove() {
+                if(gameIsOver)
+                    return;
+
                 try {
                     String text = gameMapData.getResourceBundle().getString("gamemap.unableToMoveWithTheCollectedItems");
 
@@ -639,6 +697,9 @@ public class GameMapScene extends GameController {
 
             @Override
             public void onTooManyItemsCollected(int itemsCount) {
+                if(gameIsOver)
+                    return;
+
                 try {
                     String text = gameMapData.getResourceBundle().getString("gamemap.youCollectedTooManyItems");
 
@@ -656,6 +717,10 @@ public class GameMapScene extends GameController {
 
             @Override
             public void onPlayerWon(Player player) {
+                if(gameIsOver)
+                    return;
+
+                playersWon.add(player);
                 winSoundAudioPlayer.playRandomSound();
 
                 try {
@@ -668,6 +733,8 @@ public class GameMapScene extends GameController {
                             actorImageMap.get(player).getImage(),
                             true,
                             gameMapData.getGameMapCallback());
+
+                    new GameOverWorkaroundThread(gameMapData).start();
                 }
                 catch (Exception exception) {
                     gameMapData.getGameMapCallback().onException(exception);
@@ -678,6 +745,9 @@ public class GameMapScene extends GameController {
 
             @Override
             public void onPlayerLost(Player player) {
+                if(gameIsOver)
+                    return;
+
                 try {
                     String text = gameMapData.getResourceBundle().getString("gamemap.playerLostTheGame1") + " " + player.getName() + " " +
                             gameMapData.getResourceBundle().getString("gamemap.playerLostTheGame2");
@@ -698,36 +768,31 @@ public class GameMapScene extends GameController {
 
             @Override
             public void onGameDone(List<Player> winners) {
-                if(winners.size() > 0) {
-                    try {
-                        List<String> winnerNames = new ArrayList<>(winners.size());
+                if(gameIsOver)
+                    return;
 
-                        for(Player tmpPlayer : winners)
-                            winnerNames.add(tmpPlayer.getName());
+                gameDoneCalled = true;
+                gameIsOver = true;
 
-                        showListDialogue(
-                                gameMapData.getResourceBundle().getString("gamemap.theGameIsOver"),
-                                gameMapData.getResourceBundle().getString("gamemap.playersWonLabel"),
-                                winnerNames,
-                                new Image(gameMapData.getResourcepack().getResourceAsStream(Figures.HEDGEHOG_PNG)),
-                                true,
-                                gameMapData.getGameMapCallback());
-                    }
-                    catch (Exception exception) {
-                        gameMapData.getGameMapCallback().onException(exception);
-                    }
-                }
+                if(winners.size() > 0)
+                    showWinnersDialogue(winners, gameMapData);
 
                 gameMapData.getGameMapCallback().onGameOver();
             }
 
             @Override
             public void onPlayerInDanger(Player player) {
+                if(gameIsOver)
+                    return;
+
                 foxIsNearAudioPlayer.playRandomSound();
             }
 
             @Override
             public void onFoxMove(NPC fox, List<Tile> tilesToMove) {
+                if(gameIsOver)
+                    return;
+
                 Tile firstTile = tilesToMove.get(0);
                 Tile lastTile = tilesToMove.get(tilesToMove.size() - 1);
 
@@ -755,6 +820,26 @@ public class GameMapScene extends GameController {
         }
         else {
             gameMode = new Cooperative(gameMapData.getPlayers(), gameModeCallback, map, gameMapData.getFoxMovementCount());
+        }
+    }
+
+    private void showWinnersDialogue(List<Player> winners, GameMapData gameMapData) {
+        try {
+            List<String> winnerNames = new ArrayList<>(winners.size());
+
+            for(Player tmpPlayer : winners)
+                winnerNames.add(tmpPlayer.getName());
+
+            showListDialogue(
+                    gameMapData.getResourceBundle().getString("gamemap.theGameIsOver"),
+                    gameMapData.getResourceBundle().getString("gamemap.playersWonLabel"),
+                    winnerNames,
+                    new Image(gameMapData.getResourcepack().getResourceAsStream(Figures.HEDGEHOG_PNG)),
+                    true,
+                    gameMapData.getGameMapCallback());
+        }
+        catch (Exception exception) {
+            gameMapData.getGameMapCallback().onException(exception);
         }
     }
 
@@ -929,7 +1014,7 @@ public class GameMapScene extends GameController {
                 new Image(
                         imageStream,
                         height - padding * 2,
-                height - padding * 2,
+                        height - padding * 2,
                         true,
                         true));
 
@@ -1015,7 +1100,7 @@ public class GameMapScene extends GameController {
         RollCallback rollCallback = new SelectiveRollCallback() {
             @Override
             public void onRollIsReady() {
-               if(!rollStage.isShowing()) {
+                if(!rollStage.isShowing()) {
                     sceneManager.switchScene(interactiveBallScene);
 
                     rollStage.show();
@@ -1025,7 +1110,7 @@ public class GameMapScene extends GameController {
 
             @Override
             public void onRollCompleted(CollectablesCount collectablesCount) {
-               rollStage.hide();
+                rollStage.hide();
 
                 Roll roll = new Roll(
                         collectablesCount.getApplesCount(),
