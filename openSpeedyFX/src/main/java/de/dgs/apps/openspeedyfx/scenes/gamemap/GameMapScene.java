@@ -455,20 +455,16 @@ public class GameMapScene extends GameController {
 
                 if(!gameDoneCalled)
                     Platform.runLater(() -> {
-                        boolean isCompetitive = mapData.getStartTile().getTileType() == TileType.HEDGEHOG_START;
+                        gameDoneCalled = true;
+                        gameIsOver = true;
 
-                        if(isCompetitive && playersWon.size() == gameMapData.getPlayers().size() - 1) {
-                            gameDoneCalled = true;
-                            gameIsOver = true;
+                        lblApplesItemCount.setText("0");
+                        lblLeavesItemsCount.setText("0");
+                        lblMushroomsItemCount.setText("0");
 
-                            lblApplesItemCount.setText("0");
-                            lblLeavesItemsCount.setText("0");
-                            lblMushroomsItemCount.setText("0");
+                        showWinnersDialogue(playersWon, gameMapData);
 
-                            showWinnersDialogue(playersWon, gameMapData);
-
-                            gameMapData.getGameMapCallback().onGameOver();
-                        }
+                        gameMapData.getGameMapCallback().onGameOver();
                     });
             }
             catch (Exception exception) {
@@ -734,7 +730,10 @@ public class GameMapScene extends GameController {
                             true,
                             gameMapData.getGameMapCallback());
 
-                    new GameOverWorkaroundThread(gameMapData).start();
+                    boolean isCompetitive = mapData.getStartTile().getTileType() == TileType.HEDGEHOG_START;
+
+                    if(isCompetitive)
+                        new GameOverWorkaroundThread(gameMapData).start();
                 }
                 catch (Exception exception) {
                     gameMapData.getGameMapCallback().onException(exception);
