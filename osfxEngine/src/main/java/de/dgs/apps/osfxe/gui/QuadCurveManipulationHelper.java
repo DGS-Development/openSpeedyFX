@@ -14,19 +14,54 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/*
+Copyright 2021 DGS-Development (https://github.com/DGS-Development)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+ */
+
+/**
+ * Helper class to manipulate {@link QuadCurve} elements, by displaying a {@link Circle} element to manipulate the "control"-property.
+ */
 public class QuadCurveManipulationHelper {
-    private ObservableList<Node> rootChildren;
+    private final ObservableList<Node> rootChildren;
 
-    private Map<QuadCurve, List<Node>> curveNodesMap = new HashMap<>();
+    private final Map<QuadCurve, List<Node>> curveNodesMap = new HashMap<>();
 
+    /**
+     * Creates an new {@link QuadCurveManipulationHelper}.
+     * @param rootChildren The list to containing the {@link QuadCurve} elements.
+     */
     public QuadCurveManipulationHelper(ObservableList<Node> rootChildren) {
         this.rootChildren = rootChildren;
     }
 
+    /**
+     * Adds a control-element for a certain {@link QuadCurve} element.
+     * @param quadCurve The {@link QuadCurve} to manipulate.
+     */
     public void add(QuadCurve quadCurve) {
         add(quadCurve, Color.rgb(0,0,0, 0.5), 2, 7, Color.WHITE);
     }
 
+    /**
+     * Adds a control-element for a certain {@link QuadCurve} element.
+     * @param quadCurve The {@link QuadCurve} to manipulate.
+     * @param strokeColor The {@link Color} of the lines to the {@link Circle} control element.
+     * @param strokeWidth The width of the lines to the {@link Circle} control element.
+     * @param circleRadius The radius of the {@link Circle} control element.
+     * @param circleColor The color of the {@link Circle} control element.
+     */
     public void add(QuadCurve quadCurve, Color strokeColor, double strokeWidth, double circleRadius, Color circleColor) {
         Line startLine = new Line();
         startLine.setStroke(strokeColor);
@@ -68,6 +103,10 @@ public class QuadCurveManipulationHelper {
         rootChildren.addAll(curveNodes);
     }
 
+    /**
+     * Removes a control-element for a certain {@link QuadCurve} element.
+     * @param quadCurve The {@link QuadCurve} to remove the manipulation.
+     */
     public void remove(QuadCurve quadCurve) {
         if(curveNodesMap.containsKey(quadCurve)) {
             rootChildren.removeAll(curveNodesMap.get(quadCurve));
@@ -75,6 +114,9 @@ public class QuadCurveManipulationHelper {
         }
     }
 
+    /**
+     * Removes all control-elements for all registered {@link QuadCurve} elements.
+     */
     public void removeAll() {
         curveNodesMap.keySet().forEach(quadCurve -> rootChildren.removeAll(curveNodesMap.get(quadCurve)));
         curveNodesMap.clear();

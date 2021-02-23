@@ -16,6 +16,22 @@ import javafx.scene.text.Font;
 
 import java.util.*;
 
+/*
+Copyright 2021 DGS-Development (https://github.com/DGS-Development)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+ */
+
 public abstract class AbstractBallScene extends GameController {
     @FXML
     protected AnchorPane apRoot;
@@ -51,7 +67,7 @@ public abstract class AbstractBallScene extends GameController {
     protected Label lblCollectedApplesCount;
 
     @FXML
-    protected Label lblCollectedLeafsCount;
+    protected Label lblCollectedLeavesCount;
 
     @FXML
     protected Label lblCollectedMushroomsCount;
@@ -69,7 +85,7 @@ public abstract class AbstractBallScene extends GameController {
     protected ImageView imgCollectedApples;
 
     @FXML
-    protected ImageView imgCollectedLeafs;
+    protected ImageView imgCollectedLeaves;
 
     @FXML
     protected ImageView imgCollectedMushrooms;
@@ -93,7 +109,7 @@ public abstract class AbstractBallScene extends GameController {
     protected static final int COLLECTABLES_ITEM_FIT_WIDTH = 45;
 
     protected SimpleIntegerProperty lblCollectedApplesCountProperty;
-    protected SimpleIntegerProperty lblCollectedLeafsCountProperty;
+    protected SimpleIntegerProperty lblCollectedLeavesCountProperty;
     protected SimpleIntegerProperty lblCollectedMushroomsCountProperty;
 
     private static final double SCENE_LABEL_FONTSIZE = 14.5;
@@ -104,8 +120,8 @@ public abstract class AbstractBallScene extends GameController {
         lblCollectedApplesCountProperty = new SimpleIntegerProperty();
         lblCollectedApplesCountProperty.addListener((observable, oldValue, newValue) -> lblCollectedApplesCount.setText(newValue + ""));
 
-        lblCollectedLeafsCountProperty = new SimpleIntegerProperty();
-        lblCollectedLeafsCountProperty.addListener((observable, oldValue, newValue) -> lblCollectedLeafsCount.setText(newValue + ""));
+        lblCollectedLeavesCountProperty = new SimpleIntegerProperty();
+        lblCollectedLeavesCountProperty.addListener((observable, oldValue, newValue) -> lblCollectedLeavesCount.setText(newValue + ""));
 
         lblCollectedMushroomsCountProperty = new SimpleIntegerProperty();
         lblCollectedMushroomsCountProperty.addListener((observable, oldValue, newValue) -> lblCollectedMushroomsCount.setText(newValue + ""));
@@ -139,7 +155,7 @@ public abstract class AbstractBallScene extends GameController {
                 true,
                 true));
 
-        imgCollectedLeafs.setImage(new Image(
+        imgCollectedLeaves.setImage(new Image(
                 resourcepack.getResourceAsStream(ResourcepackPaths.Fields.LEAF_FIELD_PNG),
                 MENU_COLLECTED_ITEMS_FIT_WIDTH,
                 MENU_COLLECTED_ITEMS_FIT_WIDTH,

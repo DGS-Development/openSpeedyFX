@@ -8,6 +8,16 @@
   <artifactId>osfxEngine</artifactId>
   <version>0.0.1</version>
 
+  <name>osfxEngine</name>
+  <url>https://github.com/DGS-Development/openSpeedyFX</url>
+
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>14</maven.compiler.source>

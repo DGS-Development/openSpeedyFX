@@ -41,6 +41,21 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 
+/*
+Copyright 2021 DGS-Development (https://github.com/DGS-Development)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+ */
 
 public class MainMenuScene extends GameController {
     @FXML
@@ -193,6 +208,9 @@ public class MainMenuScene extends GameController {
     @FXML
     private ChoiceBox<String> cbDifficulties;
 
+    @FXML
+    private VBox vbHead;
+
     @Override
     public String getFxmlPath() {
         return "/assets/fxml/mainmenu/mainmenu.fxml";
@@ -212,8 +230,12 @@ public class MainMenuScene extends GameController {
 
     @Override
     public void onInitialized() {
+        //----------------------------
         //Setup animations.
-        final Image image = new Image(getClass().getResourceAsStream("/assets/fxml/mainmenu/hedgehogSpriteAnimation.png"));
+        //----------------------------
+
+        //Hedgehog sprite animation.
+        Image image = new Image(getClass().getResourceAsStream("/assets/fxml/mainmenu/hedgehogSpriteAnimation.png"));
 
         final int COLUMNS = 8;
         final int COUNT = 8;
@@ -225,7 +247,7 @@ public class MainMenuScene extends GameController {
         imgHedgehog.setImage(image);
         imgHedgehog.setViewport(new Rectangle2D(OFFSET_X, OFFSET_Y, WIDTH, HEIGHT));
 
-        final Animation spriteAnimation = new SpriteAnimation(
+        Animation spriteAnimation = new SpriteAnimation(
                 imgHedgehog,
                 Duration.millis(1000),
                 COUNT, COLUMNS,
@@ -236,10 +258,40 @@ public class MainMenuScene extends GameController {
         spriteAnimation.setCycleCount(Animation.INDEFINITE);
         spriteAnimation.play();
 
+        //Pulsing logo.
         new Pulse(imgLogo).setCycleCount(AnimationFX.INDEFINITE).play();
-        new FadeInUpBig(bpControls).setDelay(Duration.millis(1500)).play();
 
+        //Controls fade in effect.
+        FadeInDownBig headFadeInDownBig = new FadeInDownBig(vbHead);
+        headFadeInDownBig.setDelay(Duration.millis(1500));
+
+        headFadeInDownBig.getTimeline().currentTimeProperty().addListener(new ChangeListener<>() {
+            @Override
+            public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {
+                headFadeInDownBig.getTimeline().currentTimeProperty().removeListener(this);
+                vbHead.setVisible(true);
+            }
+        });
+
+        headFadeInDownBig.play();
+
+        FadeInUpBig controlsFadeInUpBig = new FadeInUpBig(bpControls);
+        controlsFadeInUpBig.setDelay(Duration.millis(2000));
+
+        controlsFadeInUpBig.getTimeline().currentTimeProperty().addListener(new ChangeListener<>() {
+            @Override
+            public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {
+                controlsFadeInUpBig.getTimeline().currentTimeProperty().removeListener(this);
+                bpControls.setVisible(true);
+            }
+        });
+
+        controlsFadeInUpBig.play();
+
+        //----------------------------
         //Setup logic.
+        //----------------------------
+
         SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 10, 3);
         spPlayersCount.setValueFactory(valueFactory);
 

@@ -1,5 +1,21 @@
 package de.dgs.apps.openspeedyfx.game.resourcepacks;
 
+/*
+Copyright 2021 DGS-Development (https://github.com/DGS-Development)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+ */
+
 public class ResourcepackPaths {
     public static class Fields {
         public static final String BASE_PATH = "/fields";
@@ -43,9 +59,9 @@ public class ResourcepackPaths {
             public static final String APPLE_1_WAV = BASE_PATH + "/apple1.wav";
             public static final String APPLE_2_WAV = BASE_PATH + "/apple2.wav";
 
-            public static final String LEAFS_1_WAV = BASE_PATH + "/leafs1.wav";
-            public static final String LEAFS_2_WAV = BASE_PATH + "/leafs2.wav";
-            public static final String LEAFS_3_WAV = BASE_PATH + "/leafs3.wav";
+            public static final String LEAVES_1_WAV = BASE_PATH + "/leaves1.wav";
+            public static final String LEAVES_2_WAV = BASE_PATH + "/leaves2.wav";
+            public static final String LEAVES_3_WAV = BASE_PATH + "/leaves3.wav";
 
             public static final String MUSHROOM_1_WAV = BASE_PATH + "/mushroom1.wav";
             public static final String MUSHROOM_2_WAV = BASE_PATH + "/mushroom2.wav";

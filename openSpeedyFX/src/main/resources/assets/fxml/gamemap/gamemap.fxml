@@ -112,12 +112,12 @@
                   </HBox>
                   <HBox alignment="CENTER_LEFT" maxWidth="1.7976931348623157E308" prefHeight="51.0" prefWidth="170.0">
                      <children>
-                        <ImageView fx:id="imgCollectedLeafs" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="imgCollectedLeaves" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../resourcepack/default/fields/leafField.png" />
                            </image>
                         </ImageView>
-                        <Label fx:id="lblLeafsItemsCount" text="0" textFill="WHITE">
+                        <Label fx:id="lblLeavesItemsCount" text="0" textFill="WHITE">
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>
