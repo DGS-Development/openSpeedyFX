@@ -1,0 +1,22 @@
+Third-party dependencies:
+     (Apache License, Version 2.0) Java Faker (com.github.javafaker:javafaker:1.0.2 - http://github.com/DiUS/java-faker)
+     (Apache License, Version 2.0) Generex (com.github.mifmif:generex:1.0.2 - https://github.com/mifmif/Generex/tree/master)
+     (Apache License, Version 2.0) Gson (com.google.code.gson:gson:2.8.6 - https://github.com/google/gson/gson)
+     (Apache License, Version 2.0) SnakeYAML (org.yaml:snakeyaml:1.23 - http://www.snakeyaml.org)
+     (Apache License, Version 2.0) AnimateFX (io.github.typhon0:AnimateFX:1.2.2 - https://github.com/typhon0/AnimateFX)
+     (Apache License, Version 2.0) Apache Commons Lang (org.apache.commons:commons-lang3:3.5 - http://commons.apache.org/proper/commons-lang/)
+
+     (LGPL 2.1 license) JOrbis (com.googlecode.soundlibs:jorbis:0.0.17.4 - https://code.google.com/p/soundlibs/jorbis/)
+     (LGPL 2.1 license) tritonus-share (com.googlecode.soundlibs:tritonus-share:0.3.7.4 - https://code.google.com/p/soundlibs/tritonus-share/)
+     (LGPL 2.1 license) VorbisSPI (com.googlecode.soundlibs:vorbisspi:1.0.3.3 - https://code.google.com/p/soundlibs/vorbisspi/)
+
+     (2-Clause BSD License) Automaton (dk.brics.automaton:automaton:1.11-8 - http://www.brics.dk/automaton/)
+     (2-Clause BSD License) jbox2d-library (org.jbox2d:jbox2d-library:2.2.1.1 - https://github.com/jbox2d/jbox2d)
+
+     (BSD 3-Clause License) OWNER :: Core (org.aeonbits.owner:owner:1.0.8 - http://owner.aeonbits.org/owner)
+     
+     (GPLv2+CE) javafx-base (org.openjfx:javafx-base:14 - https://github.com/openjdk/jfx/tree/master/modules/javafx.base)
+     (GPLv2+CE) javafx-controls (org.openjfx:javafx-controls:14 - https://github.com/openjdk/jfx/tree/master/modules/javafx.controls)
+     (GPLv2+CE) javafx-fxml (org.openjfx:javafx-fxml:14 - https://github.com/openjdk/jfx/tree/master/modules/javafx.fxml)
+     (GPLv2+CE) javafx-graphics (org.openjfx:javafx-graphics:14 - https://github.com/openjdk/jfx/tree/master/modules/javafx.graphics)
+     (GPLv2+CE) javafx-media (org.openjfx:javafx-media:14 - https://github.com/openjdk/jfx/tree/master/modules/javafx.media)

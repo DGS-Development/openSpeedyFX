@@ -5,6 +5,8 @@
 
 openSpeedyFX is a free open-source 2D board game, inspired by Urtis Šulinskas's "Speedy Roll". It was a student research project to practice software engineering. The implementation is Java based.
 
+![featuresPreview](https://github.com/DGS-Development/openSpeedyFX/blob/main/docs/img/featuresPreview.png?raw=true)
+
 This repository includes the game itself ("openSpeedyFX") and an expandable game engine, using JavaFX and jbox2d ("osfxEngine"). It's the foundation for the project, but can be used for any 2D-based games. 
 
 Although the code is covered by a permissive open-source-license (Apache-2.0 License) , and no assets of "Speedy Roll" were used, you can't use the project commercially ("as it is"). It includes some assets which forbid any commercial use.
