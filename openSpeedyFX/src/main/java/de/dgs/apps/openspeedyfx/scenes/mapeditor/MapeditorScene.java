@@ -186,6 +186,7 @@ public class MapeditorScene extends GameController {
     //Actual map.
     private File fxmlFile;
     private Pane rootNode;
+    private ClipAdaptionHelper clipAdaptionHelper;
     private ZoomingPane zoomingPane;
     private ZoomingPaneInteractionController sceneInteractionController;
 
@@ -224,7 +225,7 @@ public class MapeditorScene extends GameController {
     }
 
     private void setupClipAdaption() {
-        ClipAdaptionHelper clipAdaptionHelper = new ClipAdaptionHelper();
+        clipAdaptionHelper = new ClipAdaptionHelper();
         clipAdaptionHelper.bindClipAdaption(paneRoot);
     }
 
