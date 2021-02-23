@@ -1,5 +1,6 @@
 package de.dgs.apps.openspeedyfx;
 
+import de.dgs.apps.openspeedyfx.scenes.ballscene.logic.HedgehogIrritation;
 import org.aeonbits.owner.Accessible;
 import org.aeonbits.owner.Config.Sources;
 import org.aeonbits.owner.Mutable;
@@ -31,7 +32,6 @@ public interface OpenSpeedyConfiguration extends Mutable, Accessible, Reloadable
     String PROPERTY_SHOW_HINTS = "showHints";
     String PROPERTY_AUTO_SCROLL = "autoScroll";
     String PROPERTY_CUSTOM_MAPS_DIRECTORY_PATH = "customMapsDirectoryPath";
-    String PROPERTY_FOX_MOVEMENT_COUNT = "foxMovementCount";
 
     @Separator(";")
     @DefaultValue("DE;EN")
@@ -64,6 +64,31 @@ public interface OpenSpeedyConfiguration extends Mutable, Accessible, Reloadable
     @DefaultValue("CUSTOM_MAPS")
     String customMapsDirectoryPath();
 
-    @DefaultValue("4")
-    int foxMovementCount();
+    @Separator(";")
+    @DefaultValue("3;3;4")
+    int[] foxMovementCount();
+
+    @Separator(";")
+    @DefaultValue("false;true;true")
+    boolean[] difficultiesIrritationImbalance();
+
+    @Separator(";")
+    @DefaultValue("0.09f;0.15f;0.25f")
+    float[] difficultiesIrritationSlowdownFactor();
+
+    @Separator(";")
+    @DefaultValue("0.65f;0.70f;0.75f")
+    float[] difficultiesPhysicsLinearDamping();
+
+    @Separator(";")
+    @DefaultValue("0.5f;0.5f;0.5f")
+    float[] difficultiesPhysicsDensity();
+
+    @Separator(";")
+    @DefaultValue("0.90f;0.99f;1.15f")
+    float[] difficultiesPhysicsFriction();
+
+    @Separator(";")
+    @DefaultValue("0.6f;0.6f;0.6f")
+    float[] difficultiesPhysicsRestitution();
 }

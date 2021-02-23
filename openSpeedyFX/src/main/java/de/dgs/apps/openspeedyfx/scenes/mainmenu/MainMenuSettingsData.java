@@ -21,7 +21,6 @@ public class MainMenuSettingsData {
     private float effectsVolume;
     private boolean showHints;
     private boolean autoScroll;
-    private int foxMovementCount;
     private String customMapPath;
 
     public float getMusicVolume() {
@@ -55,10 +54,6 @@ public class MainMenuSettingsData {
     public void setAutoScroll(boolean autoScroll) {
         this.autoScroll = autoScroll;
     }
-
-    public void setFoxMovementCount(int foxMovementCount) { this.foxMovementCount = foxMovementCount; }
-
-    public int getFoxMovementCount() { return foxMovementCount; }
 
     public void setCustomMapPath(String customMapPath) { this.customMapPath = customMapPath; }
 

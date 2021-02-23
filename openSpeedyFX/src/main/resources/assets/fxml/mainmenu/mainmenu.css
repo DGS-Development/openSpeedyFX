@@ -43,8 +43,8 @@
 
 .text-area .scroll-pane {
     -fx-background-color: transparent;
-    -fx-hbar-policy : never;
-    -fx-vbar-policy : never;
+    -fx-hbar-policy: never;
+    -fx-vbar-policy: never;
 }
 
 .text-area .scroll-pane .viewport {
@@ -57,4 +57,40 @@
 
 .text-area *.text {
     -fx-text-alignment: center;
+}
+
+.choiceBox {
+    -fx-background-color: rgba(0, 0, 0, 0.15);
+    -fx-font-size: 18px;
+    -fx-mark-color: white;
+}
+
+.choiceBox .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 7, 0.5, 0.0, 0.0);
+}
+
+.choiceBox .menu-item > .label {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 7, 0.5, 0.0, 0.0);
+}
+
+.choiceBox:hover {
+    -fx-background-color: rgba(0, 0, 0, 0.62);
+}
+
+.choiceBox .context-menu {
+    -fx-background-color: rgba(0, 0, 0, 0.62);
+    -fx-text-fill: #242424;
+    -fx-font-size: 15px;
+}
+
+.list {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.spinner {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
 }

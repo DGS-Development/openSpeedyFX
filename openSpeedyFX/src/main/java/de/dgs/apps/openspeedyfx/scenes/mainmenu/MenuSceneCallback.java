@@ -22,9 +22,9 @@ limitations under the License.
  */
 
 public interface MenuSceneCallback {
-    void onCooperativeStart(int playersCount, Player player, Path mapInfoPath);
+    void onCooperativeStart(int playersCount, Player player, Path mapInfoPath, Difficulty difficulty);
 
-    void onCompetitiveStart(List<Player> players, Path mapInfoPath);
+    void onCompetitiveStart(List<Player> players, Path mapInfoPath, Difficulty difficulty);
 
     void onLevelEditorClicked();
 
