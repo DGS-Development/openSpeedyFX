@@ -71,6 +71,10 @@ public class OpenSpeedyGameApp extends Application {
         setStageInfo(gameMapStage, resourceBundle.getString("app.gameMapStageTitle"), "/assets/fxml/gamemap/mapIcon.png");
     }
 
+    public void start(String[] args) {
+        launch(args);
+    }
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         mainMenuStage = primaryStage;
@@ -382,7 +386,6 @@ public class OpenSpeedyGameApp extends Application {
 
         return configuration.foxMovementCount()[index];
     }
-
 
     private HedgehogIrritation irritationFromDifficulty(Difficulty difficulty, OpenSpeedyConfiguration configuration) {
         int index = indexFromDifficulty(difficulty);
