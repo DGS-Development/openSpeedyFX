@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.dgs.apps.openspeedyfx.speedyfield.SpeedyFxField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1052.0" prefWidth="2567.0" styleClass="floorTexture" stylesheets="@../assets/general/default.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="510.0" fitWidth="966.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/tiles/1a.png" />
+         </image>
+      </ImageView>
+      <SpeedyFxField fieldId="sff16108985088020" fxFieldType="MUSHROOM_ITEM_FIELD" layoutX="317.0" layoutY="387.0" />
+      <SpeedyFxField fieldId="sff16108985088041" fxFieldType="START_FIELD" layoutX="126.0" layoutY="243.0" />
+      <SpeedyFxField fieldId="sff16108985088042" fxFieldType="LEAF_ITEM_FIELD" layoutX="331.0" layoutY="62.0" />
+      <SpeedyFxField fieldId="sff16108985088043" fxFieldType="APPLE_ITEM_FIELD" layoutX="334.0" layoutY="230.0" />
+      <SpeedyFxField fieldId="sff16108985088044" fxFieldType="MUSHROOM_ITEM_FIELD" layoutX="598.0" layoutY="315.0" />
+      <ImageView fitHeight="438.0" fitWidth="1017.0" layoutX="979.0" layoutY="61.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/tiles/3a.png" />
+         </image>
+      </ImageView>
+      <SpeedyFxField fieldId="sff16108993516080" fxFieldType="APPLE_ITEM_FIELD" layoutX="836.0" layoutY="55.0" />
+      <SpeedyFxField fieldId="sff16108993516091" fxFieldType="LEAF_ITEM_FIELD" layoutX="589.0" layoutY="128.0" />
+      <SpeedyFxField fieldId="sff16108993516092" fxFieldType="APPLE_ITEM_FIELD" layoutX="836.0" layoutY="214.0" />
+      <SpeedyFxField fieldId="sff16108993516093" fxFieldType="MUSHROOM_ITEM_FIELD" layoutX="829.0" layoutY="377.0" />
+      <SpeedyFxField fieldId="sff16108993516104" fxFieldType="MUSHROOM_ITEM_FIELD" layoutX="1129.0" layoutY="147.0" />
+      <SpeedyFxField fieldId="sff16108993516105" fxFieldType="MUSHROOM_ITEM_FIELD" layoutX="1129.0" layoutY="347.0" />
+      <SpeedyFxField fieldId="sff16108993516106" fxFieldType="APPLE_ITEM_FIELD" layoutX="1384.0" layoutY="72.0" />
+      <SpeedyFxField fieldId="sff16108993516107" fxFieldType="LEAF_ITEM_FIELD" layoutX="1393.0" layoutY="235.0" />
+      <SpeedyFxField fieldId="sff16108993516108" fxFieldType="APPLE_ITEM_FIELD" layoutX="1393.0" layoutY="387.0" />
+      <SpeedyFxField fieldId="sff16108993516109" fxFieldType="APPLE_ITEM_FIELD" layoutX="1629.0" layoutY="135.0" />
+      <SpeedyFxField fieldId="sff161089935161010" fxFieldType="LEAF_ITEM_FIELD" layoutX="1644.0" layoutY="331.0" />
+      <SpeedyFxField fieldId="sff161089935161011" fxFieldType="LEAF_ITEM_FIELD" layoutX="1836.0" layoutY="72.0" />
+      <SpeedyFxField fieldId="sff161089935161012" fxFieldType="MUSHROOM_ITEM_FIELD" layoutX="1834.0" layoutY="240.0" />
+      <SpeedyFxField fieldId="sff161089935161013" fxFieldType="MUSHROOM_ITEM_FIELD" layoutX="1834.0" layoutY="400.0" />
+      <ImageView layoutX="367.0" layoutY="577.0" preserveRatio="true">
+         <image>
+            <Image url="@../assets/general/hedgehog.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="917.0" fitWidth="455.0" layoutX="1995.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/tiles/2a.png" />
+         </image>
+      </ImageView>
+      <SpeedyFxField fieldId="sff161089935161014" fxFieldType="LEAF_ITEM_FIELD" layoutX="2220.0" layoutY="76.0" />
+      <SpeedyFxField fieldId="sff161089935161015" fxFieldType="APPLE_ITEM_FIELD" layoutX="2140.0" layoutY="227.0" />
+      <SpeedyFxField fieldId="sff161089935161016" fxFieldType="MUSHROOM_ITEM_FIELD" layoutX="2354.0" layoutY="221.0" />
+      <SpeedyFxField fieldId="sff161089935161017" fxFieldType="MUSHROOM_ITEM_FIELD" layoutX="2060.0" layoutY="377.0" />
+      <SpeedyFxField fieldId="sff161089935161018" fxFieldType="APPLE_ITEM_FIELD" layoutX="2233.0" layoutY="377.0" />
+      <SpeedyFxField fieldId="sff161089935161019" fxFieldType="MUSHROOM_ITEM_FIELD" layoutX="2060.0" layoutY="543.0" />
+      <SpeedyFxField fieldId="sff161089935161020" fxFieldType="LEAF_ITEM_FIELD" layoutX="2238.0" layoutY="554.0" />
+      <SpeedyFxField fieldId="sff161089935161021" fxFieldType="MUSHROOM_ITEM_FIELD" layoutX="2352.0" layoutY="709.0" />
+      <SpeedyFxField fieldId="sff161089935161022" fxFieldType="APPLE_ITEM_FIELD" layoutX="2149.0" layoutY="711.0" />
+      <SpeedyFxField fieldId="sff161089935161023" fxFieldType="LEAF_ITEM_FIELD" layoutX="2213.0" layoutY="878.0" />
+      <ImageView fitHeight="473.0" fitWidth="966.0" layoutX="1029.0" layoutY="512.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/tiles/1a.png" />
+         </image>
+      </ImageView>
+      <SpeedyFxField fieldId="sff161089935161024" fxFieldType="APPLE_ITEM_FIELD" layoutX="1350.0" layoutY="557.0" />
+      <SpeedyFxField fieldId="sff161089935161025" fxFieldType="END_FIELD" layoutX="1141.0" layoutY="743.0" />
+      <SpeedyFxField fieldId="sff161089935161026" fxFieldType="APPLE_ITEM_FIELD" layoutX="1344.0" layoutY="723.0" />
+      <SpeedyFxField fieldId="sff161089935161027" fxFieldType="APPLE_ITEM_FIELD" layoutX="1851.0" layoutY="557.0" />
+      <SpeedyFxField fieldId="sff161089935161028" fxFieldType="MUSHROOM_ITEM_FIELD" layoutX="1606.0" layoutY="629.0" />
+      <SpeedyFxField fieldId="sff161089935161029" fxFieldType="MUSHROOM_ITEM_FIELD" layoutX="1605.0" layoutY="812.0" />
+      <SpeedyFxField fieldId="sff161089935161130" fxFieldType="LEAF_ITEM_FIELD" layoutX="1328.0" layoutY="887.0" />
+      <SpeedyFxField fieldId="sff161089935161131" fxFieldType="LEAF_ITEM_FIELD" layoutX="1845.0" layoutY="718.0" />
+      <SpeedyFxField fieldId="sff161089935161132" fxFieldType="MUSHROOM_ITEM_FIELD" layoutX="1847.0" layoutY="877.0" />
+      <ImageView fitHeight="327.0" fitWidth="527.0" layoutX="388.0" layoutY="397.0" preserveRatio="true">
+         <image>
+            <Image url="@../assets/general/tree1.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="328.0" fitWidth="301.0" layoutX="793.0" layoutY="487.0" preserveRatio="true">
+         <image>
+            <Image url="@../assets/general/cottage2.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="327.0" fitWidth="527.0" layoutX="174.0" layoutY="571.0" preserveRatio="true">
+         <image>
+            <Image url="@../assets/general/tree1.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="78.0" fitWidth="72.0" layoutX="699.0" layoutY="704.0" preserveRatio="true">
+         <image>
+            <Image url="@../assets/general/stump1.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="323.0" fitWidth="447.0" layoutX="628.0" layoutY="714.0" preserveRatio="true">
+         <image>
+            <Image url="@../assets/general/tree2.png" />
+         </image>
+      </ImageView>
+      <ImageView layoutX="1596.0" layoutY="447.0">
+         <image>
+            <Image url="@../assets/general/stump2.png" />
+         </image>
+      </ImageView>
+      <ImageView layoutX="1701.0" layoutY="505.0">
+         <image>
+            <Image url="@../assets/general/stump3.png" />
+         </image>
+      </ImageView>
+      <ImageView layoutX="1482.0" layoutY="498.0">
+         <image>
+            <Image url="@../assets/general/stump3.png" />
+         </image>
+      </ImageView>
+      <ImageView layoutX="1113.0" layoutY="518.0">
+         <image>
+            <Image url="@../assets/general/stump3.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="81.0" fitWidth="54.0" layoutX="1118.0" layoutY="453.0" preserveRatio="true">
+         <image>
+            <Image url="@../assets/general/owl.png" />
+         </image>
+      </ImageView>
+      <ImageView layoutX="244.0" layoutY="301.0" preserveRatio="true">
+         <image>
+            <Image url="@../assets/general/mole.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="154.0" fitWidth="126.0" layoutX="2437.0" layoutY="872.0" preserveRatio="true">
+         <image>
+            <Image url="@../assets/general/pond3.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="88.0" fitWidth="117.0" layoutX="2360.0" layoutY="873.0" preserveRatio="true">
+         <image>
+            <Image url="@../assets/general/frogOnALillypad.png" />
+         </image>
+      </ImageView>
+      <ImageView layoutX="971.0" layoutY="142.0">
+         <image>
+            <Image url="@../assets/general/stump3.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

@@ -10,6 +10,7 @@ import de.dgs.apps.openspeedyfx.game.resourcepacks.ResourcepackPaths.Music;
 import de.dgs.apps.osfxe.audio.AudioPlayer;
 import de.dgs.apps.osfxe.gui.SpriteAnimation;
 import de.dgs.apps.osfxe.scenes.GameController;
+import de.dgs.apps.osfxe.util.FileUtil;
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.application.Platform;
@@ -37,6 +38,9 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
@@ -326,12 +330,23 @@ public class MainMenuScene extends GameController {
         String content;
 
         try {
-            content = Files.readString(Path.of(getClass().getResource("/resources.txt").toURI()));
-        } catch (Exception exception) {
-            content = "Unable to load credits: " + exception.toString();
+            content = inputStreamToText(getClass().getResourceAsStream("/about.txt"));
+        }
+        catch (Exception exception) {
+            content = "Unable to load about-section: " + exception.toString();
         }
 
         txtAreaCredits.setText(content);
+    }
+
+    private String inputStreamToText(InputStream inputStream) {
+        String text;
+
+        try (Scanner scanner = new Scanner(inputStream, StandardCharsets.UTF_8.name())) {
+            text = scanner.useDelimiter("\\A").next();
+        }
+
+        return text;
     }
 
     public void setupMenuScene(Resourcepack resourcepack, MainMenuSettingsData mainMenuSettingsData,
@@ -554,29 +569,21 @@ public class MainMenuScene extends GameController {
         try {
             tabPaneMenus.getSelectionModel().select(tabMapSelection);
 
-
+            //Load maps from filesystem.
             List<Path> mapPaths = new LinkedList<>();
 
-            //Load maps from classpath.
-            Path mapFilesPath;
+            File defaultMapDirectory = new File(settingsData.getDefaultMapPath());
 
-            if (isCooperativeMode) {
-                mapFilesPath = Path.of(getClass().getResource("/assets/fxml/defaultmaps/cooperative").toURI());
-            } else {
-                mapFilesPath = Path.of(getClass().getResource("/assets/fxml/defaultmaps/competitive").toURI());
+            if (defaultMapDirectory.isDirectory()) {
+                for(File tmpFile : FileUtil.listFiles(defaultMapDirectory, ".mapj"))
+                    mapPaths.add(tmpFile.toPath());
             }
 
-            Files.list(mapFilesPath)
-                    .filter(path -> path.getFileName().toString().endsWith(".mapj"))
-                    .forEach(mapPaths::add);
-
-            //Load maps from filesystem.
             File customMapDirectory = new File(settingsData.getCustomMapPath());
 
             if (customMapDirectory.isDirectory()) {
-                Files.list(customMapDirectory.toPath())
-                        .filter(path -> path.getFileName().toString().endsWith(".mapj") && path.toFile().isFile())
-                        .forEach(mapPaths::add);
+                for(File tmpFile : FileUtil.listFiles(customMapDirectory, ".mapj"))
+                    mapPaths.add(tmpFile.toPath());
             }
 
             Map<String, Path> namePathMap = new HashMap<>();
@@ -587,6 +594,17 @@ public class MainMenuScene extends GameController {
 
             for (Path tmpPath : mapPaths) {
                 MapInfo mapInfo = new Gson().fromJson(Files.readString(tmpPath), MapInfo.class);
+
+                if(isCooperativeMode && mapInfo.isCompetitive()) {
+                    continue;
+                }
+                else if(!isCooperativeMode && !mapInfo.isCompetitive()){
+                    continue;
+                }
+
+                if(names.contains(mapInfo.getMapName()))
+                    continue;
+
                 names.add(mapInfo.getMapName());
 
                 namePathMap.put(mapInfo.getMapName(), tmpPath);

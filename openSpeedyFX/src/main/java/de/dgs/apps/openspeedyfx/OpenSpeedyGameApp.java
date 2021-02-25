@@ -6,7 +6,6 @@ import de.dgs.apps.openspeedyfx.game.resourcepacks.Resourcepack;
 import de.dgs.apps.openspeedyfx.game.resourcepacks.ResourcepackPaths.Figures;
 import de.dgs.apps.openspeedyfx.scenes.ballscene.logic.HedgehogIrritation;
 import de.dgs.apps.openspeedyfx.scenes.ballscene.logic.HedgehogPhysicsProperties;
-import de.dgs.apps.openspeedyfx.scenes.ballscene.logic.RollProperties;
 import de.dgs.apps.openspeedyfx.scenes.ballscene.logic.SelectiveRollProperties;
 import de.dgs.apps.openspeedyfx.scenes.dialogues.NotificationDialogueScene;
 import de.dgs.apps.openspeedyfx.scenes.dialogues.SelectionDialogueScene;
@@ -21,6 +20,7 @@ import de.dgs.apps.openspeedyfx.scenes.gamemap.GameMapScene;
 import de.dgs.apps.osfxe.gui.JavaFxDialogs;
 import de.dgs.apps.osfxe.scenes.GameControllerLoader;
 import de.dgs.apps.osfxe.scenes.SceneCreator;
+import de.dgs.apps.osfxe.util.ZipUtil;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -32,7 +32,9 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.aeonbits.owner.ConfigFactory;
 
+import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.*;
 
@@ -108,6 +110,21 @@ public class OpenSpeedyGameApp extends Application {
 
         Resourcepack resourcepack = DefaultResourcepack.getInstance();
         ResourceBundle resourceBundle = ResourceBundle.getBundle("localization/UiResources", appLocale);
+
+        //Extract default maps.
+        File defaultMapsDirectory = new File(configuration.defaultMapsDirectoryPath());
+
+        if(!defaultMapsDirectory.exists()) {
+            if(!defaultMapsDirectory.mkdirs())
+                onException(resourceBundle, new Exception("Unable to create default maps directory \"" + defaultMapsDirectory.toString() + "\"."));
+
+            try {
+                ZipUtil.zipInputStreamToDirectory(getClass().getResourceAsStream("/assets/general/defaultmaps.zip"), defaultMapsDirectory);
+            }
+            catch (IOException ioException) {
+                onException(resourceBundle, ioException);
+            }
+        }
 
         //--------------------------
         //Setup map editor scene.
@@ -350,6 +367,7 @@ public class OpenSpeedyGameApp extends Application {
         mainMenuSettingsData.setMusicVolume(configuration.musicVolume());
         mainMenuSettingsData.setShowHints(configuration.showHints());
         mainMenuSettingsData.setAutoScroll(configuration.autoScroll());
+        mainMenuSettingsData.setDefaultMapPath(configuration.defaultMapsDirectoryPath());
         mainMenuSettingsData.setCustomMapPath(configuration.customMapsDirectoryPath());
 
         mainMenuScene.setupMenuScene(resourcepack, mainMenuSettingsData, menuSceneCallback, resourceBundle);
@@ -390,23 +408,19 @@ public class OpenSpeedyGameApp extends Application {
     private HedgehogIrritation irritationFromDifficulty(Difficulty difficulty, OpenSpeedyConfiguration configuration) {
         int index = indexFromDifficulty(difficulty);
 
-        HedgehogIrritation hedgehogIrritation = new HedgehogIrritation(
+        return new HedgehogIrritation(
                 configuration.difficultiesIrritationImbalance()[index],
                 configuration.difficultiesIrritationSlowdownFactor()[index]);
-
-        return hedgehogIrritation;
     }
 
     private HedgehogPhysicsProperties physicsPropertiesFromDifficulty(Difficulty difficulty, OpenSpeedyConfiguration configuration) {
         int index = indexFromDifficulty(difficulty);
 
-        HedgehogPhysicsProperties hedgehogPhysicsProperties = new HedgehogPhysicsProperties(
+        return new HedgehogPhysicsProperties(
                 configuration.difficultiesPhysicsLinearDamping()[index],
                 configuration.difficultiesPhysicsDensity()[index],
                 configuration.difficultiesPhysicsFriction()[index],
                 configuration.difficultiesPhysicsRestitution()[index]);
-
-        return hedgehogPhysicsProperties;
     }
 
     private void reconfigureGameMapData(GameMapData gameMapData, OpenSpeedyConfiguration configuration) {

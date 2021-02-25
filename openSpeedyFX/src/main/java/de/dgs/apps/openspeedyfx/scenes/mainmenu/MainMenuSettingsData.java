@@ -21,6 +21,7 @@ public class MainMenuSettingsData {
     private float effectsVolume;
     private boolean showHints;
     private boolean autoScroll;
+    private String defaultMapPath;
     private String customMapPath;
 
     public float getMusicVolume() {
@@ -55,7 +56,15 @@ public class MainMenuSettingsData {
         this.autoScroll = autoScroll;
     }
 
-    public void setCustomMapPath(String customMapPath) { this.customMapPath = customMapPath; }
+    public String getDefaultMapPath() {
+        return defaultMapPath;
+    }
+
+    public void setDefaultMapPath(String defaultMapPath) {
+        this.defaultMapPath = defaultMapPath;
+    }
 
     public String getCustomMapPath() { return customMapPath; }
+
+    public void setCustomMapPath(String customMapPath) { this.customMapPath = customMapPath; }
 }

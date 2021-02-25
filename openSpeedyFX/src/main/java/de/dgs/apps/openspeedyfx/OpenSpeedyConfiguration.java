@@ -26,12 +26,10 @@ limitations under the License.
 public interface OpenSpeedyConfiguration extends Mutable, Accessible, Reloadable {
     String FILENAME = "openSpeedy.properties";
 
-    String PROPERTY_LANGUAGE_TAGS = "languageTags";
     String PROPERTY_MUSIC_VOLUME = "musicVolume";
     String PROPERTY_EFFECTS_VOLUME = "effectsVolume";
     String PROPERTY_SHOW_HINTS = "showHints";
     String PROPERTY_AUTO_SCROLL = "autoScroll";
-    String PROPERTY_CUSTOM_MAPS_DIRECTORY_PATH = "customMapsDirectoryPath";
 
     @Separator(";")
     @DefaultValue("DE;EN")
@@ -63,6 +61,9 @@ public interface OpenSpeedyConfiguration extends Mutable, Accessible, Reloadable
 
     @DefaultValue("CUSTOM_MAPS")
     String customMapsDirectoryPath();
+
+    @DefaultValue("data/defaultmaps")
+    String defaultMapsDirectoryPath();
 
     @Separator(";")
     @DefaultValue("3;3;4")
