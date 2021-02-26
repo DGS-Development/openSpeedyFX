@@ -25,31 +25,13 @@ public class Competitive extends AbstractGameMode{
     public void playerWon(Player player) {
         winners.add(player);
         getGameModeCallback().onPlayerWon(player);
+        getGameModeCallback().onGameDone(winners);
     }
 
     @Override
     public void playerLost(Player player) {
         losers.add(player);
         getGameModeCallback().onPlayerLost(player);
-    }
-
-    @Override
-    protected Player getNextPlayer(){
-        if(getPlayers().isEmpty()) return null;
-
-        if(getTurnRepository().getLast() == null) return getPlayers().get(0);
-
-        Player lastPlayer = getTurnRepository().getLast().getPlayer();
-        int playerIndex = getPlayers().indexOf(lastPlayer);
-        if(playerIndex == getPlayers().size() - 1) return getPlayers().get(0);
-
-        if(!winners.isEmpty()) {
-            setGameOver(true);
-            losers.addAll(getPlayers());
-            getGameModeCallback().onGameDone(winners);
-            nextTurn();
-        }
-
-        return getPlayers().get(playerIndex + 1);
+        getGameModeCallback().onGameDone(winners);
     }
 }

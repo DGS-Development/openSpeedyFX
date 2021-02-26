@@ -13,7 +13,7 @@ public abstract class AbstractGameMode implements GameMode{
     private final TurnRepository turnRepository;
     private final ForestPieceRepository forestPieceRepository;
     private final GameModeCallback gameModeCallback;
-    protected final List<Player> players;
+    private final List<Player> players;
     private final EndConditionObserver endConditionObserver;
     private final TurnQueue turnQueue;
 

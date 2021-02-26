@@ -37,19 +37,11 @@ public class Cooperative extends AbstractGameMode {
     }
 
     @Override
-    protected Player getNextPlayer() {
-        if(!winners.isEmpty() || !losers.isEmpty()){
-            setGameOver(true);
-            getGameModeCallback().onGameDone(winners);
-        }
-        return getPlayers().get(0);
-    }
-
-    @Override
     public void playerWon(Player player) {
         winners.add(player);
         getGameModeCallback().onPlayerWon(player);
         player.setCurrentTile(getMap().getFoxStart());
+        getGameModeCallback().onGameDone(winners);
     }
 
     @Override
@@ -57,6 +49,7 @@ public class Cooperative extends AbstractGameMode {
         losers.add(player);
         getGameModeCallback().onPlayerLost(player);
         player.setCurrentTile(getMap().getFoxStart());
+        getGameModeCallback().onGameDone(winners);
     }
 
     @Override
