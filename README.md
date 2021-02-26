@@ -1,5 +1,7 @@
 ![dgsLabsLogo](https://github.com/DGS-Development/openSpeedyFX/blob/main/docs/img/dgsLabsLogo.png?raw=true)
 
+**NOTICE: This project isn't maintained on a regular basis, because it is a research project. Please don't open issues!**
+
 # openSpeedyFX
 ![openSpeedyFxLogo](https://github.com/DGS-Development/openSpeedyFX/blob/main/docs/img/openSpeedyFXLogo.png?raw=true)
 
