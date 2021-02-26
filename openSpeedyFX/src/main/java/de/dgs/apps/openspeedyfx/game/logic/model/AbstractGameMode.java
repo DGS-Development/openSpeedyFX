@@ -13,8 +13,9 @@ public abstract class AbstractGameMode implements GameMode{
     private final TurnRepository turnRepository;
     private final ForestPieceRepository forestPieceRepository;
     private final GameModeCallback gameModeCallback;
-    private final List<Player> players;
+    protected final List<Player> players;
     private final EndConditionObserver endConditionObserver;
+    private final TurnQueue turnQueue;
 
     @Override
     public boolean isGameOver() {
@@ -28,6 +29,7 @@ public abstract class AbstractGameMode implements GameMode{
         this.turnRepository = new TurnRepository();
         this.forestPieceRepository = new ForestPieceRepository();
         this.endConditionObserver = new EndConditionObserver(this);
+        this.turnQueue = new TurnQueue(players);
         for(Player p : players){
             p.register(endConditionObserver);
         }
@@ -66,15 +68,21 @@ public abstract class AbstractGameMode implements GameMode{
     public void nextTurn() {
         if(isGameOver) return;
         moved = false;
+        moveActivePlayer = getNextPlayer();
+        if(moveActivePlayer == null){
+            endTurn();
+        }
         getForestPieceRepository().update();
-        getGameModeCallback().onActivePlayerSet(getNextPlayer());
+        getGameModeCallback().onActivePlayerSet(moveActivePlayer);
         getGameModeCallback().onRoll(
                 getForestPieceRepository().getAvailableAppleCount(),
                 getForestPieceRepository().getAvailableMushroomCount(),
                 getForestPieceRepository().getAvailableLeafCount());
     }
 
-    protected abstract Player getNextPlayer();
+    private Player getNextPlayer(){
+        return turnQueue.getNextPlayer();
+    }
 
     /**
      * Gets executed after the player moved his character. This is useful when other actions are required, if the player was able to move forward.
@@ -82,7 +90,7 @@ public abstract class AbstractGameMode implements GameMode{
      */
     protected void onAdditionalMove(Turn.Builder turnBuilder) {
         //Ignore...
-    };
+    }
 
     private Player moveActivePlayer;
     private Turn.Builder moveTurnBuilder;
@@ -92,8 +100,6 @@ public abstract class AbstractGameMode implements GameMode{
     public void onRollCompleted(Roll roll) {
         moveRoll = roll;
         realRoll = new Roll(roll);
-
-        moveActivePlayer = getNextPlayer();
 
         boolean tooManyItems = roll.getCollectedItemsCount() >= 5;
 
