@@ -7,6 +7,7 @@ import de.dgs.apps.openspeedyfx.game.mapinfo.MapInfo;
 import de.dgs.apps.openspeedyfx.game.mapinfo.MapInfoParser;
 import de.dgs.apps.openspeedyfx.game.mapinfo.MapInfoParser.MapData;
 import de.dgs.apps.openspeedyfx.game.resourcepacks.Resourcepack;
+import de.dgs.apps.openspeedyfx.game.resourcepacks.ResourcepackPaths;
 import de.dgs.apps.openspeedyfx.game.resourcepacks.ResourcepackPaths.Fields;
 import de.dgs.apps.openspeedyfx.game.resourcepacks.ResourcepackPaths.Figures;
 import de.dgs.apps.openspeedyfx.game.resourcepacks.ResourcepackPaths.Music;
@@ -48,6 +49,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -193,6 +195,8 @@ public class GameMapScene extends GameController {
         }
     }
 
+    private static final double SCENE_LABEL_FONTSIZE = 14.5;
+
     //Actual map.
     private ZoomingPane zoomingPane;
     private ZoomingPaneInteractionController sceneInteractionController;
@@ -273,6 +277,16 @@ public class GameMapScene extends GameController {
             return false;
 
         isInitialized = true;
+
+        //Setup font.
+        Font sillyFont = Font.loadFont(
+                gameMapData.getResourcepack().getResourceAsStream(ResourcepackPaths.Fonts.SILLY_FONT_TTF),
+                SCENE_LABEL_FONTSIZE);
+
+        if(sillyFont != null) {
+            lblActivePlayerDescriptionText.setFont(sillyFont);
+            lblActivePlayerDescriptionText.setWrapText(true);
+        }
 
         //Setup zooming pane.
         if(gameMapData.isAutoScroll()) {
