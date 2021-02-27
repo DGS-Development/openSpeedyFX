@@ -14,6 +14,11 @@ This repository includes the game itself ("openSpeedyFX") and an expandable game
 Although the code is covered by a permissive open-source-license (Apache-2.0 License) , and no assets of "Speedy Roll" were used, you can't use the project commercially ("as it is"). It includes some assets which forbid any commercial use.
 Please check the file "ASSETS-LICENSES.txt" for more detailed information.
 
+## Manuals
+
+* [English](https://github.com/DGS-Development/openSpeedyFX/blob/main/docs/manuals/English-Manual.pdf?raw=true)
+* [German](https://github.com/DGS-Development/openSpeedyFX/blob/main/docs/manuals/German-Manual.pdf?raw=true)
+
 ## Features
 
 * Competitive mode (hedgehog race for 2-4 players)
