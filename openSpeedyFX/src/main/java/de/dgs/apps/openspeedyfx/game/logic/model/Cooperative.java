@@ -4,8 +4,6 @@ import java.util.*;
 
 public class Cooperative extends AbstractGameMode {
     private final NPC fox;
-    private final List<Player> winners;
-    private final List<Player> losers;
     private final int foxMoves;
 
     public Cooperative(Player player, GameModeCallback cooperativeCallback, de.dgs.apps.openspeedyfx.game.logic.model.Map map) {
@@ -18,9 +16,8 @@ public class Cooperative extends AbstractGameMode {
 
     public Cooperative(List<Player> player, GameModeCallback cooperativeCallback, Map map, int foxMoves) {
         super(List.of(player.get(0)), cooperativeCallback, map);
+
         this.foxMoves = foxMoves;
-        this.winners = new ArrayList<>();
-        this.losers = new ArrayList<>();
         this.fox = new NPC();
         getPlayers().get(0).register(getEndConditionObserver());
         this.fox.register(getEndConditionObserver());
@@ -30,26 +27,12 @@ public class Cooperative extends AbstractGameMode {
     protected void onPiecesSetup() {
         fox.setCurrentTile(getMap().getFoxStart());
         getPlayers().get(0).setCurrentTile(getMap().getHedgehogStart());
+
         List<Actor> actors = new ArrayList<>(2);
         actors.add(getPlayers().get(0));
         actors.add(this.fox);
+
         getGameModeCallback().onInitialized(actors);
-    }
-
-    @Override
-    public void playerWon(Player player) {
-        winners.add(player);
-        getGameModeCallback().onPlayerWon(player);
-        player.setCurrentTile(getMap().getFoxStart());
-        getGameModeCallback().onGameDone(winners);
-    }
-
-    @Override
-    public void playerLost(Player player) {
-        losers.add(player);
-        getGameModeCallback().onPlayerLost(player);
-        player.setCurrentTile(getMap().getFoxStart());
-        getGameModeCallback().onGameDone(winners);
     }
 
     @Override
@@ -60,6 +43,8 @@ public class Cooperative extends AbstractGameMode {
     }
 
     private void moveFox(Turn.Builder turnBuilder){
+        if(getPlayers().isEmpty())return;
+
         List<Tile> foxMoves = new ArrayList<>();
 
         Tile foxTile = fox.getCurrentTile();

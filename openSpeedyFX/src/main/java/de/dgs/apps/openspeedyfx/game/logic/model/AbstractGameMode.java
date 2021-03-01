@@ -3,6 +3,7 @@ package de.dgs.apps.openspeedyfx.game.logic.model;
 import de.dgs.apps.openspeedyfx.game.logic.repository.ForestPieceRepository;
 import de.dgs.apps.openspeedyfx.game.logic.repository.TurnRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbstractGameMode implements GameMode{
@@ -16,6 +17,8 @@ public abstract class AbstractGameMode implements GameMode{
     private final List<Player> players;
     private final EndConditionObserver endConditionObserver;
     private final TurnQueue turnQueue;
+    private final List<Player> winners;
+    private final List<Player> losers;
 
     @Override
     public boolean isGameOver() {
@@ -25,11 +28,13 @@ public abstract class AbstractGameMode implements GameMode{
     public AbstractGameMode(List<Player> players, GameModeCallback gameModeCallback, Map map){
         this.map = map;
         this.gameModeCallback = gameModeCallback;
-        this.players = players;
+        this.players = new ArrayList<>(players);
         this.turnRepository = new TurnRepository();
         this.forestPieceRepository = new ForestPieceRepository();
         this.endConditionObserver = new EndConditionObserver(this);
         this.turnQueue = new TurnQueue(players);
+        this.winners = new ArrayList<>();
+        this.losers = new ArrayList<>();
         for(Player p : players){
             p.register(endConditionObserver);
         }
@@ -65,8 +70,23 @@ public abstract class AbstractGameMode implements GameMode{
         return endConditionObserver;
     }
 
+    @Override
+    public void playerWon(Player player) {
+        winners.add(player);
+        players.remove(player);
+        gameModeCallback.onPlayerWon(player);
+        gameModeCallback.onGameDone(winners);
+    }
+
+    @Override
+    public void playerLost(Player player) {
+        losers.add(player);
+        players.remove(player);
+        gameModeCallback.onPlayerLost(player);
+        gameModeCallback.onGameDone(winners);
+    }
+
     public void nextTurn() {
-        if(isGameOver) return;
         moved = false;
         moveActivePlayer = getNextPlayer();
         if(moveActivePlayer == null){
