@@ -26,9 +26,8 @@ public abstract class Actor implements Observable{
     }
 
     public void notifyObservers(Actor obj){
-        for(Observer<Actor> observer : observers){
-            observer.update(obj);
-        }
+        // ConcurrentModificationException if no new List is instantiated
+        new ArrayList<>(observers).forEach(actorObserver -> actorObserver.update(obj));
     }
 
     public void setCurrentTile(Tile tile){
