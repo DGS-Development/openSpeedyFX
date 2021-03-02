@@ -14,12 +14,12 @@ public class EndConditionObserver implements Observer<Actor>{
 
     @Override
     public void update(Actor updateActor) {
+        if(gameMode.getPlayers().isEmpty())return;
 
         if(updateActor instanceof Player){
             if(updateActor.getCurrentTile().getTileType() == TileType.END){
-                gameMode.playerWon((Player) updateActor);
                 updateActor.unregister(this);
-                gameMode.endTurn();
+                gameMode.playerWon((Player) updateActor);
             }
         }
 
@@ -27,8 +27,8 @@ public class EndConditionObserver implements Observer<Actor>{
             List<Player> players = new ArrayList<>(gameMode.getPlayers());
             for(Player p : players){
                 if(p.getCurrentTile() == updateActor.getCurrentTile()){
-                    gameMode.playerLost(p);
                     p.unregister(this);
+                    gameMode.playerLost(p);
                 }
                 p.getCurrentTile().getAdjacent().forEach(tile -> {
                     if(tile == updateActor.getCurrentTile()){

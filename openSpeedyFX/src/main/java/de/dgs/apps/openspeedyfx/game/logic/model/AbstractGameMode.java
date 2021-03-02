@@ -54,8 +54,8 @@ public abstract class AbstractGameMode implements GameMode{
         return gameModeCallback;
     }
 
-    public void setGameOver(boolean gameOver) {
-        isGameOver = gameOver;
+    public void setGameOver() {
+        isGameOver = true;
     }
 
     public ForestPieceRepository getForestPieceRepository() {
@@ -76,6 +76,7 @@ public abstract class AbstractGameMode implements GameMode{
         players.remove(player);
         gameModeCallback.onPlayerWon(player);
         gameModeCallback.onGameDone(winners);
+        setGameOver();
     }
 
     @Override
@@ -84,6 +85,7 @@ public abstract class AbstractGameMode implements GameMode{
         players.remove(player);
         gameModeCallback.onPlayerLost(player);
         gameModeCallback.onGameDone(winners);
+        setGameOver();
     }
 
     public void nextTurn() {

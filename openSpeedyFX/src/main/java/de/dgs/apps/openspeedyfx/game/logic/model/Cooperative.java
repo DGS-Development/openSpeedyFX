@@ -37,9 +37,7 @@ public class Cooperative extends AbstractGameMode {
 
     @Override
     protected void onAdditionalMove(Turn.Builder turnBuilder) {
-        for(int i = 0; i < foxMoves; i++){
-            moveFox(turnBuilder);
-        }
+        moveFox(turnBuilder);
     }
 
     private void moveFox(Turn.Builder turnBuilder){
@@ -52,7 +50,7 @@ public class Cooperative extends AbstractGameMode {
 
         Stack<Tile> moves = shortestPath(foxTile, playerTile);
 
-        if(!moves.isEmpty()){
+        while(!moves.isEmpty() && foxMoves.size() < this.foxMoves){
             foxMoves.add(moves.pop());
         }
 
@@ -71,7 +69,7 @@ public class Cooperative extends AbstractGameMode {
 
     private Stack<Tile> shortestPath(Tile startTile, Tile endTile){
         int count = 0;
-        Queue<Tile> queue = new ArrayDeque<>();
+        Queue<Tile> queue = new LinkedList<>();
         java.util.Map<Tile, Integer> visited = new LinkedHashMap<>();
 
         visited.put(startTile, count);
@@ -98,11 +96,11 @@ public class Cooperative extends AbstractGameMode {
 
     private Stack<Tile> reconstructPath(Tile startTile, Tile finalTile, java.util.Map<Tile, Integer> visited){
         Stack<Tile> tiles = new Stack<>();
+
+        // Add the destination to the stack
+        tiles.push(finalTile);
+
         while(finalTile != startTile){
-            if(startTile.getAdjacent().contains(finalTile)){
-                tiles.push(finalTile);
-                break;
-            }
             for(Tile tile : finalTile.getAdjacent()){
                 if(visited.containsKey(tile) && visited.get(tile) < visited.get(finalTile)){
                     finalTile = tile;
@@ -111,9 +109,12 @@ public class Cooperative extends AbstractGameMode {
                 }
             }
         }
+
+        // Remove the tile the fox is already standing on from the Stack
         if(tiles.size() > 1){
             tiles.pop();
         }
+
         return tiles;
     }
 
