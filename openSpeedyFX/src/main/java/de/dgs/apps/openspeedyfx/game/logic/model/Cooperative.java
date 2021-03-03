@@ -1,5 +1,7 @@
 package de.dgs.apps.openspeedyfx.game.logic.model;
 
+import de.dgs.apps.openspeedyfx.game.logic.util.MapUtil;
+
 import java.util.*;
 
 /*
@@ -20,8 +22,6 @@ limitations under the License.
 
 public class Cooperative extends AbstractGameMode {
     private final NPC fox;
-    private final List<Player> winners;
-    private final List<Player> losers;
     private final int foxMoves;
 
     public Cooperative(Player player, GameModeCallback cooperativeCallback, de.dgs.apps.openspeedyfx.game.logic.model.Map map) {
@@ -34,9 +34,8 @@ public class Cooperative extends AbstractGameMode {
 
     public Cooperative(List<Player> player, GameModeCallback cooperativeCallback, Map map, int foxMoves) {
         super(List.of(player.get(0)), cooperativeCallback, map);
+
         this.foxMoves = foxMoves;
-        this.winners = new ArrayList<>();
-        this.losers = new ArrayList<>();
         this.fox = new NPC();
         getPlayers().get(0).register(getEndConditionObserver());
         this.fox.register(getEndConditionObserver());
@@ -46,51 +45,30 @@ public class Cooperative extends AbstractGameMode {
     protected void onPiecesSetup() {
         fox.setCurrentTile(getMap().getFoxStart());
         getPlayers().get(0).setCurrentTile(getMap().getHedgehogStart());
+
         List<Actor> actors = new ArrayList<>(2);
         actors.add(getPlayers().get(0));
         actors.add(this.fox);
+
         getGameModeCallback().onInitialized(actors);
     }
 
     @Override
-    protected Player getNextPlayer() {
-        if(!winners.isEmpty() || !losers.isEmpty()){
-            setGameOver(true);
-            getGameModeCallback().onGameDone(winners);
-        }
-        return getPlayers().get(0);
-    }
-
-    @Override
-    public void playerWon(Player player) {
-        winners.add(player);
-        getGameModeCallback().onPlayerWon(player);
-        player.setCurrentTile(getMap().getFoxStart());
-    }
-
-    @Override
-    public void playerLost(Player player) {
-        losers.add(player);
-        getGameModeCallback().onPlayerLost(player);
-        player.setCurrentTile(getMap().getFoxStart());
-    }
-
-    @Override
     protected void onAdditionalMove(Turn.Builder turnBuilder) {
-        for(int i = 0; i < foxMoves; i++){
-            moveFox(turnBuilder);
-        }
+        moveFox(turnBuilder);
     }
 
     private void moveFox(Turn.Builder turnBuilder){
+        if(getPlayers().isEmpty())return;
+
         List<Tile> foxMoves = new ArrayList<>();
 
         Tile foxTile = fox.getCurrentTile();
         Tile playerTile = getPlayers().get(0).getCurrentTile();
 
-        Stack<Tile> moves = shortestPath(foxTile, playerTile);
+        Stack<Tile> moves = MapUtil.shortestPath(foxTile, playerTile);
 
-        if(!moves.isEmpty()){
+        while(!moves.isEmpty() && foxMoves.size() < this.foxMoves){
             foxMoves.add(moves.pop());
         }
 
@@ -105,54 +83,6 @@ public class Cooperative extends AbstractGameMode {
         }
 
         getGameModeCallback().onFoxMove(fox, foxMoves);
-    }
-
-    private Stack<Tile> shortestPath(Tile startTile, Tile endTile){
-        int count = 0;
-        Queue<Tile> queue = new ArrayDeque<>();
-        java.util.Map<Tile, Integer> visited = new LinkedHashMap<>();
-
-        visited.put(startTile, count);
-        queue.offer(startTile);
-
-        while(!queue.isEmpty()){
-            count++;
-            Tile currentTile = queue.remove();
-            if(currentTile == endTile){
-                break;
-            }
-
-            int finalCount = count;
-            currentTile.getAdjacent().forEach(tile -> {
-                if(!visited.containsKey(tile)){
-                    visited.put(tile, finalCount);
-                    queue.offer(tile);
-                }
-            });
-        }
-
-        return reconstructPath(startTile, endTile, visited);
-    }
-
-    private Stack<Tile> reconstructPath(Tile startTile, Tile finalTile, java.util.Map<Tile, Integer> visited){
-        Stack<Tile> tiles = new Stack<>();
-        while(finalTile != startTile){
-            if(startTile.getAdjacent().contains(finalTile)){
-                tiles.push(finalTile);
-                break;
-            }
-            for(Tile tile : finalTile.getAdjacent()){
-                if(visited.containsKey(tile) && visited.get(tile) < visited.get(finalTile)){
-                    finalTile = tile;
-                    tiles.push(tile);
-                    break;
-                }
-            }
-        }
-        if(tiles.size() > 1){
-            tiles.pop();
-        }
-        return tiles;
     }
 
 }

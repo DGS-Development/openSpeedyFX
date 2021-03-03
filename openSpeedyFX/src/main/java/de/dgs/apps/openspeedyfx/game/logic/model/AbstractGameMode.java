@@ -3,6 +3,7 @@ package de.dgs.apps.openspeedyfx.game.logic.model;
 import de.dgs.apps.openspeedyfx.game.logic.repository.ForestPieceRepository;
 import de.dgs.apps.openspeedyfx.game.logic.repository.TurnRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -31,6 +32,9 @@ public abstract class AbstractGameMode implements GameMode{
     private final GameModeCallback gameModeCallback;
     private final List<Player> players;
     private final EndConditionObserver endConditionObserver;
+    private final TurnQueue turnQueue;
+    private final List<Player> winners;
+    private final List<Player> losers;
 
     @Override
     public boolean isGameOver() {
@@ -40,10 +44,13 @@ public abstract class AbstractGameMode implements GameMode{
     public AbstractGameMode(List<Player> players, GameModeCallback gameModeCallback, Map map){
         this.map = map;
         this.gameModeCallback = gameModeCallback;
-        this.players = players;
+        this.players = new ArrayList<>(players);
         this.turnRepository = new TurnRepository();
         this.forestPieceRepository = new ForestPieceRepository();
         this.endConditionObserver = new EndConditionObserver(this);
+        this.turnQueue = new TurnQueue(players);
+        this.winners = new ArrayList<>();
+        this.losers = new ArrayList<>();
         for(Player p : players){
             p.register(endConditionObserver);
         }
@@ -63,8 +70,8 @@ public abstract class AbstractGameMode implements GameMode{
         return gameModeCallback;
     }
 
-    public void setGameOver(boolean gameOver) {
-        isGameOver = gameOver;
+    public void setGameOver() {
+        isGameOver = true;
     }
 
     public ForestPieceRepository getForestPieceRepository() {
@@ -79,18 +86,41 @@ public abstract class AbstractGameMode implements GameMode{
         return endConditionObserver;
     }
 
+    @Override
+    public void playerWon(Player player) {
+        winners.add(player);
+        players.remove(player);
+        gameModeCallback.onPlayerWon(player);
+        gameModeCallback.onGameDone(winners);
+        setGameOver();
+    }
+
+    @Override
+    public void playerLost(Player player) {
+        losers.add(player);
+        players.remove(player);
+        gameModeCallback.onPlayerLost(player);
+        gameModeCallback.onGameDone(winners);
+        setGameOver();
+    }
+
     public void nextTurn() {
-        if(isGameOver) return;
         moved = false;
+        moveActivePlayer = getNextPlayer();
+        if(moveActivePlayer == null){
+            endTurn();
+        }
         getForestPieceRepository().update();
-        getGameModeCallback().onActivePlayerSet(getNextPlayer());
+        getGameModeCallback().onActivePlayerSet(moveActivePlayer);
         getGameModeCallback().onRoll(
                 getForestPieceRepository().getAvailableAppleCount(),
                 getForestPieceRepository().getAvailableMushroomCount(),
                 getForestPieceRepository().getAvailableLeafCount());
     }
 
-    protected abstract Player getNextPlayer();
+    private Player getNextPlayer(){
+        return turnQueue.getNextPlayer();
+    }
 
     /**
      * Gets executed after the player moved his character. This is useful when other actions are required, if the player was able to move forward.
@@ -98,7 +128,7 @@ public abstract class AbstractGameMode implements GameMode{
      */
     protected void onAdditionalMove(Turn.Builder turnBuilder) {
         //Ignore...
-    };
+    }
 
     private Player moveActivePlayer;
     private Turn.Builder moveTurnBuilder;
@@ -108,8 +138,6 @@ public abstract class AbstractGameMode implements GameMode{
     public void onRollCompleted(Roll roll) {
         moveRoll = roll;
         realRoll = new Roll(roll);
-
-        moveActivePlayer = getNextPlayer();
 
         boolean tooManyItems = roll.getCollectedItemsCount() >= 5;
 
@@ -137,9 +165,9 @@ public abstract class AbstractGameMode implements GameMode{
         }
     }
 
-    public boolean onMoveSelected(Move selectedMove) {
+    public void onMoveSelected(Move selectedMove) {
         if(!awaitNextMove)
-            return false;
+            return;
 
         moved = true;
 
@@ -175,8 +203,6 @@ public abstract class AbstractGameMode implements GameMode{
         }
 
         getTurnRepository().addTurn(moveTurnBuilder.build());
-
-        return true;
     }
 
     public void onEarlyTurnEnd(){
@@ -187,7 +213,7 @@ public abstract class AbstractGameMode implements GameMode{
     }
 
     public void endTurn(){
-        if(!isGameOver){
+        if(!isGameOver()){
             nextTurn();
         }
     }

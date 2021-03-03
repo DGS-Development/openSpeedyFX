@@ -30,6 +30,7 @@ public class Map {
         List<Move> possibleMoves = new ArrayList<>();
         List<Tile> connectedTiles = player.getCurrentTile().getAdjacent();
         List<CollectableForestPiece> collectedForestPieces = roll.getCollectedForestPieces();
+
         connectedTiles.forEach(tile -> {
             collectedForestPieces.forEach(collectableForestPiece -> {
                 if(tile.getTileType().name().equals(collectableForestPiece.name()) || tile.getTileType() == TileType.END){
@@ -37,24 +38,28 @@ public class Map {
                 }
             });
         });
+
         return possibleMoves;
     }
 
     public boolean canMove(Player player, Roll roll){
-        List<Tile> connectedTiles = player.getCurrentTile().getAdjacent();
-        List<CollectableForestPiece> collectedForestPieces = roll.getCollectedForestPieces();
+        if(player != null) {
+            List<Tile> connectedTiles = player.getCurrentTile().getAdjacent();
+            List<CollectableForestPiece> collectedForestPieces = roll.getCollectedForestPieces();
 
-        for(Tile t : connectedTiles){
-            for(CollectableForestPiece piece : collectedForestPieces){
-                if(t.getTileType().name().equals(piece.name()) || t.getTileType() == TileType.END){
-                    return true;
+            for(Tile t : connectedTiles){
+                for(CollectableForestPiece piece : collectedForestPieces){
+                    if(t.getTileType().name().equals(piece.name()) || t.getTileType() == TileType.END){
+                        return true;
+                    }
                 }
             }
         }
+
         return false;
     }
 
-    public Tile getStartTiles() {
+    public Tile getStartTile() {
         return startTile;
     }
 
