@@ -165,9 +165,9 @@ public abstract class AbstractGameMode implements GameMode{
         }
     }
 
-    public boolean onMoveSelected(Move selectedMove) {
+    public void onMoveSelected(Move selectedMove) {
         if(!awaitNextMove)
-            return false;
+            return;
 
         moved = true;
 
@@ -203,8 +203,6 @@ public abstract class AbstractGameMode implements GameMode{
         }
 
         getTurnRepository().addTurn(moveTurnBuilder.build());
-
-        return true;
     }
 
     public void onEarlyTurnEnd(){
@@ -215,7 +213,7 @@ public abstract class AbstractGameMode implements GameMode{
     }
 
     public void endTurn(){
-        if(!isGameOver){
+        if(!isGameOver()){
             nextTurn();
         }
     }
