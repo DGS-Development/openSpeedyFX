@@ -4,10 +4,12 @@ import de.dgs.apps.openspeedyfx.game.logic.model.Player;
 import de.dgs.apps.openspeedyfx.game.resourcepacks.DefaultResourcepack;
 import de.dgs.apps.openspeedyfx.game.resourcepacks.Resourcepack;
 import de.dgs.apps.openspeedyfx.game.resourcepacks.ResourcepackPaths.Figures;
-import de.dgs.apps.openspeedyfx.scenes.ballscene.logic.RollProperties;
+import de.dgs.apps.openspeedyfx.scenes.ballscene.logic.HedgehogIrritation;
+import de.dgs.apps.openspeedyfx.scenes.ballscene.logic.HedgehogPhysicsProperties;
 import de.dgs.apps.openspeedyfx.scenes.ballscene.logic.SelectiveRollProperties;
 import de.dgs.apps.openspeedyfx.scenes.dialogues.NotificationDialogueScene;
 import de.dgs.apps.openspeedyfx.scenes.dialogues.SelectionDialogueScene;
+import de.dgs.apps.openspeedyfx.scenes.mainmenu.Difficulty;
 import de.dgs.apps.openspeedyfx.scenes.mainmenu.MainMenuScene;
 import de.dgs.apps.openspeedyfx.scenes.mainmenu.MainMenuSettingsData;
 import de.dgs.apps.openspeedyfx.scenes.mainmenu.MenuSceneCallback;
@@ -18,6 +20,7 @@ import de.dgs.apps.openspeedyfx.scenes.gamemap.GameMapScene;
 import de.dgs.apps.osfxe.gui.JavaFxDialogs;
 import de.dgs.apps.osfxe.scenes.GameControllerLoader;
 import de.dgs.apps.osfxe.scenes.SceneCreator;
+import de.dgs.apps.osfxe.util.ZipUtil;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -29,9 +32,27 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.aeonbits.owner.ConfigFactory;
 
+import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.*;
+
+/*
+Copyright 2021 DGS-Development (https://github.com/DGS-Development)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+ */
 
 public class OpenSpeedyGameApp extends Application {
     private Stage mainMenuStage;
@@ -50,6 +71,10 @@ public class OpenSpeedyGameApp extends Application {
         gameMapStage = new Stage();
         gameMapStage.setScene(gameMapSceneObject);
         setStageInfo(gameMapStage, resourceBundle.getString("app.gameMapStageTitle"), "/assets/fxml/gamemap/mapIcon.png");
+    }
+
+    public void start(String[] args) {
+        launch(args);
     }
 
     @Override
@@ -86,6 +111,21 @@ public class OpenSpeedyGameApp extends Application {
         Resourcepack resourcepack = DefaultResourcepack.getInstance();
         ResourceBundle resourceBundle = ResourceBundle.getBundle("localization/UiResources", appLocale);
 
+        //Extract default maps.
+        File defaultMapsDirectory = new File(configuration.defaultMapsDirectoryPath());
+
+        if(!defaultMapsDirectory.exists()) {
+            if(!defaultMapsDirectory.mkdirs())
+                onException(resourceBundle, new Exception("Unable to create default maps directory \"" + defaultMapsDirectory.toString() + "\"."));
+
+            try {
+                ZipUtil.zipInputStreamToDirectory(getClass().getResourceAsStream("/assets/general/defaultmaps.zip"), defaultMapsDirectory);
+            }
+            catch (IOException ioException) {
+                onException(resourceBundle, ioException);
+            }
+        }
+
         //--------------------------
         //Setup map editor scene.
         //--------------------------
@@ -112,7 +152,7 @@ public class OpenSpeedyGameApp extends Application {
 
         mainMenuStage.setMaximized(true);
 
-        RollProperties defaultRollProperties = new SelectiveRollProperties() {
+        SelectiveRollProperties selectiveRollProperties = new SelectiveRollProperties() {
             @Override
             public ResourceBundle getResourceBundle() {
                 return resourceBundle;
@@ -168,11 +208,11 @@ public class OpenSpeedyGameApp extends Application {
         gameMapData.setRandom(random);
         gameMapData.setResourceBundle(resourceBundle);
         gameMapData.setResourcepack(resourcepack);
-        gameMapData.setRollProperties(defaultRollProperties);
+        gameMapData.setRollProperties(selectiveRollProperties);
 
         MenuSceneCallback menuSceneCallback = new MenuSceneCallback() {
             @Override
-            public void onCooperativeStart(int playersCount, Player player, Path mapInfoPath) {
+            public void onCooperativeStart(int playersCount, Player player, Path mapInfoPath, Difficulty difficulty) {
                 try {
                     Stage notificationStage = createNotificationStage(
                             resourceBundle.getString("app.loadingGameData"),
@@ -183,6 +223,11 @@ public class OpenSpeedyGameApp extends Application {
 
                         Platform.runLater(() -> {
                             try {
+                                //Setup difficulty properties.
+                                selectiveRollProperties.setHedgehogIrritation(irritationFromDifficulty(difficulty, configuration));
+                                selectiveRollProperties.setHedgehogPhysicsProperties(physicsPropertiesFromDifficulty(difficulty, configuration));
+                                gameMapData.setFoxMovementCount(foxMovementCountFromDifficulty(difficulty, configuration));
+
                                 //Set game map data.
                                 reconfigureGameMapData(gameMapData, configuration);
 
@@ -225,7 +270,7 @@ public class OpenSpeedyGameApp extends Application {
             }
 
             @Override
-            public void onCompetitiveStart(List<Player> players, Path mapInfoPath) {
+            public void onCompetitiveStart(List<Player> players, Path mapInfoPath, Difficulty difficulty) {
                 try {
                     Stage notificationStage = createNotificationStage(
                             resourceBundle.getString("app.loadingGameData"),
@@ -236,6 +281,10 @@ public class OpenSpeedyGameApp extends Application {
 
                         Platform.runLater(() -> {
                             try {
+                                //Setup difficulty properties.
+                                selectiveRollProperties.setHedgehogIrritation(irritationFromDifficulty(difficulty, configuration));
+                                selectiveRollProperties.setHedgehogPhysicsProperties(physicsPropertiesFromDifficulty(difficulty, configuration));
+
                                 //Set game map data.
                                 reconfigureGameMapData(gameMapData, configuration);
 
@@ -292,7 +341,6 @@ public class OpenSpeedyGameApp extends Application {
                     configuration.setProperty(OpenSpeedyConfiguration.PROPERTY_EFFECTS_VOLUME, mainMenuData.getEffectsVolume() + "");
                     configuration.setProperty(OpenSpeedyConfiguration.PROPERTY_SHOW_HINTS, mainMenuData.getShowHints() + "");
                     configuration.setProperty(OpenSpeedyConfiguration.PROPERTY_AUTO_SCROLL, mainMenuData.isAutoScroll() + "");
-                    configuration.setProperty(OpenSpeedyConfiguration.PROPERTY_FOX_MOVEMENT_COUNT, mainMenuData.getFoxMovementCount() + "");
 
                     configuration.store(new FileOutputStream(OpenSpeedyConfiguration.FILENAME), "");
 
@@ -319,10 +367,10 @@ public class OpenSpeedyGameApp extends Application {
         mainMenuSettingsData.setMusicVolume(configuration.musicVolume());
         mainMenuSettingsData.setShowHints(configuration.showHints());
         mainMenuSettingsData.setAutoScroll(configuration.autoScroll());
-        mainMenuSettingsData.setFoxMovementCount(configuration.foxMovementCount());
+        mainMenuSettingsData.setDefaultMapPath(configuration.defaultMapsDirectoryPath());
         mainMenuSettingsData.setCustomMapPath(configuration.customMapsDirectoryPath());
 
-        mainMenuScene.setupMenuScene(resourcepack, mainMenuSettingsData, menuSceneCallback);
+        mainMenuScene.setupMenuScene(resourcepack, mainMenuSettingsData, menuSceneCallback, resourceBundle);
 
         //Setup editor change.
         mapeditorStage.setOnCloseRequest(event -> {
@@ -338,12 +386,48 @@ public class OpenSpeedyGameApp extends Application {
         mainMenuStage.show();
     }
 
+    private int indexFromDifficulty(Difficulty difficulty) {
+        int index = 0;
+
+        if (difficulty == Difficulty.MEDIUM) {
+            index = 1;
+        }
+        else if (difficulty == Difficulty.HARD) {
+            index = 2;
+        }
+
+        return index;
+    }
+
+    private int foxMovementCountFromDifficulty(Difficulty difficulty, OpenSpeedyConfiguration configuration) {
+        int index = indexFromDifficulty(difficulty);
+
+        return configuration.foxMovementCount()[index];
+    }
+
+    private HedgehogIrritation irritationFromDifficulty(Difficulty difficulty, OpenSpeedyConfiguration configuration) {
+        int index = indexFromDifficulty(difficulty);
+
+        return new HedgehogIrritation(
+                configuration.difficultiesIrritationImbalance()[index],
+                configuration.difficultiesIrritationSlowdownFactor()[index]);
+    }
+
+    private HedgehogPhysicsProperties physicsPropertiesFromDifficulty(Difficulty difficulty, OpenSpeedyConfiguration configuration) {
+        int index = indexFromDifficulty(difficulty);
+
+        return new HedgehogPhysicsProperties(
+                configuration.difficultiesPhysicsLinearDamping()[index],
+                configuration.difficultiesPhysicsDensity()[index],
+                configuration.difficultiesPhysicsFriction()[index],
+                configuration.difficultiesPhysicsRestitution()[index]);
+    }
+
     private void reconfigureGameMapData(GameMapData gameMapData, OpenSpeedyConfiguration configuration) {
         gameMapData.setShowHints(configuration.showHints());
         gameMapData.setAutoScroll(configuration.autoScroll());
         gameMapData.setSoundsVolume(configuration.effectsVolume());
         gameMapData.setMusicVolume(configuration.musicVolume());
-        gameMapData.setFoxMovementCount(configuration.foxMovementCount());
     }
 
     private Stage createNotificationStage(String text, Image image) throws Exception {

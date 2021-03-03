@@ -10,6 +10,7 @@ import de.dgs.apps.openspeedyfx.game.resourcepacks.ResourcepackPaths.Music;
 import de.dgs.apps.osfxe.audio.AudioPlayer;
 import de.dgs.apps.osfxe.gui.SpriteAnimation;
 import de.dgs.apps.osfxe.scenes.GameController;
+import de.dgs.apps.osfxe.util.FileUtil;
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.application.Platform;
@@ -17,6 +18,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -36,10 +38,28 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 
+/*
+Copyright 2021 DGS-Development (https://github.com/DGS-Development)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+ */
 
 public class MainMenuScene extends GameController {
     @FXML
@@ -184,13 +204,13 @@ public class MainMenuScene extends GameController {
     private CheckBox cbAutoScroll;
 
     @FXML
-    private Spinner<Integer> spFoxMovementCount;
-
-    @FXML
     private TextField txtCustomMapPath;
 
     @FXML
     private Button btnQuit;
+
+    @FXML
+    private ChoiceBox<String> cbDifficulties;
 
     @FXML
     private VBox vbHead;
@@ -209,6 +229,8 @@ public class MainMenuScene extends GameController {
     private List<Player> players;
 
     private AudioPlayer audioPlayer;
+
+    private Difficulty difficulty = Difficulty.EASY;
 
     @Override
     public void onInitialized() {
@@ -273,7 +295,6 @@ public class MainMenuScene extends GameController {
         //----------------------------
         //Setup logic.
         //----------------------------
-        setupMainMenuLogic();
 
         SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 10, 3);
         spPlayersCount.setValueFactory(valueFactory);
@@ -309,17 +330,31 @@ public class MainMenuScene extends GameController {
         String content;
 
         try {
-            content = Files.readString(Path.of(getClass().getResource("/resources.txt").toURI()));
-        } catch (Exception exception) {
-            content = "Unable to load credits: " + exception.toString();
+            content = inputStreamToText(getClass().getResourceAsStream("/about.txt"));
+        }
+        catch (Exception exception) {
+            content = "Unable to load about-section: " + exception.toString();
         }
 
         txtAreaCredits.setText(content);
     }
 
+    private String inputStreamToText(InputStream inputStream) {
+        String text;
+
+        try (Scanner scanner = new Scanner(inputStream, StandardCharsets.UTF_8.name())) {
+            text = scanner.useDelimiter("\\A").next();
+        }
+
+        return text;
+    }
+
     public void setupMenuScene(Resourcepack resourcepack, MainMenuSettingsData mainMenuSettingsData,
-                               MenuSceneCallback menuSceneCallback) {
+                               MenuSceneCallback menuSceneCallback, ResourceBundle resourceBundle) {
+
         try {
+            setupMainMenuLogic(resourceBundle);
+
             byte[] menuLoopBytes = resourcepack.getResourceAsStream(Music.MENU_LOOP_OGG).readAllBytes();
 
             audioPlayer = new AudioPlayer(menuLoopBytes, true, mainMenuSettingsData.getMusicVolume());
@@ -357,14 +392,6 @@ public class MainMenuScene extends GameController {
             });
 
             txtCustomMapPath.setText(mainMenuSettingsData.getCustomMapPath());
-
-            spFoxMovementCount.valueProperty().addListener((observable, oldValue, newValue) -> {
-                mainMenuSettingsData.setFoxMovementCount(Integer.parseInt(newValue.toString()));
-                menuSceneCallback.onMainMenuDataUpdate(mainMenuSettingsData);
-            });
-
-            SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(2, 8, mainMenuSettingsData.getFoxMovementCount());
-            spFoxMovementCount.setValueFactory(valueFactory);
 
             //Setup UI logic.
             btnQuit.setOnAction(event -> menuSceneCallback.onQuit());
@@ -439,7 +466,7 @@ public class MainMenuScene extends GameController {
         }
     }
 
-    private void setupMainMenuLogic() {
+    private void setupMainMenuLogic(ResourceBundle resourceBundle) {
         btnCompetitiveMode.setOnAction(event -> {
             players = new LinkedList<>();
             tabPaneMenus.getSelectionModel().select(tabCompetitiveMenu);
@@ -524,35 +551,39 @@ public class MainMenuScene extends GameController {
             tabPaneMenus.getSelectionModel().select(tabPlayMenu);
             playTabPaneFadeTransition();
         });
+
+        ObservableList<String> options = FXCollections.observableArrayList(
+                resourceBundle.getString("mainmenu.difficultyEasy"),
+                resourceBundle.getString("mainmenu.difficultyMedium"),
+                resourceBundle.getString("mainmenu.difficultyHard"));
+
+        cbDifficulties.setValue(options.get(0));
+        cbDifficulties.setItems(options);
+
+        cbDifficulties.getSelectionModel().selectedIndexProperty().addListener((ov, value, new_value) -> {
+            difficulty = Difficulty.values()[new_value.intValue()];
+        });
     }
 
     private void loadMaps(MenuSceneCallback menuSceneCallback, MainMenuSettingsData settingsData, List<Player> players) {
         try {
             tabPaneMenus.getSelectionModel().select(tabMapSelection);
 
-
+            //Load maps from filesystem.
             List<Path> mapPaths = new LinkedList<>();
 
-            //Load maps from classpath.
-            Path mapFilesPath;
+            File defaultMapDirectory = new File(settingsData.getDefaultMapPath());
 
-            if (isCooperativeMode) {
-                mapFilesPath = Path.of(getClass().getResource("/assets/fxml/defaultmaps/cooperative").toURI());
-            } else {
-                mapFilesPath = Path.of(getClass().getResource("/assets/fxml/defaultmaps/competitive").toURI());
+            if (defaultMapDirectory.isDirectory()) {
+                for(File tmpFile : FileUtil.listFiles(defaultMapDirectory, ".mapj"))
+                    mapPaths.add(tmpFile.toPath());
             }
 
-            Files.list(mapFilesPath)
-                    .filter(path -> path.getFileName().toString().endsWith(".mapj"))
-                    .forEach(mapPaths::add);
-
-            //Load maps from filesystem.
             File customMapDirectory = new File(settingsData.getCustomMapPath());
 
             if (customMapDirectory.isDirectory()) {
-                Files.list(customMapDirectory.toPath())
-                        .filter(path -> path.getFileName().toString().endsWith(".mapj") && path.toFile().isFile())
-                        .forEach(mapPaths::add);
+                for(File tmpFile : FileUtil.listFiles(customMapDirectory, ".mapj"))
+                    mapPaths.add(tmpFile.toPath());
             }
 
             Map<String, Path> namePathMap = new HashMap<>();
@@ -563,6 +594,17 @@ public class MainMenuScene extends GameController {
 
             for (Path tmpPath : mapPaths) {
                 MapInfo mapInfo = new Gson().fromJson(Files.readString(tmpPath), MapInfo.class);
+
+                if(isCooperativeMode && mapInfo.isCompetitive()) {
+                    continue;
+                }
+                else if(!isCooperativeMode && !mapInfo.isCompetitive()){
+                    continue;
+                }
+
+                if(names.contains(mapInfo.getMapName()))
+                    continue;
+
                 names.add(mapInfo.getMapName());
 
                 namePathMap.put(mapInfo.getMapName(), tmpPath);
@@ -605,9 +647,9 @@ public class MainMenuScene extends GameController {
                             lvMaps.getSelectionModel().selectedItemProperty().removeListener(changeListenerSimpleObjectProperty.get());
 
                             if (isCooperativeMode) {
-                                menuSceneCallback.onCooperativeStart(spPlayersCount.getValue(), players.get(0), mapPath);
+                                menuSceneCallback.onCooperativeStart(spPlayersCount.getValue(), players.get(0), mapPath, difficulty);
                             } else {
-                                menuSceneCallback.onCompetitiveStart(players, mapPath);
+                                menuSceneCallback.onCompetitiveStart(players, mapPath, difficulty);
                             }
 
                             reset();
