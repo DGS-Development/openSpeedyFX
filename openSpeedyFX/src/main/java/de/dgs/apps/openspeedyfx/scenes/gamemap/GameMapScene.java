@@ -450,43 +450,7 @@ public class GameMapScene extends GameController {
         zoomingPane.getChildren().add(mapData.getRootNode());
     }
 
-    //Game logic bug workaround, until improved game logic is available.
-    /*
-    private volatile boolean gameDoneCalled = false;
-    private List<Player> playersWon = new LinkedList<>();
-
-    private class GameOverWorkaroundThread extends Thread {
-        private final GameMapData gameMapData;
-
-        public GameOverWorkaroundThread(GameMapData gameMapData) {
-            this.gameMapData = gameMapData;
-        }
-
-        @Override
-        public void run() {
-            try {
-                Thread.sleep(1000);
-
-                if(!gameDoneCalled)
-                    Platform.runLater(() -> {
-                        gameDoneCalled = true;
-                        gameIsOver = true;
-
-                        lblApplesItemCount.setText("0");
-                        lblLeavesItemsCount.setText("0");
-                        lblMushroomsItemCount.setText("0");
-
-                        showWinnersDialogue(playersWon, gameMapData);
-
-                        gameMapData.getGameMapCallback().onGameOver();
-                    });
-            }
-            catch (Exception exception) {
-                //Ignore...
-            }
-        }
-    }
-     */
+    private boolean gameIsOver = false;
 
     private void setupGameLogic(GameMapData gameMapData) {
         map = new Map(mapData.getFirstTile());
@@ -756,6 +720,8 @@ public class GameMapScene extends GameController {
 
             @Override
             public void onGameDone(List<Player> winners) {
+                gameIsOver = true;
+
                 if(winners.size() > 0)
                     showWinnersDialogue(winners, gameMapData);
 
@@ -769,6 +735,9 @@ public class GameMapScene extends GameController {
 
             @Override
             public void onFoxMove(NPC fox, List<Tile> tilesToMove) {
+                if(gameIsOver)
+                    return;
+
                 final int[] tileIndex = {0};
 
                 if(gameMapData.isAutoScroll()) {
@@ -781,15 +750,15 @@ public class GameMapScene extends GameController {
                             nextField = mapData.getTileFieldMapping().get(tilesToMove.get(tileIndex[0]));
                             moveFox(fox, nextField);
 
-                            scrollToField(nextField, 0, 500, eventHandlerProperty.get());
+                            foxSoundAudioPlayer.playRandomSound();
+                            tileIndex[0]++;
+
+                            scrollToField(nextField, 0, 700, eventHandlerProperty.get());
                         }
                         else {
                             nextField = mapData.getTileFieldMapping().get(activePlayer.getCurrentTile());
                             scrollToField(nextField, 0, 1000, null);
                         }
-
-                        foxSoundAudioPlayer.playRandomSound();
-                        tileIndex[0]++;
                     });
 
                     scrollToField(
