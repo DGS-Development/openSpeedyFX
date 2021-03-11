@@ -22,10 +22,9 @@ limitations under the License.
 public abstract class Actor implements Observable{
     private Tile currentTile;
     private final List<Observer<Actor>> observers = new ArrayList<>();
-    private boolean initialized;
+    private boolean initialized = false;
 
     public void movePiece(Tile newTile){
-        initialized = false;
         currentTile = newTile;
         notifyObservers(this);
     }
