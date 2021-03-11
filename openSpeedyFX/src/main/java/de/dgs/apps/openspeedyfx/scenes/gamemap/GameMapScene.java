@@ -33,8 +33,8 @@ import de.dgs.apps.osfxe.scenes.SceneManager;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
-import javafx.application.Platform;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -417,7 +417,7 @@ public class GameMapScene extends GameController {
 
         //Scroll to start field.
         SpeedyFxField startField = mapData.getTileFieldMapping().get(mapData.getStartTile());
-        scrollToField(startField, 2500);
+        scrollToField(startField, 0, 2500, null);
 
         //Start first turn.
         gameMode.nextTurn();
@@ -451,7 +451,7 @@ public class GameMapScene extends GameController {
     }
 
     //Game logic bug workaround, until improved game logic is available.
-    private boolean gameIsOver = false;
+    /*
     private volatile boolean gameDoneCalled = false;
     private List<Player> playersWon = new LinkedList<>();
 
@@ -486,6 +486,7 @@ public class GameMapScene extends GameController {
             }
         }
     }
+     */
 
     private void setupGameLogic(GameMapData gameMapData) {
         map = new Map(mapData.getFirstTile());
@@ -493,9 +494,6 @@ public class GameMapScene extends GameController {
         GameModeCallback gameModeCallback = new GameModeCallback() {
             @Override
             public void onInitialized(List<? extends Actor> actors) {
-                if(gameIsOver)
-                    return;
-
                 //Add actors to map.
                 SpeedyFxField startField = mapData.getTileFieldMapping().get(mapData.getStartTile());
 
@@ -542,9 +540,6 @@ public class GameMapScene extends GameController {
 
             @Override
             public void onRoll(int appleCount, int mushroomCount, int leafCount) {
-                if(gameIsOver)
-                    return;
-
                 lblActivePlayerDescriptionText.setText(
                         gameMapData.getResourceBundle().getString("gamemap.helloPleaseHelpMeToCollectItemsByRollingTheBall"));
 
@@ -571,9 +566,6 @@ public class GameMapScene extends GameController {
 
             @Override
             public void onActivePlayerSet(Player player) {
-                if(gameIsOver)
-                    return;
-
                 if(gameMapData.getPhysicalPlayersCount() > 0) {
                     if(activePlayerIdIntegerProperty.get() < gameMapData.getPhysicalPlayersCount()) {
                         activePlayerIdIntegerProperty.set(activePlayerIdIntegerProperty.get() + 1);
@@ -597,11 +589,12 @@ public class GameMapScene extends GameController {
 
             @Override
             public void onReadyToMove(List<Move> possibleMoves, int appleCount, int mushroomCount, int leafCount) {
-                if(gameIsOver)
-                    return;
-
                 if(gameMapData.isAutoScroll())
-                    scrollToField(mapData.getTileFieldMapping().get(activePlayer.getCurrentTile()));
+                    scrollToField(
+                            mapData.getTileFieldMapping().get(activePlayer.getCurrentTile()),
+                            0,
+                            1000,
+                            null);
 
                 applesIntegerProperty.set(appleCount);
                 mushroomsIntegerProperty.set(mushroomCount);
@@ -687,9 +680,6 @@ public class GameMapScene extends GameController {
 
             @Override
             public void onUnableToMove() {
-                if(gameIsOver)
-                    return;
-
                 try {
                     String text = gameMapData.getResourceBundle().getString("gamemap.unableToMoveWithTheCollectedItems");
 
@@ -707,9 +697,6 @@ public class GameMapScene extends GameController {
 
             @Override
             public void onTooManyItemsCollected(int itemsCount) {
-                if(gameIsOver)
-                    return;
-
                 try {
                     String text = gameMapData.getResourceBundle().getString("gamemap.youCollectedTooManyItems");
 
@@ -727,10 +714,6 @@ public class GameMapScene extends GameController {
 
             @Override
             public void onPlayerWon(Player player) {
-                if(gameIsOver)
-                    return;
-
-                playersWon.add(player);
                 winSoundAudioPlayer.playRandomSound();
 
                 try {
@@ -743,11 +726,6 @@ public class GameMapScene extends GameController {
                             actorImageMap.get(player).getImage(),
                             true,
                             gameMapData.getGameMapCallback());
-
-                    boolean isCompetitive = mapData.getStartTile().getTileType() == TileType.HEDGEHOG_START;
-
-                    if(isCompetitive)
-                        new GameOverWorkaroundThread(gameMapData).start();
                 }
                 catch (Exception exception) {
                     gameMapData.getGameMapCallback().onException(exception);
@@ -758,9 +736,6 @@ public class GameMapScene extends GameController {
 
             @Override
             public void onPlayerLost(Player player) {
-                if(gameIsOver)
-                    return;
-
                 try {
                     String text = gameMapData.getResourceBundle().getString("gamemap.playerLostTheGame1") + " " + player.getName() + " " +
                             gameMapData.getResourceBundle().getString("gamemap.playerLostTheGame2");
@@ -781,12 +756,6 @@ public class GameMapScene extends GameController {
 
             @Override
             public void onGameDone(List<Player> winners) {
-                if(gameIsOver)
-                    return;
-
-                gameDoneCalled = true;
-                gameIsOver = true;
-
                 if(winners.size() > 0)
                     showWinnersDialogue(winners, gameMapData);
 
@@ -795,35 +764,47 @@ public class GameMapScene extends GameController {
 
             @Override
             public void onPlayerInDanger(Player player) {
-                if(gameIsOver)
-                    return;
-
                 foxIsNearAudioPlayer.playRandomSound();
             }
 
             @Override
             public void onFoxMove(NPC fox, List<Tile> tilesToMove) {
-                if(gameIsOver)
-                    return;
-
-                Tile firstTile = tilesToMove.get(0);
-                Tile lastTile = tilesToMove.get(tilesToMove.size() - 1);
+                final int[] tileIndex = {0};
 
                 if(gameMapData.isAutoScroll()) {
-                    scrollToField(mapData.getTileFieldMapping().get(firstTile), event -> {
+                    final SimpleObjectProperty<EventHandler<ActionEvent>> eventHandlerProperty = new SimpleObjectProperty<>();
+
+                    eventHandlerProperty.set(event -> {
+                        SpeedyFxField nextField;
+
+                        if(tileIndex[0] < tilesToMove.size()) {
+                            nextField = mapData.getTileFieldMapping().get(tilesToMove.get(tileIndex[0]));
+                            moveFox(fox, nextField);
+
+                            scrollToField(nextField, 0, 500, eventHandlerProperty.get());
+                        }
+                        else {
+                            nextField = mapData.getTileFieldMapping().get(activePlayer.getCurrentTile());
+                            scrollToField(nextField, 0, 1000, null);
+                        }
+
                         foxSoundAudioPlayer.playRandomSound();
-
-                        SpeedyFxField tmpField = mapData.getTileFieldMapping().get(lastTile);
-                        moveFox(fox, tmpField);
-
-                        scrollToField(mapData.getTileFieldMapping().get(activePlayer.getCurrentTile()));
+                        tileIndex[0]++;
                     });
+
+                    scrollToField(
+                            mapData.getTileFieldMapping().get(tilesToMove.get(tileIndex[0])),
+                            0,
+                            1000,
+                            eventHandlerProperty.get());
                 }
                 else {
                     foxSoundAudioPlayer.playRandomSound();
 
-                    SpeedyFxField tmpField = mapData.getTileFieldMapping().get(lastTile);
-                    moveFox(fox, tmpField);
+                    Tile lastTile = tilesToMove.get(tilesToMove.size() - 1);
+                    SpeedyFxField lastField = mapData.getTileFieldMapping().get(lastTile);
+
+                    moveFox(fox, lastField);
                 }
             }
         };
@@ -921,19 +902,7 @@ public class GameMapScene extends GameController {
         }
     }
 
-    private void scrollToField(SpeedyFxField speedyFxField) {
-        scrollToField(speedyFxField, null);
-    }
-
-    private void scrollToField(SpeedyFxField speedyFxField, int durationMilliseconds) {
-        scrollToField(speedyFxField, durationMilliseconds, null);
-    }
-
-    private void scrollToField(SpeedyFxField speedyFxField, EventHandler<ActionEvent> onEndEventHandler) {
-        scrollToField(speedyFxField, 1000, onEndEventHandler);
-    }
-
-    private void scrollToField(SpeedyFxField speedyFxField, int durationMilliseconds, EventHandler<ActionEvent> onEndEventHandler) {
+    private void scrollToField(SpeedyFxField speedyFxField, int delayMilliseconds, int durationMilliseconds, EventHandler<ActionEvent> onEndEventHandler) {
         double paneCenterX = (paneRoot.getWidth() / 2);
         double paneCenterY = (paneRoot.getHeight() / 2);
 
@@ -967,6 +936,7 @@ public class GameMapScene extends GameController {
         translateTransition.setToX(mapX);
         translateTransition.setToY(mapY);
         translateTransition.setCycleCount(1);
+        translateTransition.setDelay(Duration.millis(delayMilliseconds));
         translateTransition.setDuration(Duration.millis(durationMilliseconds));
         translateTransition.setInterpolator(Interpolator.EASE_BOTH);
         translateTransition.play();

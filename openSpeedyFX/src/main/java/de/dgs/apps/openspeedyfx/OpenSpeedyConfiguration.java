@@ -1,6 +1,5 @@
 package de.dgs.apps.openspeedyfx;
 
-import de.dgs.apps.openspeedyfx.scenes.ballscene.logic.HedgehogIrritation;
 import org.aeonbits.owner.Accessible;
 import org.aeonbits.owner.Config.Sources;
 import org.aeonbits.owner.Mutable;
