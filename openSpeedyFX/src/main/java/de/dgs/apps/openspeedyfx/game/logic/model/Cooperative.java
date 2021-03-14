@@ -23,6 +23,7 @@ limitations under the License.
 public class Cooperative extends AbstractGameMode {
     private final NPC fox;
     private final int foxMoves;
+    private Turn.Builder currentTurnBuilder;
 
     public Cooperative(Player player, GameModeCallback cooperativeCallback, de.dgs.apps.openspeedyfx.game.logic.model.Map map) {
         this(List.of(player), cooperativeCallback, map);
@@ -55,10 +56,11 @@ public class Cooperative extends AbstractGameMode {
 
     @Override
     protected void onAdditionalMove(Turn.Builder turnBuilder) {
-        moveFox(turnBuilder);
+        currentTurnBuilder = turnBuilder;
+        moveFox();
     }
 
-    private void moveFox(Turn.Builder turnBuilder){
+    private void moveFox(){
         if(getPlayers().isEmpty())return;
 
         List<Tile> foxMoves = new ArrayList<>();
@@ -72,17 +74,20 @@ public class Cooperative extends AbstractGameMode {
             foxMoves.add(moves.pop());
         }
 
-        for (Tile t : foxMoves) {
-            fox.movePiece(t);
-            Move foxMove = new Move(fox.getCurrentTile(), t);
-            turnBuilder.addFoxMove(foxMove);
-        }
-
         if(foxMoves.isEmpty()){
             return;
         }
 
         getGameModeCallback().onFoxMove(fox, foxMoves);
+    }
+
+    @Override
+    public void onFoxMoveDone(List<Tile> foxMoves){
+        for (Tile t : foxMoves) {
+            fox.movePiece(t);
+            Move foxMove = new Move(fox.getCurrentTile(), t);
+            currentTurnBuilder.addFoxMove(foxMove);
+        }
     }
 
 }

@@ -33,6 +33,7 @@ import de.dgs.apps.osfxe.scenes.SceneManager;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -703,7 +704,6 @@ public class GameMapScene extends GameController {
                 try {
                     String text = gameMapData.getResourceBundle().getString("gamemap.playerLostTheGame1") + " " + player.getName() + " " +
                             gameMapData.getResourceBundle().getString("gamemap.playerLostTheGame2");
-
                     showInfoDialogue(
                             text,
                             text,
@@ -757,7 +757,9 @@ public class GameMapScene extends GameController {
                         }
                         else {
                             nextField = mapData.getTileFieldMapping().get(activePlayer.getCurrentTile());
-                            scrollToField(nextField, 0, 1000, null);
+                            scrollToField(nextField, 0, 1000, actionEvent -> {
+                                gameMode.onFoxMoveDone(tilesToMove);
+                            });
                         }
                     });
 
@@ -774,6 +776,8 @@ public class GameMapScene extends GameController {
                     SpeedyFxField lastField = mapData.getTileFieldMapping().get(lastTile);
 
                     moveFox(fox, lastField);
+
+                    gameMode.onFoxMoveDone(tilesToMove);
                 }
             }
         };

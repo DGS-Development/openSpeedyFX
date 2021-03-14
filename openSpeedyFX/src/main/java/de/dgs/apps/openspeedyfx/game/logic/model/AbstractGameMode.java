@@ -130,6 +130,10 @@ public abstract class AbstractGameMode implements GameMode{
         //Ignore...
     }
 
+    public void onFoxMoveDone(List<Tile> foxMoves){
+        //Ignore...
+    };
+
     private Player moveActivePlayer;
     private Turn.Builder moveTurnBuilder;
     private Roll realRoll;
