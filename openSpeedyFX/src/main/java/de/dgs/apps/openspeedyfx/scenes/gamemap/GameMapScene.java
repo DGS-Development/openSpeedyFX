@@ -187,6 +187,7 @@ public class GameMapScene extends GameController {
             if(slotId == -1)
                 return false;
 
+            //noinspection SuspiciousMethodCalls
             slotPlayerMap.remove(player);
             freeSlot[slotId] = true;
 
@@ -325,9 +326,8 @@ public class GameMapScene extends GameController {
         //Field slot map.
         fieldSlotsMap = new HashMap<>();
 
-        mapData.getSpeedyFxFields().forEach(tmpField -> {
-            fieldSlotsMap.put(tmpField, new PlayerSlots(gameMapData.getRandom(), 40));
-        });
+        mapData.getSpeedyFxFields().forEach(tmpField ->
+                fieldSlotsMap.put(tmpField, new PlayerSlots(gameMapData.getRandom(), 40)));
 
         //Player image representation map.
         actorImageMap = new HashMap<>();
@@ -704,12 +704,13 @@ public class GameMapScene extends GameController {
                 try {
                     String text = gameMapData.getResourceBundle().getString("gamemap.playerLostTheGame1") + " " + player.getName() + " " +
                             gameMapData.getResourceBundle().getString("gamemap.playerLostTheGame2");
-                    showInfoDialogue(
+
+                    Platform.runLater(() -> showInfoDialogue(
                             text,
                             text,
                             actorImageMap.get(player).getImage(),
                             true,
-                            gameMapData.getGameMapCallback());
+                            gameMapData.getGameMapCallback()));
                 }
                 catch (Exception exception) {
                     gameMapData.getGameMapCallback().onException(exception);
@@ -757,9 +758,9 @@ public class GameMapScene extends GameController {
                         }
                         else {
                             nextField = mapData.getTileFieldMapping().get(activePlayer.getCurrentTile());
-                            scrollToField(nextField, 0, 1000, actionEvent -> {
-                                gameMode.onFoxMoveDone(tilesToMove);
-                            });
+
+                            scrollToField(nextField, 0, 1000, actionEvent ->
+                                    gameMode.onFoxMoveDone(tilesToMove));
                         }
                     });
 
