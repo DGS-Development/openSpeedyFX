@@ -741,45 +741,33 @@ public class GameMapScene extends GameController {
 
                 final int[] tileIndex = {0};
 
-                if(gameMapData.isAutoScroll()) {
-                    final SimpleObjectProperty<EventHandler<ActionEvent>> eventHandlerProperty = new SimpleObjectProperty<>();
+                final SimpleObjectProperty<EventHandler<ActionEvent>> eventHandlerProperty = new SimpleObjectProperty<>();
 
-                    eventHandlerProperty.set(event -> {
-                        SpeedyFxField nextField;
+                eventHandlerProperty.set(event -> {
+                    SpeedyFxField nextField;
 
-                        if(tileIndex[0] < tilesToMove.size()) {
-                            nextField = mapData.getTileFieldMapping().get(tilesToMove.get(tileIndex[0]));
-                            moveFox(fox, nextField);
+                    if(tileIndex[0] < tilesToMove.size()) {
+                        nextField = mapData.getTileFieldMapping().get(tilesToMove.get(tileIndex[0]));
+                        moveFox(fox, nextField);
 
-                            foxSoundAudioPlayer.playRandomSound();
-                            tileIndex[0]++;
+                        foxSoundAudioPlayer.playRandomSound();
+                        tileIndex[0]++;
 
-                            scrollToField(nextField, 0, 700, eventHandlerProperty.get());
-                        }
-                        else {
-                            nextField = mapData.getTileFieldMapping().get(activePlayer.getCurrentTile());
+                        scrollToField(nextField, 0, 700, eventHandlerProperty.get());
+                    }
+                    else {
+                        nextField = mapData.getTileFieldMapping().get(activePlayer.getCurrentTile());
 
-                            scrollToField(nextField, 0, 1000, actionEvent ->
-                                    gameMode.onFoxMoveDone(tilesToMove));
-                        }
-                    });
+                        scrollToField(nextField, 0, 1000, actionEvent ->
+                                gameMode.onFoxMoveDone(tilesToMove));
+                    }
+                });
 
-                    scrollToField(
-                            mapData.getTileFieldMapping().get(tilesToMove.get(tileIndex[0])),
-                            0,
-                            1000,
-                            eventHandlerProperty.get());
-                }
-                else {
-                    foxSoundAudioPlayer.playRandomSound();
-
-                    Tile lastTile = tilesToMove.get(tilesToMove.size() - 1);
-                    SpeedyFxField lastField = mapData.getTileFieldMapping().get(lastTile);
-
-                    moveFox(fox, lastField);
-
-                    gameMode.onFoxMoveDone(tilesToMove);
-                }
+                scrollToField(
+                        mapData.getTileFieldMapping().get(tilesToMove.get(tileIndex[0])),
+                        0,
+                        1000,
+                        eventHandlerProperty.get());
             }
         };
 
