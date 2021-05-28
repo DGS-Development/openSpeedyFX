@@ -341,8 +341,10 @@ public class AudioPlayer {
 		clip = AudioSystem.getClip();
 		clip.open(AudioSystem.getAudioInputStream(targetAudioFormat, audioInputStream));
 
-		if(loopAudio)
+		if(loopAudio) {
 			clip.loop(Clip.LOOP_CONTINUOUSLY);
+			clip.stop();
+		}
 	}
 }
 
