@@ -4,7 +4,7 @@
 
     <groupId>de.dgs.apps.openspeedyfx</groupId>
     <artifactId>openSpeedyFX</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
 
     <name>openSpeedyFX</name>
     <url>https://github.com/DGS-Development/openSpeedyFX</url>
@@ -99,6 +99,24 @@
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-media</artifactId>
+            <version>14</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>14</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>14</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-base</artifactId>
             <version>14</version>
         </dependency>
 
