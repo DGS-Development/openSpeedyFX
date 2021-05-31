@@ -1,11 +1,11 @@
 ![dgsLabsLogo](https://github.com/DGS-Development/openSpeedyFX/blob/main/docs/img/dgsLabsLogo.png?raw=true)
 
-**NOTICE: This project isn't maintained on a regular basis, because it is a research project. Please don't open issues!**
+**NOTICE: This project isn't maintained on a regular basis, because it is a student research project.**
 
 # openSpeedyFX
 ![openSpeedyFxLogo](https://github.com/DGS-Development/openSpeedyFX/blob/main/docs/img/openSpeedyFXLogo.png?raw=true)
 
-openSpeedyFX is a free open-source 2D board game, inspired by Urtis Šulinskas's "Speedy Roll". It was a student research project to practice software engineering. The implementation is Java based.
+openSpeedyFX is a free open-source 2D board game, inspired by Urtis Šulinskas's "Speedy Roll". It was a [student research project](https://informatik.hof-university.de/allgemein/openspeedyfx-2d-spieleentwicklung-im-3-semester/) to practice software engineering. The implementation is Java based.
 
 ![featuresPreview](https://github.com/DGS-Development/openSpeedyFX/blob/main/docs/img/featuresPreview.png?raw=true)
 
